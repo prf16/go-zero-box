@@ -2,6 +2,10 @@
 
 开箱即用的 go-zero 示例
 
+内置服务api、scheduler、queue、script
+
+符合Web应用框架的代码结构，便于开发者快速上手，减少开发成本。
+
 ### 二、技术选型
 
 go-zreo 框架 + goctl 代码生成工具 + Makefile 实现自动化编译
@@ -102,3 +106,5 @@ source ~/.bash_profile
 5. 查看更新结果
 go env GOPROXY
 ```
+
+### 关于坐着

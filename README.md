@@ -1,10 +1,12 @@
 ### 一、概述
 
-开箱即用的 go-zero 示例
+开箱即用的 go-zero 示例。
 
-内置服务api、scheduler、queue、script
+内置服务api、scheduler、queue、script。
 
 符合Web应用框架的代码结构，便于开发者快速上手，减少开发成本。
+
+本项目基于 go-zero 框架的 1.5.5 版本。
 
 ### 二、技术选型
 

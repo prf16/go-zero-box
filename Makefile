@@ -2,6 +2,14 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOSUMDB=sum.golang.org
 
+.PHONY: new
+# 目录初始化
+new:
+	$(info ******************** new ********************)
+	@mkdir deploy
+	@mkdir runtime
+	@mkdir runtime/logs
+
 .PHONY: build
 # 构建
 build:

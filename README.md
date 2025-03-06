@@ -113,3 +113,7 @@ source ~/.bash_profile
 5. 查看更新结果
 go env GOPROXY
 ```
+
+### 关于贡献
+
+go-zero-box 是一个基于 [MIT](https://github.com/prf16/go-zero-box/LICENSE) 的开源项目，大家在使用中发现bug，有新的特性等，均可以参与到go-zero-box的贡献中来，我们非常欢迎大家的积极参与，也会最快响应大家提出的各种问题，pr等。

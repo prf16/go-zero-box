@@ -1,0 +1,35 @@
+syntax = "v1"
+
+info(
+    title: "Hello world"
+    desc: "Hello world"
+    version: "v1"
+)
+
+type HelloResponse {
+    Code int `json:"code"`
+    Message string `json:"message"`
+}
+
+// Login
+type (
+    HelloReq {
+    }
+    HelloResp {
+        HelloResponse
+        Data HelloData `json:"data"`
+    }
+    HelloData {
+    }
+)
+
+
+@server(
+    group: hello
+    prefix: /api
+)
+service app {
+    @doc "Hello world"
+    @handler Hello
+    get /hello (HelloReq) returns (HelloResp)
+}

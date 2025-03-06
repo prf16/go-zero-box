@@ -1,0 +1,6 @@
+{"@timestamp":"2025-03-06T16:23:33.423+08:00","caller":"stat/metrics.go:210","content":"(api) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms","level":"stat"}
+{"@timestamp":"2025-03-06T16:23:35.711+08:00","caller":"stat/metrics.go:210","content":"(api) - qps: 0.0/s, drops: 0, avg time: 0.0ms, med: 0.0ms, 90th: 0.0ms, 99th: 0.0ms, 99.9th: 0.0ms","level":"stat"}
+{"@timestamp":"2025-03-06T16:25:28.315+08:00","caller":"stat/usage.go:61","content":"CPU: 0m, MEMORY: Alloc=1.3Mi, TotalAlloc=1.3Mi, Sys=13.0Mi, NumGC=0","level":"stat"}
+{"@timestamp":"2025-03-06T16:27:18.198+08:00","caller":"stat/usage.go:61","content":"CPU: 0m, MEMORY: Alloc=1.3Mi, TotalAlloc=1.3Mi, Sys=12.8Mi, NumGC=0","level":"stat"}
+{"@timestamp":"2025-03-06T16:28:33.934+08:00","caller":"stat/usage.go:61","content":"CPU: 0m, MEMORY: Alloc=1.3Mi, TotalAlloc=1.3Mi, Sys=13.0Mi, NumGC=0","level":"stat"}
+{"@timestamp":"2025-03-06T16:29:33.934+08:00","caller":"stat/usage.go:61","content":"CPU: 0m, MEMORY: Alloc=1.4Mi, TotalAlloc=1.4Mi, Sys=13.0Mi, NumGC=0","level":"stat"}

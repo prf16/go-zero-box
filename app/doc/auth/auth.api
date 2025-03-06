@@ -1,0 +1,59 @@
+syntax = "v1"
+
+info(
+    title: "认证相关"
+    desc: "认证相关"
+    version: "v1"
+)
+
+type AuthResponse {
+    Code int `json:"code"`
+    Message string `json:"message,default=ok"`
+}
+
+// Login
+type (
+    LoginReq {
+        Account string `json:"account"`
+        Password string `json:"password"`
+    }
+    LoginResp {
+        AuthResponse
+        Data LoginData `json:"data"`
+    }
+
+    LoginData {
+        User LoginDataUser `json:"user"` //用户基本信息
+        Token string `json:"token"`      //服务端返回的token值
+    }
+
+    LoginDataUser {
+        ID int64 `json:"id"`                // 账号ID
+        NickName string `json:"nickname"`   //昵称
+    }
+)
+
+// RegisterReq
+type (
+    RegisterReq {
+        Account string `json:"account"`
+        Password string `json:"password"`
+    }
+    RegisterResp {
+        AuthResponse
+    }
+)
+
+
+@server(
+    group: auth
+    prefix: /api/auth
+)
+service app {
+    @doc "用户登录"
+    @handler Login
+    post /login (LoginReq) returns (LoginResp)
+    @doc "用户注册"
+    @handler Register
+    post /register (RegisterReq) returns (RegisterResp)
+}

@@ -1,0 +1,65 @@
+syntax = "v1"
+
+info(
+    title: "用户相关"
+    desc: "用户相关"
+    version: "v1"
+)
+
+type UserResponse {
+    Code int `json:"code"`
+    Message string `json:"message"`
+}
+type UserPaginate {
+    Page uint64 `form:"page,optional,default=1,range=[1:]"` // 页码
+    PageSize uint64 `form:"page_size,optional,default=10"`  // 分页大小
+}
+type UserPaginateResp {
+    Page uint64 `json:"page"`           // 页码
+    PageSize uint64 `json:"page_size"`  // 分页大小
+    Total int64 `json:"total"`          // 总条数
+}
+
+type (
+    UserInfoResp {
+        UserResponse
+        Data *UserInfoData `json:"data"`
+    }
+    UserInfoData {
+        Id int64 `json:"id"`
+        Account string `json:"account"`      // 用户名
+        Name string `json:"name"`            // 姓名
+        JobNumber string `json:"job_number"` // 工号
+        Email string `json:"email"`          // 邮箱
+        Note string `json:"note"`            // 备注
+        Status int64 `json:"status"`         // 状态 1启动 2禁用
+        IsDelete int64 `json:"is_delete"`    // 是否删除 1是 2否
+    }
+)
+
+type (
+    ExitReq {
+
+    }
+    ExitResp {
+        UserResponse
+        Data ExitData `json:"data"`
+    }
+    ExitData {
+        Url string `json:"url"`
+    }
+)
+
+@server(
+    middleware: AuthMiddleware
+    group: user/info
+    prefix: /api/user
+)
+service app {
+    @doc "用户相关/用户信息"
+    @handler UserInfo
+    get /info returns (UserInfoResp)
+
+    @handler Exit
+    post /exit returns (ExitResp)
+}

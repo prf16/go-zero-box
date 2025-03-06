@@ -106,5 +106,3 @@ source ~/.bash_profile
 5. 查看更新结果
 go env GOPROXY
 ```
-
-### 关于坐着

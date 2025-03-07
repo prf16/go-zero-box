@@ -11,6 +11,7 @@
 ### 二、特性
 
 - 简化框架原生开发模型，优化了代码结构，设计出符合Web应用框架的代码结构，便于开发者代码阅读更便捷，减少开发成本；
+- 提供了初始的接口文档，使用Apifox工具，导入可使用，[go-zero-box.apifox.json](https://github.com/prf16/go-zero-box/blob/main/go-zero-box.apifox.json)
 - 增加了更多的 ORM API，支持复杂的数据查询业务；
 - 引入 asynq 库，实现了队列、调度、脚本等功能；
 - 引入 wire 库，实现了依赖注入功能；
@@ -32,8 +33,6 @@ goctl 是 go-zero 微服务框架下的代码生成工具。使用 goctl 可显�
 wire 是一个依赖注入工具，用于解决 Go 语言中依赖注入的问题。通过 wire，您可以轻松地管理应用程序的依赖关系，并确保它们在编译时进行注入。
 
 Makefile 文件描述了 Linux 系统下项目工程的编译规则，只需要一个 `make bild` 命令，整个工程就开始自动构建项目环境，不再需要手动执行大量的 `go build` 命令，Makefile 文件定义了一系列规则，指明了源文件的编译顺序、依赖关系、是否需要重新编译等，可以输入 `make help` 查看命令集。
-
-接口文档 使用了 Apifox 工具，方便开发者导入使用，详细文档地址：https://github.com/prf16/go-zero-box/blob/main/go-zero-box.apifox.json
 
 ### 四、代码结构
 

@@ -1,6 +1,6 @@
 ### 一、概述
 
-开箱即用的 go-zero 示例，内置服务api、scheduler、queue、script。
+开箱即用的 go-zero 示例，内置 api、scheduler、queue、script 服务。
 
 框架初始版本基于 go-zero 框架的 1.5.5 版本，后续会参考 go-zero 的版本出相应的更新。
 

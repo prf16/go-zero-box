@@ -6,7 +6,6 @@ export GOSUMDB=sum.golang.org
 # 目录初始化
 new:
 	$(info ******************** new ********************)
-	@mkdir deploy
 	@mkdir runtime
 	@mkdir runtime/logs
 

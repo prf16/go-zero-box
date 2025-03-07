@@ -18,9 +18,9 @@
 - 标准库扩展，比如通过范式实现的三元表达式 ```tools.Any(a == b, a, b)```；
 - 提供了初始的 api 编写示例，包含登录、注册、鉴权等开箱即用的业务功能；
 
-···
+    ···
 
-持续更新中，敬请期待。
+    持续更新中，敬请期待。
 
 ### 三、框架介绍
 
@@ -105,7 +105,7 @@ $ go get -u github.com/zeromicro/go-zero/tools/goctl
 ```
 
 ### 八、常见问题
-#### 1 go mod tidy 超时 i/o timeout
+#### 1. go mod tidy 超时 i/o timeout
 ```
 1. 确认当前shell
 echo $SHELL

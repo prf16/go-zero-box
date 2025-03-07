@@ -33,6 +33,8 @@ wire 是一个依赖注入工具，用于解决 Go 语言中依赖注入的问�
 
 Makefile 文件描述了 Linux 系统下项目工程的编译规则，只需要一个 `make bild` 命令，整个工程就开始自动构建项目环境，不再需要手动执行大量的 `go build` 命令，Makefile 文件定义了一系列规则，指明了源文件的编译顺序、依赖关系、是否需要重新编译等，可以输入 `make help` 查看命令集。
 
+接口文档 使用了 Apifox 工具，方便开发者导入使用，详细文档地址：https://github.com/prf16/go-zero-box/blob/main/go-zero-box.apifox.json
+
 ### 四、代码结构
 
 ```text

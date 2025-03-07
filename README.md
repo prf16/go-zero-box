@@ -11,7 +11,7 @@
 ### 二、特性
 
 - 简化框架原生开发模型，优化了代码结构，设计出符合Web应用框架的代码结构，便于开发者代码阅读更便捷，减少开发成本；
-- 提供了初始的接口文档，使用Apifox工具，导入可使用，[go-zero-box.apifox.json](https://github.com/prf16/go-zero-box/blob/main/go-zero-box.apifox.json)
+- 提供了初始的接口文档，使用Apifox工具，导入可使用[go-zero-box.apifox.json](https://github.com/prf16/go-zero-box/blob/main/go-zero-box.apifox.json)；
 - 增加了更多的 ORM API，支持复杂的数据查询业务；
 - 引入 asynq 库，实现了队列、调度、脚本等功能；
 - 引入 wire 库，实现了依赖注入功能；

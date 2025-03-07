@@ -6,18 +6,19 @@
 
 在熟悉 go-zero 框架过程中踩坑很多，衍生的 go-zero-box 框架也是相当于经验贴了，希望可以帮助开发者更快的度过熟悉期。
 
-整理并且开源不易，后续还会持续增加go-zero框架和go语言新特性的使用，在使用过程中有任何问题，欢迎提 **issue**，如果您觉得项目对您有帮助，希望给个 **star**😊，十分感谢。
+整理并且开源不易，后续还会持续增加 go-zero 框架和 go 语言新特性的使用心得，在使用过程中有任何问题，欢迎提 **issue**，如果您觉得项目对您有帮助，希望给个 **star**😊，十分感谢。
 
 ### 二、特性
 
 - 做了一些符合Web应用框架的目录划分，使开发者代码阅读更便捷，减少开发成本；
-- 提供了初始的接口文档，使用Apifox工具，导入可使用 [go-zero-box.apifox.json](https://github.com/prf16/go-zero-box/blob/main/go-zero-box.apifox.json)；
-- 增加了更多的 ORM API，支持复杂的数据查询业务；
+- 提供了初始业务的 api 代码示例，包含登录、注册、鉴权等开箱即用的业务功能；
+- 提供了初始业务的 api 文档，使用 Apifox 工具，导入即可使用 [go-zero-box.apifox.json](https://github.com/prf16/go-zero-box/blob/main/go-zero-box.apifox.json)；
+- 增加了更多的 ORM API，支持复杂的数据操作业务；
 - 引入 asynq 库，实现了队列、调度、脚本等功能；
 - 引入 wire 库，实现了依赖注入功能；
-- 通过 ```app [command]``` 的方式，在多实例扩展的场景下可以更方便地部署 api 、scheduler、queue；
+- 通过 ```app [command]``` 的方式，在多实例扩展的场景下可以更方便地部署 api 、scheduler、queue 服务；
 - go 语言新特性的优秀示例，比如通过范式实现的三元表达式 ```tools.Any(a == b, a, b)```；
-- 提供了初始的 api 编写示例，包含登录、注册、鉴权等开箱即用的业务功能；
+
 
     ···
 

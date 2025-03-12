@@ -12,7 +12,7 @@
 
 - 做了一些符合Web应用框架的目录划分，使开发者代码阅读更便捷，减少开发成本；
 - 提供了初始业务的 api 代码示例，包含登录、注册、鉴权等开箱即用的业务功能；
-- 提供了初始业务的 api 文档，使用 Apifox 工具，导入即可使用 [go-zero-box.apifox.json](https://github.com/prf16/go-zero-box/blob/main/go-zero-box.apifox.json)；
+- 提供了初始业务的 api 文档，使用 Apifox 工具，导入即可使用 [go-zero-box.apifox.json](https://github.com/prf16/go-zero-box/blob/main/deploy/doc/go-zero-box.apifox.json)；
 - 增加了更多的 ORM API，支持复杂的数据操作业务；
 - 引入 asynq 库，实现了队列、调度、脚本等功能；
 - 引入 wire 库，实现了依赖注入功能；

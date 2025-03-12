@@ -130,11 +130,6 @@ source ~/.bash_profile
 go env GOPROXY
 ```
 
-### 关于贡献
+### 许可证
 
-go-zero-box 是一个基于 [MIT](https://github.com/prf16/go-zero-box/blob/main/LICENSE) 的开源项目，大家在使用中发现bug，有新的特性等，均可以参与到go-zero-box的贡献中来，我们非常欢迎大家的积极参与，也会最快响应大家提出的各种问题，pr等。
-
-### go-zero-box 用户
-
-如果贵公司也已使用 go-zero-box，欢迎在 [登记地址](https://github.com/prf16/go-zero-box/issues/1) 登记，仅仅为了推广，不做其它用途。
-
+本项目采用 Apache License 2.0 许可证 - 查看 LICENSE 文件了解详情

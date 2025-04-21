@@ -47,9 +47,11 @@ func (q *Scheduler) Start() {
 	}
 
 	log.Printf("| Server: scheduler | run...")
-	if err := q.scheduler.Run(); err != nil {
+	if err := q.scheduler.Start(); err != nil {
 		panic(fmt.Sprintf("| Server: scheduler | q.scheduler.Run error: %v", err))
 	}
+
+	select {}
 }
 func (q *Scheduler) Stop() {
 	q.scheduler.Shutdown()

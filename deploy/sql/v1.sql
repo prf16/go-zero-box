@@ -1,4 +1,4 @@
-CREATE DATABASE `user` DEFAULT CHARACTER SET = `utf8mb4`;
+CREATE DATABASE `go-zero-box` DEFAULT CHARACTER SET = `utf8mb4`;
 
 CREATE TABLE `user` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -22,9 +22,6 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `uuid`, `account`, `name`, `mobile`, `email`, `password`, `gender`, `note`, `status`, `is_delete`, `created_at`, `updated_at`)
 VALUES
     (1, '', 'admin', '测试管理员', '', 'demo@qq.com', '$2a$04$nnU0o/uNUjkWr9ZfqvqzAusjR5AaiJ.KrJz6lfyUgZQbgF7slYF6a', 1, '1', 1, 2, '2025-02-12 18:28:42', '2025-02-12 18:28:42');
-
-
-CREATE DATABASE `message` DEFAULT CHARACTER SET = `utf8mb4`;
 
 CREATE TABLE `message` (
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

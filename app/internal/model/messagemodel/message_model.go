@@ -19,7 +19,7 @@ type (
 )
 
 // NewMessageModel returns a model for the database table.
-func NewMessageModel(conn config.DBTest1) MessageModel {
+func NewMessageModel(conn config.DatabaseCore) MessageModel {
 	return &customMessageModel{
 		defaultMessageModel: newMessageModel(conn.SqlConn),
 	}

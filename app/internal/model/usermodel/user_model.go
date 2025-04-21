@@ -19,7 +19,7 @@ type (
 )
 
 // NewUserModel returns a model for the database table.
-func NewUserModel(conn config.DBTest) UserModel {
+func NewUserModel(conn config.DatabaseCore) UserModel {
 	return &customUserModel{
 		defaultUserModel: newUserModel(conn.SqlConn),
 	}

@@ -27,10 +27,9 @@ import (
 func initApp() *App {
 	configConfig := config.NewConfig()
 	redis := config.NewRedis(configConfig)
-	dbTest := config.NewDBTest(configConfig)
-	userModel := usermodel.NewUserModel(dbTest)
-	dbTest1 := config.NewDBTest1(configConfig)
-	messageModel := messagemodel.NewMessageModel(dbTest1)
+	databaseCore := config.NewDatabaseCore(configConfig)
+	userModel := usermodel.NewUserModel(databaseCore)
+	messageModel := messagemodel.NewMessageModel(databaseCore)
 	modelModel := model.NewModel(userModel, messageModel)
 	service := demo.NewService(userModel)
 	messageService := message.NewService()

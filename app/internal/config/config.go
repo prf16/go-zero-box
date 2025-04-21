@@ -9,8 +9,7 @@ import (
 
 var Provider = wire.NewSet(
 	NewConfig,
-	NewDBTest,
-	NewDBTest1,
+	NewDatabaseCore,
 	NewRedis,
 )
 
@@ -18,7 +17,7 @@ var globalConfig = new(Config)
 
 type Config struct {
 	Api       *Api
-	DB        *DB
+	Database  *Database
 	JwtAuth   *JwtAuth
 	Redis     *Redis
 	Scheduler *asynqx.Config
@@ -36,6 +35,11 @@ func GetConfig() *Config {
 // Api - api 配置
 type Api struct {
 	rest.RestConf
+}
+
+// Database - 数据库
+type Database struct {
+	Core string
 }
 
 // JwtAuth - jwt 配置

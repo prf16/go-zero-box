@@ -33,7 +33,7 @@ func main() {
 	logc.MustSetup(c.Api.Log)
 	config.Init(c)
 	app := initApp()
-	rootCmd.AddCommand(apiCommand(app), schedulerCommand(app), queueCommand(app))
+	rootCmd.AddCommand(serverApi(app), serverQueue(app), serverScheduler(app), serverAll(app))
 	rootCmd.AddCommand(command.CommandHandler(app.command)...)
 
 	if err := rootCmd.Execute(); err != nil {
@@ -41,7 +41,7 @@ func main() {
 	}
 }
 
-func apiCommand(app *App) *cobra.Command {
+func serverApi(app *App) *cobra.Command {
 	return &cobra.Command{
 		Use:   "server:api",
 		Short: "启动api服务",
@@ -56,7 +56,7 @@ func apiCommand(app *App) *cobra.Command {
 	}
 }
 
-func queueCommand(app *App) *cobra.Command {
+func serverQueue(app *App) *cobra.Command {
 	return &cobra.Command{
 		Use:   "server:queue",
 		Short: "启动队列服务",
@@ -74,7 +74,7 @@ func queueCommand(app *App) *cobra.Command {
 	}
 }
 
-func schedulerCommand(app *App) *cobra.Command {
+func serverScheduler(app *App) *cobra.Command {
 	return &cobra.Command{
 		Use:   "server:scheduler",
 		Short: "启动计划任务服务",
@@ -89,6 +89,19 @@ func schedulerCommand(app *App) *cobra.Command {
 			}
 
 			serviceGroup.Start()
+		},
+	}
+}
+
+func serverAll(app *App) *cobra.Command {
+	return &cobra.Command{
+		Use:   "server:all",
+		Short: "单体式服务，包含api、队列、计划任务",
+		Run: func(cmd *cobra.Command, args []string) {
+			go serverApi(app).Run(serverApi(app), []string{})
+			go serverQueue(app).Run(serverQueue(app), []string{})
+			go serverScheduler(app).Run(serverScheduler(app), []string{})
+			select {}
 		},
 	}
 }

@@ -27,9 +27,8 @@ Redis:
   Type: "node"
   Pass: ""
 
-DB:
-  Test: root:123456@tcp(127.0.0.1:3306)/user?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
-  Test1: root:123456@tcp(127.0.0.1:3306)/message?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+Database:
+  Core: root:123456@tcp(127.0.0.1:3306)/go-zero-box?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
 JwtAuth:
   AccessSecret: ad879037-c7a4-4063-9236-6bfc35d54b7d

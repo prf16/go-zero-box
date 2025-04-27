@@ -21,11 +21,6 @@ type Config struct {
 	JwtAuth   *JwtAuth
 }
 
-// Api - api 配置
-type Api struct {
-	rest.RestConf
-}
-
 // JwtAuth - jwt 配置
 type JwtAuth struct {
 	AccessSecret string

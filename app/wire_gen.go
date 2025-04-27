@@ -30,8 +30,10 @@ import (
 func initApp(c *config.Config) *App {
 	redisConfig := c.Redis
 	redisDefault := redis.NewDefault(redisConfig)
+	redisRedis := redis.NewRedis(redisDefault)
 	databaseConfig := c.Database
 	databaseDefault := database.NewDefault(databaseConfig)
+	databaseDatabase := database.NewDatabase(databaseDefault)
 	userModel := usermodel.NewUserModel(databaseDefault)
 	messageModel := messagemodel.NewMessageModel(databaseDefault)
 	modelModel := model.NewModel(userModel, messageModel)
@@ -40,7 +42,7 @@ func initApp(c *config.Config) *App {
 	servicesServices := services.NewServices(service, messageService)
 	authMiddleware := middleware.NewAuthMiddleware(c)
 	middlewareMiddleware := middleware.NewMiddleware(authMiddleware)
-	serviceContext := svc.NewServiceContext(redisDefault, c, modelModel, servicesServices, middlewareMiddleware)
+	serviceContext := svc.NewServiceContext(redisRedis, databaseDatabase, c, modelModel, servicesServices, middlewareMiddleware)
 	mailQueue := message2.NewMailQueue(messageService)
 	smsQueue := message2.NewSmsQueue(messageService)
 	wechatQueue := message2.NewWechatQueue(messageService)

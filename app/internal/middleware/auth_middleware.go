@@ -11,10 +11,11 @@ import (
 )
 
 type AuthMiddleware struct {
+	config *config.Config
 }
 
-func NewAuthMiddleware() *AuthMiddleware {
-	return &AuthMiddleware{}
+func NewAuthMiddleware(config *config.Config) *AuthMiddleware {
+	return &AuthMiddleware{config: config}
 }
 
 func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
@@ -27,7 +28,7 @@ func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		token, err := jwt.Parse(authorization, func(token *jwt.Token) (interface{}, error) {
-			return []byte(config.GetConfig().JwtAuth.AccessSecret), nil
+			return []byte(m.config.JwtAuth.AccessSecret), nil
 		})
 
 		if err != nil || !token.Valid {

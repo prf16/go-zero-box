@@ -14,6 +14,9 @@ import (
 	"go-zero-box/app/internal/model"
 	"go-zero-box/app/internal/model/messagemodel"
 	"go-zero-box/app/internal/model/usermodel"
+	"go-zero-box/app/internal/pkg"
+	"go-zero-box/app/internal/pkg/database"
+	"go-zero-box/app/internal/pkg/redis"
 	"go-zero-box/app/internal/queue"
 	message2 "go-zero-box/app/internal/queue/message"
 	"go-zero-box/app/internal/services"
@@ -24,37 +27,41 @@ import (
 
 // Injectors from wire.go:
 
-func initApp() *App {
-	configConfig := config.NewConfig()
-	redis := config.NewRedis(configConfig)
-	databaseCore := config.NewDatabaseCore(configConfig)
-	userModel := usermodel.NewUserModel(databaseCore)
-	messageModel := messagemodel.NewMessageModel(databaseCore)
+func initApp(c *config.Config) *App {
+	redisConfig := c.Redis
+	redisDefault := redis.NewDefault(redisConfig)
+	databaseConfig := c.Database
+	databaseDefault := database.NewDefault(databaseConfig)
+	userModel := usermodel.NewUserModel(databaseDefault)
+	messageModel := messagemodel.NewMessageModel(databaseDefault)
 	modelModel := model.NewModel(userModel, messageModel)
 	service := demo.NewService(userModel)
 	messageService := message.NewService()
 	servicesServices := services.NewServices(service, messageService)
-	authMiddleware := middleware.NewAuthMiddleware()
+	authMiddleware := middleware.NewAuthMiddleware(c)
 	middlewareMiddleware := middleware.NewMiddleware(authMiddleware)
-	serviceContext := svc.NewServiceContext(redis, modelModel, servicesServices, middlewareMiddleware)
+	serviceContext := svc.NewServiceContext(redisDefault, c, modelModel, servicesServices, middlewareMiddleware)
 	mailQueue := message2.NewMailQueue(messageService)
 	smsQueue := message2.NewSmsQueue(messageService)
 	wechatQueue := message2.NewWechatQueue(messageService)
 	queueQueue := queue.NewQueue(mailQueue, smsQueue, wechatQueue)
 	personProcess := demo2.NewPersonProcess()
 	commandCommand := command.NewCommand(personProcess)
-	app := NewApp(serviceContext, queueQueue, commandCommand)
+	pkgPkg := pkg.NewPkg(databaseDefault, redisDefault)
+	app := NewApp(c, serviceContext, queueQueue, commandCommand, pkgPkg)
 	return app
 }
 
 // wire.go:
 
 type App struct {
+	config  *config.Config
 	svcCtx  *svc.ServiceContext
 	queue   *queue.Queue
 	command *command.Command
+	pkg     *pkg.Pkg
 }
 
-func NewApp(svcCtx *svc.ServiceContext, queue2 *queue.Queue, command2 *command.Command) *App {
-	return &App{svcCtx: svcCtx, queue: queue2, command: command2}
+func NewApp(config2 *config.Config, svcCtx *svc.ServiceContext, queue2 *queue.Queue, command2 *command.Command, pkg2 *pkg.Pkg) *App {
+	return &App{config: config2, svcCtx: svcCtx, queue: queue2, command: command2, pkg: pkg2}
 }

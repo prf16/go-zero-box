@@ -7,9 +7,9 @@ import (
 	"github.com/google/wire"
 	"go-zero-box/app/internal/command"
 	"go-zero-box/app/internal/config"
-	"go-zero-box/app/internal/pkg"
 	"go-zero-box/app/internal/queue"
 	"go-zero-box/app/internal/svc"
+	"go-zero-box/pkg"
 )
 
 type App struct {

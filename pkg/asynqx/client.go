@@ -4,18 +4,15 @@ import (
 	"github.com/hibiken/asynq"
 )
 
-var _client *asynq.Client
+var Client *asynq.Client
 
-func Init(c *Config) error {
-	_client = asynq.NewClient(asynq.RedisClientOpt{
+func NewClient(c *Config) *asynq.Client {
+	Client = asynq.NewClient(asynq.RedisClientOpt{
 		Addr:     c.Addr,
 		Password: c.Password,
 		DB:       c.DB,
 	})
-	return nil
-}
-func GetClient() *asynq.Client {
-	return _client
+	return Client
 }
 
 func NewTask(typename string, payload []byte, opts ...asynq.Option) *asynq.Task {

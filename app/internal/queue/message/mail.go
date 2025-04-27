@@ -29,10 +29,11 @@ type MailQueuePayload struct {
 func MailQueueEnqueue(ctx context.Context, payload MailQueuePayload) error {
 	payloadByte, err := json.Marshal(payload)
 	if err != nil {
-		return err
+		logx.Errorf("MailQueueEnqueue json.Marshal err: %v", err)
+		return nil
 	}
 
-	taskInfo, err := asynqx.GetClient().EnqueueContext(ctx, asynq.NewTask(MailQueueType, payloadByte))
+	taskInfo, err := asynqx.Client.EnqueueContext(ctx, asynqx.NewTask(MailQueueType, payloadByte))
 	if err != nil {
 		return err
 	}

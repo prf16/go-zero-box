@@ -14,42 +14,46 @@ import (
 	"go-zero-box/app/internal/model"
 	"go-zero-box/app/internal/model/messagemodel"
 	"go-zero-box/app/internal/model/usermodel"
-	"go-zero-box/app/internal/pkg"
-	"go-zero-box/app/internal/pkg/database"
-	"go-zero-box/app/internal/pkg/redis"
 	"go-zero-box/app/internal/queue"
 	message2 "go-zero-box/app/internal/queue/message"
 	"go-zero-box/app/internal/services"
 	"go-zero-box/app/internal/services/demo"
 	"go-zero-box/app/internal/services/message"
 	"go-zero-box/app/internal/svc"
+	"go-zero-box/pkg"
+	"go-zero-box/pkg/asynqx"
+	"go-zero-box/pkg/database"
+	"go-zero-box/pkg/redis"
 )
 
 // Injectors from wire.go:
 
 func initApp(c *config.Config) *App {
-	redisConfig := c.Redis
-	redisDefault := redis.NewDefault(redisConfig)
-	redisRedis := redis.NewRedis(redisDefault)
 	databaseConfig := c.Database
 	databaseDefault := database.NewDefault(databaseConfig)
-	databaseDatabase := database.NewDatabase(databaseDefault)
 	userModel := usermodel.NewUserModel(databaseDefault)
 	messageModel := messagemodel.NewMessageModel(databaseDefault)
 	modelModel := model.NewModel(userModel, messageModel)
 	service := demo.NewService(userModel)
 	messageService := message.NewService()
 	servicesServices := services.NewServices(service, messageService)
+	databaseDatabase := database.NewDatabase(databaseDefault)
+	redisConfig := c.Redis
+	redisDefault := redis.NewDefault(redisConfig)
+	redisRedis := redis.NewRedis(redisDefault)
+	asynqxConfig := c.Queue
+	client := asynqx.NewClient(asynqxConfig)
+	asynq := asynqx.NewAsynq(client)
+	pkgPkg := pkg.NewPkg(databaseDatabase, redisRedis, asynq)
 	authMiddleware := middleware.NewAuthMiddleware(c)
 	middlewareMiddleware := middleware.NewMiddleware(authMiddleware)
-	serviceContext := svc.NewServiceContext(redisRedis, databaseDatabase, c, modelModel, servicesServices, middlewareMiddleware)
+	serviceContext := svc.NewServiceContext(c, modelModel, servicesServices, pkgPkg, middlewareMiddleware)
 	mailQueue := message2.NewMailQueue(messageService)
 	smsQueue := message2.NewSmsQueue(messageService)
 	wechatQueue := message2.NewWechatQueue(messageService)
 	queueQueue := queue.NewQueue(mailQueue, smsQueue, wechatQueue)
 	personProcess := demo2.NewPersonProcess()
 	commandCommand := command.NewCommand(personProcess)
-	pkgPkg := pkg.NewPkg(databaseDefault, redisDefault)
 	app := NewApp(c, serviceContext, queueQueue, commandCommand, pkgPkg)
 	return app
 }

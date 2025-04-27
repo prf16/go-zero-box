@@ -1,7 +1,7 @@
 package messagemodel
 
 import (
-	"go-zero-box/app/internal/pkg/database"
+	"go-zero-box/pkg/database"
 )
 
 var _ MessageModel = (*customMessageModel)(nil)

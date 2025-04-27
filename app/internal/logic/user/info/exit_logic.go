@@ -36,7 +36,7 @@ func (l *ExitLogic) Exit() (resp *types.ExitResp, err error) {
 	}
 
 	// 删除用户登入标识
-	_, err = l.svcCtx.Redis.Default.Del(fmt.Sprintf("user:auth:%d", userId))
+	_, err = l.svcCtx.Pkg.Redis.Default.Del(fmt.Sprintf("user:auth:%d", userId))
 	if err != nil {
 		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}

@@ -9,16 +9,15 @@ import (
 )
 
 var Provider = wire.NewSet(
-	wire.FieldsOf(new(*Config), "Database", "Redis", "Queue"),
+	wire.FieldsOf(new(*Config), "Database", "Redis", "Asynqx"),
 )
 
 type Config struct {
-	Server    rest.RestConf
-	Database  *database.Config
-	Redis     *redis.Config
-	Scheduler *asynqx.Config
-	Queue     *asynqx.Config
-	JwtAuth   *JwtAuth
+	Server   rest.RestConf
+	Database *database.Config
+	Redis    *redis.Config
+	Asynqx   *asynqx.Config
+	JwtAuth  *JwtAuth
 }
 
 // JwtAuth - jwt 配置

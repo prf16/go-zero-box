@@ -6,9 +6,9 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"go-zero-box/app/internal/model/usermodel"
 	"go-zero-box/app/internal/queue/message"
-	"go-zero-box/app/internal/result"
-	"go-zero-box/pkg/constant"
-	"go-zero-box/pkg/tools"
+	"go-zero-box/app/internal/types/constant"
+	"go-zero-box/app/internal/types/result"
+	"go-zero-box/app/internal/types/tools"
 	"strings"
 	"time"
 

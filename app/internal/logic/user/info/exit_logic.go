@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/spf13/cast"
-	"go-zero-box/app/internal/result"
 	"go-zero-box/app/internal/svc"
 	"go-zero-box/app/internal/types"
+	"go-zero-box/app/internal/types/result"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

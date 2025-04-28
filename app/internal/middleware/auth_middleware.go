@@ -6,7 +6,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"go-zero-box/app/internal/config"
-	"go-zero-box/app/internal/result"
+	"go-zero-box/app/internal/types/result"
 	"net/http"
 )
 

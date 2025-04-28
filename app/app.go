@@ -65,7 +65,7 @@ func serverQueue(app *App) *cobra.Command {
 
 			handlers := queue.Handler(app.queue)
 			for _, v := range handlers {
-				serviceGroup.Add(asynqx.NewQueue(app.config.Queue, v))
+				serviceGroup.Add(asynqx.NewQueue(app.config.Asynqx, v))
 			}
 			serviceGroup.Start()
 			select {}
@@ -82,9 +82,9 @@ func serverScheduler(app *App) *cobra.Command {
 			defer serviceGroup.Stop()
 
 			handlers := command.SchedulerHandler(app.command)
-			serviceGroup.Add(asynqx.NewScheduler(app.config.Scheduler, handlers))
+			serviceGroup.Add(asynqx.NewScheduler(app.config.Asynqx, handlers))
 			for _, v := range handlers {
-				serviceGroup.Add(asynqx.NewQueue(app.config.Scheduler, v))
+				serviceGroup.Add(asynqx.NewQueue(app.config.Asynqx, v))
 			}
 
 			serviceGroup.Start()

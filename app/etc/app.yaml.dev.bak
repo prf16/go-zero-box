@@ -12,12 +12,7 @@ Server:
 #    Rotation: daily
 #    KeepDays: 10
 
-Queue:
-  Addr: 127.0.0.1:6379
-  Password: ""
-  DB: 1
-
-Scheduler:
+Asynqx:
   Addr: 127.0.0.1:6379
   Password: ""
   DB: 2

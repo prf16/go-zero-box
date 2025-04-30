@@ -17,9 +17,9 @@ var Provider = wire.NewSet(
 type Pkg struct {
 	Database *database.Database
 	Redis    *redis.Redis
-	Asynqqx  *asynqx.Asynq
+	Asynqx   *asynqx.Asynq
 }
 
-func NewPkg(database *database.Database, redis *redis.Redis, asynqqx *asynqx.Asynq) *Pkg {
-	return &Pkg{Database: database, Redis: redis, Asynqqx: asynqqx}
+func NewPkg(database *database.Database, redis *redis.Redis, asynqx *asynqx.Asynq) *Pkg {
+	return &Pkg{Database: database, Redis: redis, Asynqx: asynqx}
 }

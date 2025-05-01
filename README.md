@@ -117,6 +117,9 @@ Makefile 文件描述了 Linux 系统下项目工程的编译规则，只需要�
 ### Make命令
 
 ```shell
+# 目录初始化，首次运行项目前请运行该命令
+$ make new
+
 # 生成api代码文件
 $ make api
 

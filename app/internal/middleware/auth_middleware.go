@@ -6,15 +6,16 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"go-zero-box/app/internal/config"
-	"go-zero-box/app/internal/result"
+	"go-zero-box/app/internal/types/result"
 	"net/http"
 )
 
 type AuthMiddleware struct {
+	config *config.Config
 }
 
-func NewAuthMiddleware() *AuthMiddleware {
-	return &AuthMiddleware{}
+func NewAuthMiddleware(config *config.Config) *AuthMiddleware {
+	return &AuthMiddleware{config: config}
 }
 
 func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
@@ -27,7 +28,7 @@ func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		}
 
 		token, err := jwt.Parse(authorization, func(token *jwt.Token) (interface{}, error) {
-			return []byte(config.GetConfig().JwtAuth.AccessSecret), nil
+			return []byte(m.config.JwtAuth.AccessSecret), nil
 		})
 
 		if err != nil || !token.Valid {

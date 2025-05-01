@@ -2,10 +2,11 @@ package svc
 
 import (
 	"github.com/google/wire"
-	"github.com/zeromicro/go-zero/core/stores/redis"
+	"go-zero-box/app/internal/config"
 	"go-zero-box/app/internal/middleware"
 	"go-zero-box/app/internal/model"
 	"go-zero-box/app/internal/services"
+	"go-zero-box/pkg"
 )
 
 var Provider = wire.NewSet(
@@ -16,12 +17,13 @@ var Provider = wire.NewSet(
 )
 
 type ServiceContext struct {
-	Redis   *redis.Redis
+	Config  *config.Config
 	Model   *model.Model
 	Service *services.Services
+	Pkg     *pkg.Pkg
 	*middleware.Middleware
 }
 
-func NewServiceContext(redis *redis.Redis, model *model.Model, service *services.Services, middleware *middleware.Middleware) *ServiceContext {
-	return &ServiceContext{Redis: redis, Model: model, Service: service, Middleware: middleware}
+func NewServiceContext(config *config.Config, model *model.Model, service *services.Services, pkg *pkg.Pkg, middleware *middleware.Middleware) *ServiceContext {
+	return &ServiceContext{Config: config, Model: model, Service: service, Pkg: pkg, Middleware: middleware}
 }

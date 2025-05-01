@@ -32,7 +32,7 @@ func WechatQueueEnqueue(ctx context.Context, payload WechatQueuePayload) error {
 		return err
 	}
 
-	taskInfo, err := asynqx.GetClient().EnqueueContext(ctx, asynqx.NewTask(WechatQueueType, payloadByte))
+	taskInfo, err := asynqx.Client.EnqueueContext(ctx, asynqx.NewTask(WechatQueueType, payloadByte))
 	if err != nil {
 		return err
 	}

@@ -1,7 +1,7 @@
 package messagemodel
 
 import (
-	"go-zero-box/app/internal/config"
+	"go-zero-box/pkg/database"
 )
 
 var _ MessageModel = (*customMessageModel)(nil)
@@ -19,9 +19,9 @@ type (
 )
 
 // NewMessageModel returns a model for the database table.
-func NewMessageModel(conn config.DatabaseCore) MessageModel {
+func NewMessageModel(conn *database.Default) MessageModel {
 	return &customMessageModel{
-		defaultMessageModel: newMessageModel(conn.SqlConn),
+		defaultMessageModel: newMessageModel(conn),
 	}
 }
 

@@ -1,4 +1,4 @@
-Api:
+Server:
   Name: api
   Host: 0.0.0.0
   Port: 8001
@@ -12,12 +12,7 @@ Api:
 #    Rotation: daily
 #    KeepDays: 10
 
-Queue:
-  Addr: 127.0.0.1:6379
-  Password: ""
-  DB: 1
-
-Scheduler:
+Asynqx:
   Addr: 127.0.0.1:6379
   Password: ""
   DB: 2
@@ -28,7 +23,7 @@ Redis:
   Pass: ""
 
 Database:
-  Core: root:123456@tcp(127.0.0.1:3306)/go-zero-box?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  Default: root:123456@tcp(127.0.0.1:3306)/go-zero-box?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
 JwtAuth:
   AccessSecret: ad879037-c7a4-4063-9236-6bfc35d54b7d

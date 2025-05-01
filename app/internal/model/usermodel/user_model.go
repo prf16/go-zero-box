@@ -1,7 +1,7 @@
 package usermodel
 
 import (
-	"go-zero-box/app/internal/config"
+	"go-zero-box/pkg/database"
 )
 
 var _ UserModel = (*customUserModel)(nil)
@@ -19,9 +19,9 @@ type (
 )
 
 // NewUserModel returns a model for the database table.
-func NewUserModel(conn config.DatabaseCore) UserModel {
+func NewUserModel(conn *database.Default) UserModel {
 	return &customUserModel{
-		defaultUserModel: newUserModel(conn.SqlConn),
+		defaultUserModel: newUserModel(conn),
 	}
 }
 

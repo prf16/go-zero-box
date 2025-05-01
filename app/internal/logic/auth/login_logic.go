@@ -4,12 +4,11 @@ import (
 	"context"
 	"github.com/Masterminds/squirrel"
 	"github.com/golang-jwt/jwt/v4"
-	"go-zero-box/app/internal/config"
 	"go-zero-box/app/internal/model/usermodel"
 	"go-zero-box/app/internal/queue/message"
-	"go-zero-box/app/internal/result"
-	"go-zero-box/pkg/constant"
-	"go-zero-box/pkg/tools"
+	"go-zero-box/app/internal/types/constant"
+	"go-zero-box/app/internal/types/result"
+	"go-zero-box/app/internal/types/tools"
 	"strings"
 	"time"
 
@@ -66,7 +65,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 	}
 
 	// 生成token
-	jwtAuth, err := l.getJwtToken(config.GetConfig().JwtAuth.AccessExpire, userInfo)
+	jwtAuth, err := l.getJwtToken(l.svcCtx.Config.JwtAuth.AccessExpire, userInfo)
 	if err != nil {
 		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}
@@ -97,5 +96,5 @@ func (l *LoginLogic) getJwtToken(seconds int64, user *usermodel.User) (string, e
 
 	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims = claims
-	return token.SignedString([]byte(config.GetConfig().JwtAuth.AccessSecret))
+	return token.SignedString([]byte(l.svcCtx.Config.JwtAuth.AccessSecret))
 }

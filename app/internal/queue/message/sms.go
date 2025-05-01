@@ -32,7 +32,7 @@ func SmsQueueEnqueue(ctx context.Context, payload SmsQueuePayload) error {
 		return err
 	}
 
-	taskInfo, err := asynqx.GetClient().EnqueueContext(ctx, asynqx.NewTask(SmsQueueType, payloadByte))
+	taskInfo, err := asynqx.Client.EnqueueContext(ctx, asynqx.NewTask(SmsQueueType, payloadByte))
 	if err != nil {
 		return err
 	}

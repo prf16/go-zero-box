@@ -7,9 +7,9 @@ import (
 	"go-zero-box/app/internal/model/usermodel"
 	"go-zero-box/app/internal/svc"
 	"go-zero-box/app/internal/types"
-	"go-zero-box/app/internal/types/constant"
-	"go-zero-box/app/internal/types/result"
-	"go-zero-box/app/internal/types/tools"
+	"go-zero-box/app/internal/utils/constant"
+	"go-zero-box/app/internal/utils/result"
+	"go-zero-box/app/internal/utils/tools"
 	"time"
 
 	"github.com/zeromicro/go-zero/core/logx"

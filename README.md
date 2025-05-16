@@ -6,7 +6,7 @@
 
 框架初始版本基于 go-zero 框架的 1.5.5 版本，后续会参考 go-zero 的版本出相应的更新。
 
-在熟悉 go-zero 框架过程中踩坑很多，衍生的 duck-goods-server 框架也是相当于经验贴了，希望可以帮助开发者更快的度过熟悉期。
+在熟悉 go-zero 框架过程中踩坑很多，衍生的 go-zero-box 框架也是相当于经验贴了，希望可以帮助开发者更快的度过熟悉期。
 
 整理并且开源不易，后续还会持续编写 go-zero 框架和 go 语言新特性的使用心得，在使用过程中有任何问题，欢迎提 **issue**，如果您觉得项目对您有帮助，希望给个️ ⭐️ **star** ⭐️ ，十分感谢。
 
@@ -15,7 +15,7 @@
 - 做了一些符合Web应用框架的目录划分，使开发者代码阅读更便捷，减少开发成本；
 - 支持多库，多redis；
 - 提供了初始业务的 api 代码示例，包含登录、注册、鉴权等开箱即用的业务功能；
-- 提供了初始业务的 api 文档，使用 Apifox 工具，导入即可使用 [duck-goods-server.apifox.json](https://github.com/prf16/duck-goods-server/blob/main/deploy/doc/duck-goods-server.apifox.json)；
+- 提供了初始业务的 api 文档，使用 Apifox 工具，导入即可使用 [go-zero-box.apifox.json](https://github.com/prf16/duck-goods-server/blob/main/deploy/doc/duck-goods-server.apifox.json)；
 - 增加了更多的 ORM API，支持复杂的数据操作业务；
 - 引入 asynq 库，实现了队列、调度、脚本等功能；
 - 引入 wire 库，实现了依赖注入功能；

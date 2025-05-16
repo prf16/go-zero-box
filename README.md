@@ -13,6 +13,7 @@
 ### 特性
 
 - 做了一些符合Web应用框架的目录划分，使开发者代码阅读更便捷，减少开发成本；
+- 支持多库，多redis；
 - 提供了初始业务的 api 代码示例，包含登录、注册、鉴权等开箱即用的业务功能；
 - 提供了初始业务的 api 文档，使用 Apifox 工具，导入即可使用 [duck-goods-server.apifox.json](https://github.com/prf16/duck-goods-server/blob/main/deploy/doc/duck-goods-server.apifox.json)；
 - 增加了更多的 ORM API，支持复杂的数据操作业务；

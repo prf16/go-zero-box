@@ -107,7 +107,7 @@ Makefile 文件描述了 Linux 系统下项目工程的编译规则，只需要�
 
 ### 安装依赖工具
 
-#### goctl
+#### goctl(1.5.5)
 
 下载地址：https://github.com/zeromicro/go-zero/releases/tag/tools%2Fgoctl%2Fv1.5.5
 

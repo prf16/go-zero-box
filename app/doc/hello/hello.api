@@ -1,10 +1,8 @@
-syntax = "v1"
-
-info(
-    title: "Hello world"
-    desc: "Hello world"
-    version: "v1"
-)
+//info(
+//    title: "Hello world"
+//    desc: "Hello world"
+//    version: "v1"
+//)
 
 type HelloResponse {
     Code int `json:"code"`
@@ -27,6 +25,7 @@ type (
 @server(
     group: hello
     prefix: /api
+    tags: "Hello world"
 )
 service app {
     @doc "Hello world"

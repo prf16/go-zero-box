@@ -9,6 +9,13 @@ new:
 	@mkdir runtime
 	@mkdir runtime/logs
 
+
+.PHONY: doc
+# 接口文档生成
+doc:
+	$(info ******************** swagger ********************)
+	goctl api swagger --api app/doc/api.api --dir deploy/doc/
+
 .PHONY: build
 # 构建
 build:
@@ -34,6 +41,7 @@ build:
 	mkdir -p ./build/app/runtime
 	mkdir -p ./build/app/runtime/logs
 	cp -f app/etc/app.yaml.$(env).bak ./build/app/etc/app.yaml
+	cp -f ./deploy/doc/api.json ./build/app/deploy/api.json
 	tar -C ./build -cvf ./build/app.tar app
 
 .PHONY: api

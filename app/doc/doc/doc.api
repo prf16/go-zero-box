@@ -1,11 +1,3 @@
-syntax = "v1"
-
-info(
-    title: "swagger"
-    desc: "swagger"
-    version: "v1"
-)
-
 type SwaggerResponse {
     Code int `json:"code"`
     Message string `json:"message"`
@@ -23,17 +15,17 @@ type (
     }
 )
 
-
 @server(
-    group: swagger
+    group: doc
     prefix: /api
+    tags: "接口文档"
 )
 service app {
-    @doc "swagger"
-    @handler Swagger
-    get /swagger (SwaggerReq) returns (SwaggerResp)
+    @doc "doc"
+    @handler Doc
+    get /doc (SwaggerReq) returns (SwaggerResp)
 
-    @doc "swagger.json"
-    @handler SwaggerJson
-    get /swagger_json (SwaggerReq) returns (SwaggerResp)
+    @doc "doc.json"
+    @handler DocJson
+    get /doc/json (SwaggerReq) returns (SwaggerResp)
 }

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	auth "go-zero-box/app/internal/handler/auth"
+	doc "go-zero-box/app/internal/handler/doc"
 	hello "go-zero-box/app/internal/handler/hello"
 	userinfo "go-zero-box/app/internal/handler/user/info"
 	"go-zero-box/app/internal/svc"
@@ -16,11 +17,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// 用户登录
 				Method:  http.MethodPost,
 				Path:    "/login",
 				Handler: auth.LoginHandler(serverCtx),
 			},
 			{
+				// 用户注册
 				Method:  http.MethodPost,
 				Path:    "/register",
 				Handler: auth.RegisterHandler(serverCtx),
@@ -30,32 +33,52 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	)
 
 	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.AuthMiddleware},
-			[]rest.Route{
-				{
-					Method:  http.MethodGet,
-					Path:    "/info",
-					Handler: userinfo.UserInfoHandler(serverCtx),
-				},
-				{
-					Method:  http.MethodPost,
-					Path:    "/exit",
-					Handler: userinfo.ExitHandler(serverCtx),
-				},
-			}...,
-		),
-		rest.WithPrefix("/api/user"),
+		[]rest.Route{
+			{
+				// doc
+				Method:  http.MethodGet,
+				Path:    "/doc",
+				Handler: doc.DocHandler(serverCtx),
+			},
+			{
+				// doc.json
+				Method:  http.MethodGet,
+				Path:    "/doc/json",
+				Handler: doc.DocJsonHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/api"),
 	)
 
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// Hello world
 				Method:  http.MethodGet,
 				Path:    "/hello",
 				Handler: hello.HelloHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/api"),
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.AuthMiddleware},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/exit",
+					Handler: userinfo.ExitHandler(serverCtx),
+				},
+				{
+					// 用户相关/用户信息
+					Method:  http.MethodGet,
+					Path:    "/info",
+					Handler: userinfo.UserInfoHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/api/user"),
 	)
 }

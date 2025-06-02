@@ -1,0 +1,39 @@
+syntax = "v1"
+
+info(
+    title: "swagger"
+    desc: "swagger"
+    version: "v1"
+)
+
+type SwaggerResponse {
+    Code int `json:"code"`
+    Message string `json:"message"`
+}
+
+// Login
+type (
+    SwaggerReq {
+    }
+    SwaggerResp {
+        SwaggerResponse
+        Data SwaggerData `json:"data"`
+    }
+    SwaggerData {
+    }
+)
+
+
+@server(
+    group: swagger
+    prefix: /api
+)
+service app {
+    @doc "swagger"
+    @handler Swagger
+    get /swagger (SwaggerReq) returns (SwaggerResp)
+
+    @doc "swagger.json"
+    @handler SwaggerJson
+    get /swagger_json (SwaggerReq) returns (SwaggerResp)
+}

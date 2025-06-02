@@ -4,7 +4,7 @@
 
 开箱即用的 [go-zero](https://go-zero.dev) 示例，做了工程化的包装，包装后的框架包含 api、scheduler、queue、script 服务。
 
-框架初始版本基于 go-zero 框架的 1.5.5 版本，后续会参考 go-zero 的版本出相应的更新。
+基于 go-zero 框架的 1.8.3 版本.
 
 在熟悉 go-zero 框架过程中踩坑很多，衍生的 go-zero-box 框架也是相当于经验贴了，希望可以帮助开发者更快的度过熟悉期。
 
@@ -15,7 +15,7 @@
 - 做了一些符合Web应用框架的目录划分，使开发者代码阅读更便捷，减少开发成本；
 - 支持多库，多redis；
 - 提供了初始业务的 api 代码示例，包含登录、注册、鉴权等开箱即用的业务功能；
-- 提供了初始业务的 api 文档，使用 Apifox 工具，导入即可使用 [go-zero-box.apifox.json](https://github.com/prf16/duck-goods-server/blob/main/deploy/doc/duck-goods-server.apifox.json)；
+- 提供了 go-zero 支持的 Swagger api 文档，引入 api 服务，**访问/api/doc即可预览文档**；
 - 增加了更多的 ORM API，支持复杂的数据操作业务；
 - 引入 asynq 库，实现了队列、调度、脚本等功能；
 - 引入 wire 库，实现了依赖注入功能；
@@ -107,13 +107,11 @@ Makefile 文件描述了 Linux 系统下项目工程的编译规则，只需要�
 
 ### 安装依赖工具
 
-#### goctl(1.5.5)
+#### goctl(1.8.4)
 
-下载地址：https://github.com/zeromicro/go-zero/releases/tag/tools%2Fgoctl%2Fv1.5.5
+下载地址：https://github.com/zeromicro/go-zero/releases/tag/tools%2Fgoctl%2Fv1.8.4-beta
 
 文档地址：https://go-zero.dev/docs/tutorials/cli/overview
-
-
 
 ### Make命令
 
@@ -129,6 +127,9 @@ $ make model
 
 # 生成wire代码文件
 $ make wire
+
+# 生成 swagger 接口文档
+$ make doc
 
 # 构建项目
 $ make build env=dev|test|prod

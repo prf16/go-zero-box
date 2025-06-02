@@ -1,11 +1,3 @@
-syntax = "v1"
-
-info(
-    title: "用户相关"
-    desc: "用户相关"
-    version: "v1"
-)
-
 type UserResponse {
     Code int `json:"code"`
     Message string `json:"message"`
@@ -54,12 +46,15 @@ type (
     middleware: AuthMiddleware
     group: user/info
     prefix: /api/user
+    authType: apiKey // 声明接口鉴权类型,有效值为"basic"、"apiKey"或"oauth2"。
+    tags: "用户相关"
 )
 service app {
-    @doc "用户相关/用户信息"
+    @doc "用户信息"
     @handler UserInfo
     get /info returns (UserInfoResp)
 
+    @doc "退出登录"
     @handler Exit
     post /exit returns (ExitResp)
 }

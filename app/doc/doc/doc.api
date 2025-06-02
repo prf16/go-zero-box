@@ -1,0 +1,31 @@
+type SwaggerResponse {
+    Code int `json:"code"`
+    Message string `json:"message"`
+}
+
+// Login
+type (
+    SwaggerReq {
+    }
+    SwaggerResp {
+        SwaggerResponse
+        Data SwaggerData `json:"data"`
+    }
+    SwaggerData {
+    }
+)
+
+@server(
+    group: doc
+    prefix: /api
+    tags: "接口文档"
+)
+service app {
+    @doc "doc"
+    @handler Doc
+    get /doc (SwaggerReq) returns (SwaggerResp)
+
+    @doc "doc.json"
+    @handler DocJson
+    get /doc/json (SwaggerReq) returns (SwaggerResp)
+}

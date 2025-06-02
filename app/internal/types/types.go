@@ -6,14 +6,32 @@ type AuthResponse struct {
 	Message string `json:"message,default=ok"`
 }
 
-type LoginReq struct {
-	Account  string `json:"account"`
-	Password string `json:"password"`
+type ExitData struct {
+	Url string `json:"url"`
 }
 
-type LoginResp struct {
-	AuthResponse
-	Data LoginData `json:"data"`
+type ExitReq struct {
+}
+
+type ExitResp struct {
+	UserResponse
+	Data ExitData `json:"data"`
+}
+
+type HelloData struct {
+}
+
+type HelloReq struct {
+}
+
+type HelloResp struct {
+	HelloResponse
+	Data HelloData `json:"data"`
+}
+
+type HelloResponse struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
 }
 
 type LoginData struct {
@@ -26,6 +44,16 @@ type LoginDataUser struct {
 	NickName string `json:"nickname"` //昵称
 }
 
+type LoginReq struct {
+	Account  string `json:"account,example=admin"`
+	Password string `json:"password,example=123456"`
+}
+
+type LoginResp struct {
+	AuthResponse
+	Data LoginData `json:"data"`
+}
+
 type RegisterReq struct {
 	Account  string `json:"account"`
 	Password string `json:"password"`
@@ -35,25 +63,20 @@ type RegisterResp struct {
 	AuthResponse
 }
 
-type UserResponse struct {
+type SwaggerData struct {
+}
+
+type SwaggerReq struct {
+}
+
+type SwaggerResp struct {
+	SwaggerResponse
+	Data SwaggerData `json:"data"`
+}
+
+type SwaggerResponse struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
-}
-
-type UserPaginate struct {
-	Page     uint64 `form:"page,optional,default=1,range=[1:]"` // 页码
-	PageSize uint64 `form:"page_size,optional,default=10"`      // 分页大小
-}
-
-type UserPaginateResp struct {
-	Page     uint64 `json:"page"`      // 页码
-	PageSize uint64 `json:"page_size"` // 分页大小
-	Total    int64  `json:"total"`     // 总条数
-}
-
-type UserInfoResp struct {
-	UserResponse
-	Data *UserInfoData `json:"data"`
 }
 
 type UserInfoData struct {
@@ -67,30 +90,23 @@ type UserInfoData struct {
 	IsDelete  int64  `json:"is_delete"`  // 是否删除 1是 2否
 }
 
-type ExitReq struct {
-}
-
-type ExitResp struct {
+type UserInfoResp struct {
 	UserResponse
-	Data ExitData `json:"data"`
+	Data *UserInfoData `json:"data"`
 }
 
-type ExitData struct {
-	Url string `json:"url"`
+type UserPaginate struct {
+	Page     uint64 `form:"page,optional,default=1,range=[1:]"` // 页码
+	PageSize uint64 `form:"page_size,optional,default=10"`      // 分页大小
 }
 
-type HelloResponse struct {
+type UserPaginateResp struct {
+	Page     uint64 `json:"page"`      // 页码
+	PageSize uint64 `json:"page_size"` // 分页大小
+	Total    int64  `json:"total"`     // 总条数
+}
+
+type UserResponse struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
-}
-
-type HelloReq struct {
-}
-
-type HelloResp struct {
-	HelloResponse
-	Data HelloData `json:"data"`
-}
-
-type HelloData struct {
 }

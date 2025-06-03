@@ -32,7 +32,7 @@ type (
 		InsertWithUpdate(ctx context.Context, data *Message) error
 		InsertWithUpdateField(ctx context.Context, data *Message, fields []string) error
 		BatchInsert(ctx context.Context, list []*Message) (sql.Result, error)
-		FindOne(ctx context.Context, id int64) (*Message, error)
+		FindOne(ctx context.Context, id uint64) (*Message, error)
 		Update(ctx context.Context, data *Message) error
 		UpdateField(ctx context.Context, data *Message, fields []string) error
 
@@ -53,7 +53,7 @@ type (
 		Customs(ctx context.Context, rowBuilder squirrel.SelectBuilder, resp interface{}) error
 		Custom(ctx context.Context, rowBuilder squirrel.SelectBuilder, resp interface{}) error
 
-		Delete(ctx context.Context, id int64) error
+		Delete(ctx context.Context, id uint64) error
 		TableName() string
 	}
 
@@ -63,8 +63,8 @@ type (
 	}
 
 	Message struct {
-		Id        int64     `db:"id" json:"id"`
-		UserId    int64     `db:"user_id" json:"user_id"`
+		Id        uint64    `db:"id" json:"id"`
+		UserId    uint64    `db:"user_id" json:"user_id"`
 		Content   string    `db:"content" json:"content"`
 		CreatedAt time.Time `db:"created_at" json:"created_at"`
 		UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
@@ -84,12 +84,12 @@ func (m *defaultMessageModel) WithSession(session sqlx.Session) *defaultMessageM
 		table: "`message`",
 	}
 }
-func (m *defaultMessageModel) Delete(ctx context.Context, id int64) error {
+func (m *defaultMessageModel) Delete(ctx context.Context, id uint64) error {
 	query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 	_, err := m.conn.ExecCtx(ctx, query, id)
 	return err
 }
-func (m *defaultMessageModel) FindOne(ctx context.Context, id int64) (*Message, error) {
+func (m *defaultMessageModel) FindOne(ctx context.Context, id uint64) (*Message, error) {
 	query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", messageRows, m.table)
 	var resp Message
 	err := m.conn.QueryRowCtx(ctx, &resp, query, id)
@@ -121,7 +121,7 @@ func (m *defaultMessageModel) InsertWithUpdate(ctx context.Context, data *Messag
 		if err != nil {
 			return err
 		}
-		data.Id = id
+		data.Id = uint64(id)
 		return err
 	} else {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, messageRowsWithPlaceHolder)
@@ -140,7 +140,7 @@ func (m *defaultMessageModel) InsertWithUpdateField(ctx context.Context, data *M
 		if err != nil {
 			return err
 		}
-		data.Id = id
+		data.Id = uint64(id)
 		return err
 	} else {
 		err := m.UpdateField(ctx, data, fields)

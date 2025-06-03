@@ -20,7 +20,7 @@ type (
     }
 
     LoginDataUser {
-        ID int64 `json:"id"`                // 账号ID
+        ID uint64 `json:"id"`                // 账号ID
         NickName string `json:"nickname"`   //昵称
     }
 )

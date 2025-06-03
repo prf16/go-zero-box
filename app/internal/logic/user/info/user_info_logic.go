@@ -24,7 +24,7 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 }
 
 func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResp, err error) {
-	userID := cast.ToInt64(l.ctx.Value("user_id"))
+	userID := cast.ToUint64(l.ctx.Value("user_id"))
 
 	user, err := l.svcCtx.Model.UserModel.FindOne(l.ctx, userID)
 	if err != nil {

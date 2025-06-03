@@ -40,7 +40,7 @@ type LoginData struct {
 }
 
 type LoginDataUser struct {
-	ID       int64  `json:"id"`       // 账号ID
+	ID       uint64 `json:"id"`       // 账号ID
 	NickName string `json:"nickname"` //昵称
 }
 
@@ -80,13 +80,13 @@ type SwaggerResponse struct {
 }
 
 type UserInfoData struct {
-	Id        int64  `json:"id"`
+	Id        uint64 `json:"id"`
 	Account   string `json:"account"`    // 用户名
 	Name      string `json:"name"`       // 姓名
 	JobNumber string `json:"job_number"` // 工号
 	Email     string `json:"email"`      // 邮箱
 	Note      string `json:"note"`       // 备注
-	Status    int64  `json:"status"`     // 状态 1启动 2禁用
+	Status    uint64 `json:"status"`     // 状态 1启动 2禁用
 	IsDelete  int64  `json:"is_delete"`  // 是否删除 1是 2否
 }
 

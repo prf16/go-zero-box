@@ -15,11 +15,11 @@
 - 做了一些符合Web应用框架的目录划分，使开发者代码阅读更便捷，减少开发成本；
 - 支持多库，多redis；
 - 提供了初始业务的 api 代码示例，包含登录、注册、鉴权等开箱即用的业务功能；
-- 提供了 go-zero 支持的 Swagger api 文档，引入 api 服务，**访问/api/doc即可预览文档**；
+- 提供了 go-zero 支持的 Swagger api 文档服务，**访问/api/doc即可预览文档**；
 - 增加了更多的 ORM API，支持复杂的数据操作业务；
 - 引入 asynq 库，实现了队列、调度、脚本等功能；
 - 引入 wire 库，实现了依赖注入功能；
-- 通过 ```app [command]``` 的方式，在多实例扩展的场景下可以更方便地部署 api 、scheduler、queue 服务；
+- 通过 ```app [command]``` 的方式，在分布式场景下可以更方便地部署 api 、scheduler、queue 服务；
 - go 语言新特性的优秀示例，比如通过范式实现的三元表达式 ```tools.Any(a == b, a, b)```；
 
 

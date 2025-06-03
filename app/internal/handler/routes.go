@@ -67,12 +67,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Middleware{serverCtx.AuthMiddleware},
 			[]rest.Route{
 				{
+					// 退出登录
 					Method:  http.MethodPost,
 					Path:    "/exit",
 					Handler: userinfo.ExitHandler(serverCtx),
 				},
 				{
-					// 用户相关/用户信息
+					// 用户信息
 					Method:  http.MethodGet,
 					Path:    "/info",
 					Handler: userinfo.UserInfoHandler(serverCtx),

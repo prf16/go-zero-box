@@ -24,7 +24,7 @@ func (m *default{{.upperStartCamelObject}}Model) InsertWithUpdate(ctx context.Co
         if err != nil {
             return err
         }
-        data.Id = id
+        data.Id = uint64(id)
         return err
 	} else {
         {{if .withCache}}{{if .containsIndexCache}}data, err:=m.FindOne(ctx, newData.{{.upperStartCamelPrimaryKey}})
@@ -56,7 +56,7 @@ func (m *default{{.upperStartCamelObject}}Model) InsertWithUpdateField(ctx conte
         if err != nil {
             return err
         }
-        data.Id = id
+        data.Id = uint64(id)
         return err
 	} else {
         err := m.UpdateField(ctx, data, fields)

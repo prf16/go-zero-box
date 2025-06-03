@@ -32,7 +32,7 @@ type (
 		InsertWithUpdate(ctx context.Context, data *User) error
 		InsertWithUpdateField(ctx context.Context, data *User, fields []string) error
 		BatchInsert(ctx context.Context, list []*User) (sql.Result, error)
-		FindOne(ctx context.Context, id int64) (*User, error)
+		FindOne(ctx context.Context, id uint64) (*User, error)
 		Update(ctx context.Context, data *User) error
 		UpdateField(ctx context.Context, data *User, fields []string) error
 
@@ -53,7 +53,7 @@ type (
 		Customs(ctx context.Context, rowBuilder squirrel.SelectBuilder, resp interface{}) error
 		Custom(ctx context.Context, rowBuilder squirrel.SelectBuilder, resp interface{}) error
 
-		Delete(ctx context.Context, id int64) error
+		Delete(ctx context.Context, id uint64) error
 		TableName() string
 	}
 
@@ -63,7 +63,7 @@ type (
 	}
 
 	User struct {
-		Id        int64     `db:"id" json:"id"`
+		Id        uint64    `db:"id" json:"id"`
 		Uuid      string    `db:"uuid" json:"uuid"`
 		Account   string    `db:"account" json:"account"`       // 用户名
 		Name      string    `db:"name" json:"name"`             // 姓名
@@ -72,8 +72,8 @@ type (
 		Password  string    `db:"password" json:"password"`     // 密码
 		Gender    int64     `db:"gender" json:"gender"`         // 性别
 		Note      string    `db:"note" json:"note"`             // 备注
-		Status    int64     `db:"status" json:"status"`         // 状态 1启动 2禁用
-		IsDelete  int64     `db:"is_delete" json:"is_delete"`   // 是否删除 1是 2否
+		Status    uint64    `db:"status" json:"status"`         // 状态 1启动 2禁用
+		IsDelete  uint64    `db:"is_delete" json:"is_delete"`   // 是否删除 1是 2否
 		CreatedAt time.Time `db:"created_at" json:"created_at"` // 创建时间
 		UpdatedAt time.Time `db:"updated_at" json:"updated_at"` // 更新时间
 	}
@@ -92,12 +92,12 @@ func (m *defaultUserModel) WithSession(session sqlx.Session) *defaultUserModel {
 		table: "`user`",
 	}
 }
-func (m *defaultUserModel) Delete(ctx context.Context, id int64) error {
+func (m *defaultUserModel) Delete(ctx context.Context, id uint64) error {
 	query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 	_, err := m.conn.ExecCtx(ctx, query, id)
 	return err
 }
-func (m *defaultUserModel) FindOne(ctx context.Context, id int64) (*User, error) {
+func (m *defaultUserModel) FindOne(ctx context.Context, id uint64) (*User, error) {
 	query := fmt.Sprintf("select %s from %s where `id` = ? limit 1", userRows, m.table)
 	var resp User
 	err := m.conn.QueryRowCtx(ctx, &resp, query, id)
@@ -129,7 +129,7 @@ func (m *defaultUserModel) InsertWithUpdate(ctx context.Context, data *User) err
 		if err != nil {
 			return err
 		}
-		data.Id = id
+		data.Id = uint64(id)
 		return err
 	} else {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userRowsWithPlaceHolder)
@@ -148,7 +148,7 @@ func (m *defaultUserModel) InsertWithUpdateField(ctx context.Context, data *User
 		if err != nil {
 			return err
 		}
-		data.Id = id
+		data.Id = uint64(id)
 		return err
 	} else {
 		err := m.UpdateField(ctx, data, fields)

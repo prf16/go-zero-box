@@ -2,19 +2,18 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOSUMDB=sum.golang.org
 
-.PHONY: new
-# 目录初始化
-new:
-	$(info ******************** new ********************)
-	@mkdir runtime
-	@mkdir runtime/logs
-
+#.PHONY: new
+## 目录初始化
+#new:
+#	$(info ******************** new ********************)
+#	@mkdir runtime
+#	@mkdir runtime/logs
 
 .PHONY: doc
 # 接口文档生成
 doc:
 	$(info ******************** swagger ********************)
-	goctl api swagger --api app/doc/api.api --dir deploy/doc/
+	goctl api swagger --api app/doc/api.api --dir app/doc/
 
 .PHONY: build
 # 构建
@@ -37,11 +36,9 @@ build:
 	fi
 
 	mkdir -p ./build/app/etc
-	mkdir -p ./build/app/deploy
-	mkdir -p ./build/app/runtime
-	mkdir -p ./build/app/runtime/logs
+	mkdir -p ./build/app/doc
 	cp -f app/etc/app.yaml.$(env).bak ./build/app/etc/app.yaml
-	cp -f ./deploy/doc/api.json ./build/app/deploy/api.json
+	cp -f app/doc/api.json ./build/app/doc/api.json
 	tar -C ./build -cvf ./build/app.tar app
 
 .PHONY: api

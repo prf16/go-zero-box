@@ -3,7 +3,6 @@ type SwaggerResponse {
     Message string `json:"message"`
 }
 
-// Login
 type (
     SwaggerReq {
     }

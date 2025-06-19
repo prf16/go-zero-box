@@ -1,15 +1,8 @@
-//info(
-//    title: "Hello world"
-//    desc: "Hello world"
-//    version: "v1"
-//)
-
 type HelloResponse {
     Code int `json:"code"`
     Message string `json:"message"`
 }
 
-// Login
 type (
     HelloReq {
     }

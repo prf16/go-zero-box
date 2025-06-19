@@ -3,7 +3,6 @@ type AuthResponse {
     Message string `json:"message,default=ok"`
 }
 
-// Login
 type (
     LoginReq {
         Account string `json:"account,example=admin"`

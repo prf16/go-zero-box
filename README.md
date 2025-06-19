@@ -133,7 +133,7 @@ $ make model
 # 生成wire代码文件
 $ make wire
 
-# 生成 swagger 接口文档
+# 更新 swagger 接口文档（预览/api/doc需要强制刷新，清除缓存）
 $ make doc
 
 # 构建项目

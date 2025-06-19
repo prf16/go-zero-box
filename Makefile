@@ -10,7 +10,7 @@ export GOSUMDB=sum.golang.org
 #	@mkdir runtime/logs
 
 .PHONY: doc
-# 接口文档生成
+# 更新 swagger 接口文档（预览/api/doc需要强制刷新，清除缓存）
 doc:
 	$(info ******************** swagger ********************)
 	goctl api swagger --api app/doc/api.api --dir app/doc/

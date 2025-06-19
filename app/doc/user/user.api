@@ -1,3 +1,6 @@
+import "../base/base.api"
+
+
 type UserResponse {
     Code int `json:"code"`
     Message string `json:"message"`
@@ -14,7 +17,7 @@ type UserPaginateResp {
 
 type (
     UserInfoResp {
-        UserResponse
+        Response
         Data *UserInfoData `json:"data"`
     }
     UserInfoData {
@@ -34,7 +37,7 @@ type (
 
     }
     ExitResp {
-        UserResponse
+        Response
         Data ExitData `json:"data"`
     }
     ExitData {

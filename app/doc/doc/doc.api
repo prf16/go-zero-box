@@ -1,14 +1,10 @@
-type SwaggerResponse {
-    Code int `json:"code"`
-    Message string `json:"message"`
-}
+import "../base/base.api"
 
-// Login
 type (
     SwaggerReq {
     }
     SwaggerResp {
-        SwaggerResponse
+        Response
         Data SwaggerData `json:"data"`
     }
     SwaggerData {

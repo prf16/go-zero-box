@@ -79,31 +79,39 @@ Makefile 文件描述了 Linux 系统下项目工程的编译规则，只需要�
 
 #### 1. clone项目
 
-![初始化项目](./deploy/doc/access/1初始化项目.jpg)
+![初始化项目](./deploy/doc/access/快速开始/1初始化项目.jpg)
 
 #### 2. 打开项目
 
-![打开项目](./deploy/doc/access/2打开项目.jpg)
+![打开项目](./deploy/doc/access/快速开始/2打开项目.jpg)
 
 #### 3. 替换包名引用
 
-![替换包名引用](./deploy/doc/access/3替换包名引用.jpg)
+![替换包名引用](./deploy/doc/access/快速开始/3替换包名引用.jpg)
 
 #### 4. 启动go模块
 
-![启动go模块](./deploy/doc/access/4启动go模块.jpg)
+![启动go模块](./deploy/doc/access/快速开始/4启动go模块.jpg)
 
-#### 5. 下载依赖包
+#### 5. 安装gosdk
 
-![下载依赖包](./deploy/doc/access/5下载依赖包.jpg)
+![下载依赖包](./deploy/doc/access/快速开始/5安装gosdk.png)
 
-#### 6. 启动项目
+#### 6. 下载依赖包
 
-![启动项目](./deploy/doc/access/6启动项目.jpg)
+![下载依赖包](./deploy/doc/access/快速开始/6下载依赖包.jpg)
 
-#### 6. 启动成功
+#### 7. 启动项目
 
-![启动项目](./deploy/doc/access/7启动成功.jpg)
+![启动项目](./deploy/doc/access/快速开始/7启动项目.jpg)
+
+#### 8. 启动redis
+
+![启动项目](./deploy/doc/access/快速开始/8启动redis.jpg)
+
+#### 9. 启动成功
+
+![启动项目](./deploy/doc/access/快速开始/9启动成功.jpg)
 
 ### 安装依赖工具
 
@@ -116,9 +124,6 @@ Makefile 文件描述了 Linux 系统下项目工程的编译规则，只需要�
 ### Make命令
 
 ```shell
-# 目录初始化，首次运行项目前请运行该命令
-$ make new
-
 # 生成api代码文件
 $ make api
 
@@ -133,7 +138,6 @@ $ make doc
 
 # 构建项目
 $ make build env=dev|test|prod
-
 ```
 
 #### 

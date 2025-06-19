@@ -6,7 +6,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"go-zero-box/app/internal/config"
-	result2 "go-zero-box/app/internal/utils/result"
+	"go-zero-box/app/internal/utils/result"
 	"net/http"
 )
 
@@ -33,13 +33,13 @@ func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 
 		if err != nil || !token.Valid {
 			logx.ErrorStack(err.Error())
-			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result2.ResponseAuth(r.Context(), result2.MessageAuthTokenNotValid))
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), result.MessageAuthTokenNotValid))
 			return
 		}
 
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if !ok {
-			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result2.ResponseAuth(r.Context(), result2.MessageAuthTokenNotValid))
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), result.MessageAuthTokenNotValid))
 			return
 		}
 

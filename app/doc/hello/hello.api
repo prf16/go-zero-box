@@ -1,20 +1,10 @@
-//info(
-//    title: "Hello world"
-//    desc: "Hello world"
-//    version: "v1"
-//)
+import "../base/base.api"
 
-type HelloResponse {
-    Code int `json:"code"`
-    Message string `json:"message"`
-}
-
-// Login
 type (
     HelloReq {
     }
     HelloResp {
-        HelloResponse
+        Response
         Data HelloData `json:"data"`
     }
     HelloData {

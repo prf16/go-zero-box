@@ -2,9 +2,11 @@ package info
 
 import (
 	"context"
+	"github.com/Masterminds/squirrel"
 	"github.com/spf13/cast"
 	"go-zero-box/app/internal/svc"
 	"go-zero-box/app/internal/types"
+	"go-zero-box/app/internal/utils/result"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,9 +28,9 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResp, err error) {
 	userID := cast.ToUint64(l.ctx.Value("user_id"))
 
-	user, err := l.svcCtx.Model.UserModel.FindOne(l.ctx, userID)
+	user, err := l.svcCtx.Model.UserModel.First(l.ctx, squirrel.Select("*").Where("id =?", userID))
 	if err != nil {
-		return nil, err
+		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}
 
 	// 用户基本信息

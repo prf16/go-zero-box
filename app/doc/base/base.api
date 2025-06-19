@@ -1,0 +1,13 @@
+type Response {
+    Code int `json:"code"`
+    Message string `json:"message"`
+}
+type Paginate {
+    Page uint64 `form:"page,optional,default=1,range=[1:]"` // 页码
+    PageSize uint64 `form:"page_size,optional,default=10"`  // 分页大小
+}
+type PaginateResp {
+    Page uint64 `json:"page"`           // 页码
+    PageSize uint64 `json:"page_size"`  // 分页大小
+    Total int64 `json:"total"`          // 总条数
+}

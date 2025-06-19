@@ -1,7 +1,4 @@
-type AuthResponse {
-    Code int `json:"code"`
-    Message string `json:"message,default=ok"`
-}
+import "../base/base.api"
 
 type (
     LoginReq {
@@ -9,7 +6,7 @@ type (
         Password string `json:"password,example=123456"`
     }
     LoginResp {
-        AuthResponse
+        Response
         Data LoginData `json:"data"`
     }
 
@@ -31,7 +28,7 @@ type (
         Password string `json:"password"`
     }
     RegisterResp {
-        AuthResponse
+        Response
     }
 )
 

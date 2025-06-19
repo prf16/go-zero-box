@@ -1,13 +1,10 @@
-type HelloResponse {
-    Code int `json:"code"`
-    Message string `json:"message"`
-}
+import "../base/base.api"
 
 type (
     HelloReq {
     }
     HelloResp {
-        HelloResponse
+        Response
         Data HelloData `json:"data"`
     }
     HelloData {

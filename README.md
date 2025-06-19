@@ -2,9 +2,9 @@
 
 ### 概述
 
-开箱即用的 [go-zero](https://go-zero.dev) 示例，做了工程化的包装，包装后的框架包含 api、scheduler、queue、script 服务。
-
 基于 go-zero 框架的 1.8.4 版本.
+
+开箱即用的 [go-zero](https://go-zero.dev) 示例，做了工程化的包装，包装后的框架包含 api、scheduler、queue、script 服务。
 
 在熟悉 go-zero 框架过程中踩坑很多，衍生的 go-zero-box 框架也是相当于经验贴了，希望可以帮助开发者更快的度过熟悉期。
 
@@ -133,7 +133,7 @@ $ make model
 # 生成wire代码文件
 $ make wire
 
-# 生成 swagger 接口文档
+# 更新 swagger 接口文档（预览/api/doc需要强制刷新，清除缓存）
 $ make doc
 
 # 构建项目

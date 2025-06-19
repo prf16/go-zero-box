@@ -99,9 +99,7 @@
                   }
                 },
                 "message": {
-                  "type": "string",
-                  "default": "ok",
-                  "example": "ok"
+                  "type": "string"
                 }
               }
             }
@@ -157,9 +155,7 @@
                   "type": "integer"
                 },
                 "message": {
-                  "type": "string",
-                  "default": "ok",
-                  "example": "ok"
+                  "type": "string"
                 }
               }
             }
@@ -407,7 +403,7 @@
       "in": "header"
     }
   },
-  "x-date": "2025-06-10 14:05:16",
+  "x-date": "2025-06-19 13:59:06",
   "x-description": "This is a goctl generated swagger file.",
   "x-github": "https://github.com/zeromicro/go-zero",
   "x-go-zero-doc": "https://go-zero.dev/",

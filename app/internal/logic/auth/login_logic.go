@@ -7,7 +7,7 @@ import (
 	"go-zero-box/app/internal/model/usermodel"
 	"go-zero-box/app/internal/queue/message"
 	"go-zero-box/app/internal/utils/constant"
-	result2 "go-zero-box/app/internal/utils/result"
+	"go-zero-box/app/internal/utils/result"
 	"go-zero-box/app/internal/utils/tools"
 	"strings"
 	"time"
@@ -48,26 +48,26 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 	}
 	userInfo, err := l.svcCtx.Model.UserModel.First(l.ctx, rowBuilder)
 	if err != nil {
-		return nil, result2.ResponseSystem(l.ctx, err.Error())
+		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}
 
 	// 校验用户是否存在
 	if userInfo == nil || userInfo.Id == 0 {
-		return nil, result2.Response(l.ctx, result2.MessageAuthNotUser)
+		return nil, result.Response(l.ctx, result.MessageAuthNotUser)
 	}
 	if userInfo.Status != constant.AccountStatusEnable {
-		return nil, result2.Response(l.ctx, result2.MessageAuthUserStatusDisable)
+		return nil, result.Response(l.ctx, result.MessageAuthUserStatusDisable)
 	}
 
 	// 密码校验工作操作--密码校验
 	if !tools.ValidatePasswords(userInfo.Password, []byte(req.Password)) {
-		return nil, result2.Response(l.ctx, "账号或密码不正确")
+		return nil, result.Response(l.ctx, "账号或密码不正确")
 	}
 
 	// 生成token
 	jwtAuth, err := l.getJwtToken(l.svcCtx.Config.JwtAuth.AccessExpire, userInfo)
 	if err != nil {
-		return nil, result2.ResponseSystem(l.ctx, err.Error())
+		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}
 
 	err = message.MailQueueEnqueue(l.ctx, message.MailQueuePayload{
@@ -75,7 +75,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 		Content: "登录成功",
 	})
 	if err != nil {
-		return nil, result2.ResponseSystem(l.ctx, err.Error())
+		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}
 
 	resp.Data.Token = jwtAuth

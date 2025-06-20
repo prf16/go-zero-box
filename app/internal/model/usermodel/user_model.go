@@ -1,8 +1,6 @@
 package usermodel
 
-import (
-	"go-zero-box/pkg/database"
-)
+import "go-zero-box/pkg/database"
 
 var _ UserModel = (*customUserModel)(nil)
 

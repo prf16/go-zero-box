@@ -1,13 +1,9 @@
 import "../base/base.api"
 
 type (
-    SwaggerReq {
-    }
+    SwaggerReq {}
     SwaggerResp {
         Response
-        Data SwaggerData `json:"data"`
-    }
-    SwaggerData {
     }
 )
 

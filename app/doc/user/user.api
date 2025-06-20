@@ -1,20 +1,5 @@
 import "../base/base.api"
 
-
-type UserResponse {
-    Code int `json:"code"`
-    Message string `json:"message"`
-}
-type UserPaginate {
-    Page uint64 `form:"page,optional,default=1,range=[1:]"` // 页码
-    PageSize uint64 `form:"page_size,optional,default=10"`  // 分页大小
-}
-type UserPaginateResp {
-    Page uint64 `json:"page"`           // 页码
-    PageSize uint64 `json:"page_size"`  // 分页大小
-    Total int64 `json:"total"`          // 总条数
-}
-
 type (
     UserInfoResp {
         Response

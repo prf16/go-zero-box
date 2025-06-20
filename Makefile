@@ -9,12 +9,6 @@ export GOSUMDB=sum.golang.org
 #	@mkdir runtime
 #	@mkdir runtime/logs
 
-.PHONY: doc
-# 更新 swagger 接口文档（预览/api/doc需要强制刷新，清除缓存）
-doc:
-	$(info ******************** swagger ********************)
-	goctl api swagger --api app/doc/api.api --dir app/doc/
-
 .PHONY: build
 # 构建
 build:
@@ -47,6 +41,7 @@ api:
 	$(info ******************** api ********************)
 	@echo "process build [api]"
 	goctl api go -api app/doc/api.api -dir app --style go_zero --home ./deploy/goctl/1.5.5/
+	goctl api swagger --api app/doc/api.api --dir app/doc/
 	@echo "processed"
 
 # 依赖注入

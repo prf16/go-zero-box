@@ -1,6 +1,7 @@
 package hello
 
 import (
+	"go-zero-box/app/internal/utils/result"
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -13,7 +14,7 @@ func HelloHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.HelloReq
 		if err := httpx.Parse(r, &req); err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.Response(r.Context(), err.Error()))
 			return
 		}
 

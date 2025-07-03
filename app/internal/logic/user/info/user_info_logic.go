@@ -26,6 +26,8 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 }
 
 func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResp, err error) {
+	resp = &types.UserInfoResp{}
+
 	userID := cast.ToUint64(l.ctx.Value("user_id"))
 
 	user, err := l.svcCtx.Model.UserModel.First(l.ctx, squirrel.Select("*").Where("id =?", userID))
@@ -34,7 +36,7 @@ func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResp, err error) {
 	}
 
 	// 用户基本信息
-	data := &types.UserInfoData{
+	resp.Data = &types.UserInfoData{
 		Id:      user.Id,
 		Account: user.Account,
 		Name:    user.Name,
@@ -43,7 +45,5 @@ func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResp, err error) {
 		Status:  user.Status,
 	}
 
-	return &types.UserInfoResp{
-		Data: data,
-	}, nil
+	return resp, nil
 }

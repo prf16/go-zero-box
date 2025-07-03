@@ -47,7 +47,6 @@ func serverApi(app *App) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			server := rest.MustNewServer(app.config.Server)
 			defer server.Stop()
-
 			handler.RegisterHandlers(server, app.svcCtx)
 			log.Printf("[Server: api] start success at %s:%d...\n", app.config.Server.Host, app.config.Server.Port)
 			server.Start()

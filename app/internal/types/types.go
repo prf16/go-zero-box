@@ -65,11 +65,8 @@ type RegisterResp struct {
 }
 
 type Response struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-}
-
-type SwaggerData struct {
+	Code    int    `json:"code"`    // 返回状态0-成功<br>10001-默认异常错误码,前端可提示<br>20001-系统异常错误码，前端可不提示<br>40000-未登录状态码
+	Message string `json:"message"` // 返回信息
 }
 
 type SwaggerReq struct {
@@ -77,7 +74,6 @@ type SwaggerReq struct {
 
 type SwaggerResp struct {
 	Response
-	Data SwaggerData `json:"data"`
 }
 
 type UserInfoData struct {
@@ -94,20 +90,4 @@ type UserInfoData struct {
 type UserInfoResp struct {
 	Response
 	Data *UserInfoData `json:"data"`
-}
-
-type UserPaginate struct {
-	Page     uint64 `form:"page,optional,default=1,range=[1:]"` // 页码
-	PageSize uint64 `form:"page_size,optional,default=10"`      // 分页大小
-}
-
-type UserPaginateResp struct {
-	Page     uint64 `json:"page"`      // 页码
-	PageSize uint64 `json:"page_size"` // 分页大小
-	Total    int64  `json:"total"`     // 总条数
-}
-
-type UserResponse struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
 }

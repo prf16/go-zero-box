@@ -26,7 +26,6 @@ func NewExitLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ExitLogic {
 }
 
 func (l *ExitLogic) Exit() (resp *types.ExitResp, err error) {
-
 	resp = &types.ExitResp{}
 
 	// 校验用户信息

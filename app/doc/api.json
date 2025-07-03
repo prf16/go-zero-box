@@ -15,7 +15,6 @@
     "title": "go-zero-box",
     "version": "v1.0"
   },
-  "host": "127.0.0.1:8001",
   "basePath": "/",
   "paths": {
     "/api/auth/login": {
@@ -65,6 +64,7 @@
               "type": "object",
               "properties": {
                 "code": {
+                  "description": "返回状态0-成功\u003cbr\u003e10001-默认异常错误码,前端可提示\u003cbr\u003e20001-系统异常错误码，前端可不提示\u003cbr\u003e40000-未登录状态码",
                   "type": "integer"
                 },
                 "data": {
@@ -99,6 +99,7 @@
                   }
                 },
                 "message": {
+                  "description": "返回信息",
                   "type": "string"
                 }
               }
@@ -152,9 +153,11 @@
               "type": "object",
               "properties": {
                 "code": {
+                  "description": "返回状态0-成功\u003cbr\u003e10001-默认异常错误码,前端可提示\u003cbr\u003e20001-系统异常错误码，前端可不提示\u003cbr\u003e40000-未登录状态码",
                   "type": "integer"
                 },
                 "message": {
+                  "description": "返回信息",
                   "type": "string"
                 }
               }
@@ -183,12 +186,11 @@
               "type": "object",
               "properties": {
                 "code": {
+                  "description": "返回状态0-成功\u003cbr\u003e10001-默认异常错误码,前端可提示\u003cbr\u003e20001-系统异常错误码，前端可不提示\u003cbr\u003e40000-未登录状态码",
                   "type": "integer"
                 },
-                "data": {
-                  "type": "object"
-                },
                 "message": {
+                  "description": "返回信息",
                   "type": "string"
                 }
               }
@@ -217,12 +219,11 @@
               "type": "object",
               "properties": {
                 "code": {
+                  "description": "返回状态0-成功\u003cbr\u003e10001-默认异常错误码,前端可提示\u003cbr\u003e20001-系统异常错误码，前端可不提示\u003cbr\u003e40000-未登录状态码",
                   "type": "integer"
                 },
-                "data": {
-                  "type": "object"
-                },
                 "message": {
+                  "description": "返回信息",
                   "type": "string"
                 }
               }
@@ -251,12 +252,14 @@
               "type": "object",
               "properties": {
                 "code": {
+                  "description": "返回状态0-成功\u003cbr\u003e10001-默认异常错误码,前端可提示\u003cbr\u003e20001-系统异常错误码，前端可不提示\u003cbr\u003e40000-未登录状态码",
                   "type": "integer"
                 },
                 "data": {
                   "type": "object"
                 },
                 "message": {
+                  "description": "返回信息",
                   "type": "string"
                 }
               }
@@ -290,6 +293,7 @@
               "type": "object",
               "properties": {
                 "code": {
+                  "description": "返回状态0-成功\u003cbr\u003e10001-默认异常错误码,前端可提示\u003cbr\u003e20001-系统异常错误码，前端可不提示\u003cbr\u003e40000-未登录状态码",
                   "type": "integer"
                 },
                 "data": {
@@ -304,6 +308,7 @@
                   }
                 },
                 "message": {
+                  "description": "返回信息",
                   "type": "string"
                 }
               }
@@ -337,6 +342,7 @@
               "type": "object",
               "properties": {
                 "code": {
+                  "description": "返回状态0-成功\u003cbr\u003e10001-默认异常错误码,前端可提示\u003cbr\u003e20001-系统异常错误码，前端可不提示\u003cbr\u003e40000-未登录状态码",
                   "type": "integer"
                 },
                 "data": {
@@ -386,6 +392,7 @@
                   }
                 },
                 "message": {
+                  "description": "返回信息",
                   "type": "string"
                 }
               }
@@ -403,7 +410,7 @@
       "in": "header"
     }
   },
-  "x-date": "2025-06-20 11:35:19",
+  "x-date": "2025-07-03 20:54:44",
   "x-description": "This is a goctl generated swagger file.",
   "x-github": "https://github.com/zeromicro/go-zero",
   "x-go-zero-doc": "https://go-zero.dev/",

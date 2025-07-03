@@ -25,7 +25,7 @@ func (s *Person) Type() string {
 func (s *Person) Sync() *cobra.Command {
 	return &cobra.Command{
 		Use:   s.Type(),
-		Short: "这是一个demo任务",
+		Short: "描述信息，这是一个demo任务",
 		Run: func(cmd *cobra.Command, args []string) {
 			s.Handle()
 		},

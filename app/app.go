@@ -33,7 +33,7 @@ func main() {
 	logc.MustSetup(c.Server.Log)
 	app := initApp(c)
 	rootCmd.AddCommand(serverApi(app), serverQueue(app), serverScheduler(app), serverAll(app))
-	rootCmd.AddCommand(command.CommandHandler(app.command)...)
+	rootCmd.AddCommand(command.ScriptHandler(app.command)...)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Printf("execute core service failed, %s\n", err.Error())

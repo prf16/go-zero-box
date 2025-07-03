@@ -9,25 +9,27 @@ import (
 
 var Provider = wire.NewSet(
 	NewCommand,
-	demo.NewPersonProcess,
+	demo.NewPerson,
 )
 
 type Command struct {
-	PersonProcess *demo.PersonProcess
+	Person *demo.Person
 }
 
-func NewCommand(personProcess *demo.PersonProcess) *Command {
-	return &Command{PersonProcess: personProcess}
+func NewCommand(person *demo.Person) *Command {
+	return &Command{Person: person}
 }
 
-func CommandHandler(s *Command) []*cobra.Command {
+// ScriptHandler 注册脚本任务
+func ScriptHandler(s *Command) []*cobra.Command {
 	return []*cobra.Command{
-		s.PersonProcess.Sync(),
+		s.Person.Sync(),
 	}
 }
 
+// SchedulerHandler 注册计划任务
 func SchedulerHandler(s *Command) []*asynqx.Handler {
 	return []*asynqx.Handler{
-		s.PersonProcess.Async(),
+		s.Person.Async(),
 	}
 }

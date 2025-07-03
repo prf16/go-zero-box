@@ -9,31 +9,31 @@ import (
 	"time"
 )
 
-type PersonProcess struct {
+type Person struct {
 }
 
-func NewPersonProcess() *PersonProcess {
-	return &PersonProcess{}
+func NewPerson() *Person {
+	return &Person{}
 }
 
 // Type 返回任务的唯一标识符
-func (s *PersonProcess) Type() string {
+func (s *Person) Type() string {
 	return "demo:person"
 }
 
-// Sync 返回一个 cobra.Command 实例，用于同步执行任务
-func (s *PersonProcess) Sync() *cobra.Command {
+// Sync 返回一个 cobra.Command 实例，用于执行脚本任务
+func (s *Person) Sync() *cobra.Command {
 	return &cobra.Command{
 		Use:   s.Type(),
-		Short: "",
+		Short: "这是一个demo任务",
 		Run: func(cmd *cobra.Command, args []string) {
 			s.Handle()
 		},
 	}
 }
 
-// Async 返回一个 asynqx.Handler 实例，用于异步处理任务
-func (s *PersonProcess) Async() *asynqx.Handler {
+// Async 返回一个 asynqx.Handler 实例，用于执行计划任务
+func (s *Person) Async() *asynqx.Handler {
 	return &asynqx.Handler{
 		Type:      s.Type(),
 		Scheduler: "* * * * *",
@@ -43,6 +43,6 @@ func (s *PersonProcess) Async() *asynqx.Handler {
 		},
 	}
 }
-func (s *PersonProcess) Handle() {
+func (s *Person) Handle() {
 	logx.WithContext(context.Background()).Infof("time: %s I'm lisa\n", time.Now().String())
 }

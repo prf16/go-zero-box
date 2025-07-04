@@ -26,6 +26,10 @@ func DocHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 				  </body>
 				  </html>`
 		w.Header().Set("Content-Type", "text/html")
-		w.Write([]byte(html))
+		_, err := w.Write([]byte(html))
+		if err != nil {
+
+			return
+		}
 	}
 }

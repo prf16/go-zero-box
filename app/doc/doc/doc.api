@@ -1,12 +1,5 @@
 import "../base/base.api"
 
-type (
-    SwaggerReq {}
-    SwaggerResp {
-        Response
-    }
-)
-
 @server(
     group: doc
     prefix: /api
@@ -15,9 +8,9 @@ type (
 service app {
     @doc "doc"
     @handler Doc
-    get /doc (SwaggerReq) returns (SwaggerResp)
+    get /doc
 
     @doc "doc.json"
     @handler DocJson
-    get /doc/json (SwaggerReq) returns (SwaggerResp)
+    get /doc/json
 }

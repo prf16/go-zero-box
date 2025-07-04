@@ -69,13 +69,6 @@ type Response struct {
 	Message string `json:"message"` // 返回信息
 }
 
-type SwaggerReq struct {
-}
-
-type SwaggerResp struct {
-	Response
-}
-
 type UserInfoData struct {
 	Id        uint64 `json:"id"`
 	Account   string `json:"account"`    // 用户名

@@ -33,7 +33,9 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
-	resp = &types.LoginResp{}
+	resp = &types.LoginResp{
+		Data: types.LoginData{},
+	}
 
 	// 检查用户
 	rowBuilder := squirrel.Select("*").Where("is_delete = ?", constant.IsNoDelete)

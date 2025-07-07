@@ -386,7 +386,7 @@
       "in": "header"
     }
   },
-  "x-date": "2025-07-04 10:18:08",
+  "x-date": "2025-07-04 18:16:27",
   "x-description": "This is a goctl generated swagger file.",
   "x-github": "https://github.com/zeromicro/go-zero",
   "x-go-zero-doc": "https://go-zero.dev/",

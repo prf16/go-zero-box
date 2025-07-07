@@ -48,6 +48,7 @@ func serverApi(app *App) *cobra.Command {
 			server := rest.MustNewServer(app.config.Server)
 			defer server.Stop()
 			handler.RegisterHandlers(server, app.svcCtx)
+			//httpx.SetValidator(tools.NewValidator())
 			log.Printf("[Server: api] start success at %s:%d...\n", app.config.Server.Host, app.config.Server.Port)
 			server.Start()
 		},

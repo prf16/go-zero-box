@@ -572,8 +572,7 @@ func (u *Unmarshaler) processAnonymousStructFieldOptional(fieldType reflect.Type
 	return nil
 }
 
-func (u *Unmarshaler) processField(field reflect.StructField, value reflect.Value,
-	m valuerWithParent, fullName string) error {
+func (u *Unmarshaler) processField(field reflect.StructField, value reflect.Value, m valuerWithParent, fullName string) error {
 	if usingDifferentKeys(u.key, field) {
 		return nil
 	}

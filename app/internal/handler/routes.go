@@ -51,14 +51,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	)
 
 	server.AddRoutes(
-		[]rest.Route{
-			{
-				// Hello world
-				Method:  http.MethodGet,
-				Path:    "/hello",
-				Handler: hello.HelloHandler(serverCtx),
-			},
-		},
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.LogMiddleware},
+			[]rest.Route{
+				{
+					// Hello world
+					Method:  http.MethodGet,
+					Path:    "/hello",
+					Handler: hello.HelloHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithPrefix("/api"),
 	)
 

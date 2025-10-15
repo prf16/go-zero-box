@@ -30,9 +30,12 @@ func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		token, err := jwt.Parse(authorization, func(token *jwt.Token) (interface{}, error) {
 			return []byte(m.config.JwtAuth.AccessSecret), nil
 		})
-
-		if err != nil || !token.Valid {
+		if err != nil {
 			logx.ErrorStack(err.Error())
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), result.MessageAuthTokenNotValid))
+			return
+		}
+		if !token.Valid {
 			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), result.MessageAuthTokenNotValid))
 			return
 		}

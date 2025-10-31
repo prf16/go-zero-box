@@ -101,13 +101,13 @@ Makefile 文件描述了 Linux 系统下项目工程的编译规则，只需要�
 
 ![下载依赖包](./deploy/doc/access/快速开始/6下载依赖包.jpg)
 
-#### 7. 启动项目
+#### 7. 启动redis
 
-![启动项目](./deploy/doc/access/快速开始/7启动项目.jpg)
+![启动redis](./deploy/doc/access/快速开始/7启动redis.jpg)
 
-#### 8. 启动redis
+#### 8. 启动项目
 
-![启动项目](./deploy/doc/access/快速开始/8启动redis.jpg)
+![启动项目](./deploy/doc/access/快速开始/8启动项目.jpg)
 
 #### 9. 启动成功
 

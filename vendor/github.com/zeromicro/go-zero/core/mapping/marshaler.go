@@ -3,6 +3,7 @@ package mapping
 import (
 	"fmt"
 	"reflect"
+	"slices"
 	"strings"
 )
 
@@ -13,6 +14,15 @@ const (
 
 // Marshal marshals the given val and returns the map that contains the fields.
 // optional=another is not implemented, and it's hard to implement and not commonly used.
+// support anonymous field, e.g.:
+//
+//	type Foo struct {
+//		Token string `header:"token"`
+//	}
+//	type FooB struct {
+//		Foo
+//		Bar string  `json:"bar"`
+//	}
 func Marshal(val any) (map[string]map[string]any, error) {
 	ret := make(map[string]map[string]any)
 	tp := reflect.TypeOf(val)
@@ -44,6 +54,16 @@ func getTag(field reflect.StructField) (string, bool) {
 	return strings.TrimSpace(tag), false
 }
 
+func insertValue(collector map[string]map[string]any, tag string, key string, val any) {
+	if m, ok := collector[tag]; ok {
+		m[key] = val
+	} else {
+		collector[tag] = map[string]any{
+			key: val,
+		}
+	}
+}
+
 func processMember(field reflect.StructField, value reflect.Value,
 	collector map[string]map[string]any) error {
 	var key string
@@ -69,15 +89,20 @@ func processMember(field reflect.StructField, value reflect.Value,
 		val = fmt.Sprint(val)
 	}
 
-	m, ok := collector[tag]
-	if ok {
-		m[key] = val
-	} else {
-		m = map[string]any{
-			key: val,
+	if field.Anonymous {
+		anonCollector, err := Marshal(val)
+		if err != nil {
+			return err
 		}
+
+		for anonTag, anonMap := range anonCollector {
+			for anonKey, anonVal := range anonMap {
+				insertValue(collector, anonTag, anonKey, anonVal)
+			}
+		}
+	} else {
+		insertValue(collector, tag, key, val)
 	}
-	collector[tag] = m
 
 	return nil
 }
@@ -118,7 +143,7 @@ func validateOptional(field reflect.StructField, value reflect.Value) error {
 		if value.IsNil() {
 			return fmt.Errorf("field %q is nil", field.Name)
 		}
-	case reflect.Array, reflect.Slice, reflect.Map:
+	case reflect.Slice, reflect.Map:
 		if value.IsNil() || value.Len() == 0 {
 			return fmt.Errorf("field %q is empty", field.Name)
 		}
@@ -128,15 +153,8 @@ func validateOptional(field reflect.StructField, value reflect.Value) error {
 }
 
 func validateOptions(value reflect.Value, opt *fieldOptions) error {
-	var found bool
 	val := fmt.Sprint(value.Interface())
-	for i := range opt.Options {
-		if opt.Options[i] == val {
-			found = true
-			break
-		}
-	}
-	if !found {
+	if !slices.Contains(opt.Options, val) {
 		return fmt.Errorf("field %q not in options", val)
 	}
 

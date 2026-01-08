@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"slices"
 	"strconv"
 	"strings"
 	"sync"
@@ -15,11 +16,9 @@ import (
 	"github.com/zeromicro/go-zero/core/jsonx"
 	"github.com/zeromicro/go-zero/core/lang"
 	"github.com/zeromicro/go-zero/core/proc"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 const (
-	comma            = ","
 	defaultKeyName   = "key"
 	delimiter        = '.'
 	ignoreKey        = "-"
@@ -38,7 +37,6 @@ var (
 	defaultCacheLock    sync.Mutex
 	emptyMap            = map[string]any{}
 	emptyValue          = reflect.ValueOf(lang.Placeholder)
-	stringSliceType     = reflect.TypeOf([]string{})
 )
 
 type (
@@ -150,10 +148,6 @@ func (u *Unmarshaler) fillSlice(fieldType reflect.Type, value reflect.Value,
 	if refValue.Len() == 0 {
 		value.Set(reflect.MakeSlice(reflect.SliceOf(baseType), 0, 0))
 		return nil
-	}
-
-	if u.opts.fromArray {
-		refValue = makeStringSlice(refValue)
 	}
 
 	var valid bool
@@ -572,7 +566,8 @@ func (u *Unmarshaler) processAnonymousStructFieldOptional(fieldType reflect.Type
 	return nil
 }
 
-func (u *Unmarshaler) processField(field reflect.StructField, value reflect.Value, m valuerWithParent, fullName string) error {
+func (u *Unmarshaler) processField(field reflect.StructField, value reflect.Value,
+	m valuerWithParent, fullName string) error {
 	if usingDifferentKeys(u.key, field) {
 		return nil
 	}
@@ -627,9 +622,19 @@ func (u *Unmarshaler) processFieldNotFromString(fieldType reflect.Type, value re
 
 		return u.fillSliceFromString(fieldType, value, mapValue, fullName)
 	case valueKind == reflect.String && derefedFieldType == durationType:
-		return fillDurationValue(fieldType, value, mapValue.(string))
+		v, err := convertToString(mapValue, fullName)
+		if err != nil {
+			return err
+		}
+
+		return fillDurationValue(fieldType, value, v)
 	case valueKind == reflect.String && typeKind == reflect.Struct && u.implementsUnmarshaler(fieldType):
-		return u.fillUnmarshalerStruct(fieldType, value, mapValue.(string))
+		v, err := convertToString(mapValue, fullName)
+		if err != nil {
+			return err
+		}
+
+		return u.fillUnmarshalerStruct(fieldType, value, v)
 	default:
 		return u.processFieldPrimitive(fieldType, value, mapValue, opts, fullName)
 	}
@@ -760,24 +765,26 @@ func (u *Unmarshaler) processFieldWithEnvValue(fieldType reflect.Type, value ref
 		return err
 	}
 
-	fieldKind := fieldType.Kind()
-	switch fieldKind {
-	case reflect.Bool:
+	derefType := Deref(fieldType)
+	derefKind := derefType.Kind()
+	switch {
+	case derefKind == reflect.String:
+		SetValue(fieldType, value, toReflectValue(derefType, envVal))
+		return nil
+	case derefKind == reflect.Bool:
 		val, err := strconv.ParseBool(envVal)
 		if err != nil {
 			return fmt.Errorf("unmarshal field %q with environment variable, %w", fullName, err)
 		}
 
-		value.SetBool(val)
+		SetValue(fieldType, value, toReflectValue(derefType, val))
 		return nil
-	case durationType.Kind():
+	case derefType == durationType:
+		// time.Duration is a special case, its derefKind is reflect.Int64.
 		if err := fillDurationValue(fieldType, value, envVal); err != nil {
 			return fmt.Errorf("unmarshal field %q with environment variable, %w", fullName, err)
 		}
 
-		return nil
-	case reflect.String:
-		value.SetString(envVal)
 		return nil
 	default:
 		return u.processFieldPrimitiveWithJSONNumber(fieldType, value, json.Number(envVal), opts, fullName)
@@ -899,7 +906,7 @@ func (u *Unmarshaler) processNamedFieldWithValueFromString(fieldType reflect.Typ
 				valueKind.String())
 		}
 
-		if !stringx.Contains(options, checkValue) {
+		if !slices.Contains(options, checkValue) {
 			return fmt.Errorf(`value "%s" for field %q is not defined in options "%v"`,
 				mapValue, key, options)
 		}
@@ -1186,35 +1193,6 @@ func join(elem ...string) string {
 	}
 
 	return builder.String()
-}
-
-func makeStringSlice(refValue reflect.Value) reflect.Value {
-	if refValue.Len() != 1 {
-		return refValue
-	}
-
-	element := refValue.Index(0)
-	if element.Kind() != reflect.String {
-		return refValue
-	}
-
-	val, ok := element.Interface().(string)
-	if !ok {
-		return refValue
-	}
-
-	splits := strings.Split(val, comma)
-	if len(splits) <= 1 {
-		return refValue
-	}
-
-	slice := reflect.MakeSlice(stringSliceType, len(splits), len(splits))
-	for i, split := range splits {
-		// allow empty strings
-		slice.Index(i).Set(reflect.ValueOf(split))
-	}
-
-	return slice
 }
 
 func newInitError(name string) error {

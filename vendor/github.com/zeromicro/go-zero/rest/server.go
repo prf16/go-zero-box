@@ -63,6 +63,11 @@ func NewServer(c RestConf, opts ...RunOption) (*Server, error) {
 	return server, nil
 }
 
+// AddRoute adds given route into the Server.
+func (s *Server) AddRoute(r Route, opts ...RouteOption) {
+	s.AddRoutes([]Route{r}, opts...)
+}
+
 // AddRoutes add given routes into the Server.
 func (s *Server) AddRoutes(rs []Route, opts ...RouteOption) {
 	r := featuredRoutes{
@@ -72,11 +77,6 @@ func (s *Server) AddRoutes(rs []Route, opts ...RouteOption) {
 		opt(&r)
 	}
 	s.ngin.addRoutes(r)
-}
-
-// AddRoute adds given route into the Server.
-func (s *Server) AddRoute(r Route, opts ...RouteOption) {
-	s.AddRoutes([]Route{r}, opts...)
 }
 
 // PrintRoutes prints the added routes to stdout.
@@ -93,25 +93,6 @@ func (s *Server) Routes() []Route {
 	}
 
 	return routes
-}
-
-// ServeHTTP is for test purpose, allow developer to do a unit test with
-// all defined router without starting an HTTP Server.
-//
-// For example:
-//
-//	server := MustNewServer(...)
-//	server.addRoute(...) // router a
-//	server.addRoute(...) // router b
-//	server.addRoute(...) // router c
-//
-//	r, _ := http.NewRequest(...)
-//	w := httptest.NewRecorder(...)
-//	server.ServeHTTP(w, r)
-//	// verify the response
-func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	s.ngin.bindRoutes(s.router)
-	s.router.ServeHTTP(w, r)
 }
 
 // Start starts the Server.
@@ -136,6 +117,16 @@ func (s *Server) Stop() {
 // Use adds the given middleware in the Server.
 func (s *Server) Use(middleware Middleware) {
 	s.ngin.use(middleware)
+}
+
+// build builds the Server and binds the routes to the router.
+func (s *Server) build() error {
+	return s.ngin.bindRoutes(s.router)
+}
+
+// serve serves the HTTP requests using the Server's router.
+func (s *Server) serve(w http.ResponseWriter, r *http.Request) {
+	s.router.ServeHTTP(w, r)
 }
 
 // ToMiddleware converts the given handler to a Middleware.
@@ -298,10 +289,17 @@ func WithSignature(signature SignatureConf) RouteOption {
 	}
 }
 
+// WithSSE returns a RouteOption to enable server-sent events.
+func WithSSE() RouteOption {
+	return func(r *featuredRoutes) {
+		r.sse = true
+	}
+}
+
 // WithTimeout returns a RouteOption to set timeout with given value.
 func WithTimeout(timeout time.Duration) RouteOption {
 	return func(r *featuredRoutes) {
-		r.timeout = timeout
+		r.timeout = &timeout
 	}
 }
 

@@ -2,15 +2,8 @@ export GO111MODULE=on
 export GOPROXY=https://goproxy.cn
 export GOSUMDB=sum.golang.org
 
-#.PHONY: new
-## 目录初始化
-#new:
-#	$(info ******************** new ********************)
-#	@mkdir runtime
-#	@mkdir runtime/logs
-
 .PHONY: build
-# 构建
+# 构建并打包应用（根据 env=dev|test|prod 编译，生成 build/app 及 app.tar）
 build:
 	$(info ******************** build ********************)
 	@echo "process [build] env=$(env)"
@@ -36,7 +29,7 @@ build:
 	tar -C ./build -cvf ./build/app.tar app
 
 .PHONY: api
-# 生成api文件
+# 根据 api.api 定义生成 Go API 代码与 Swagger 文档
 api:
 	$(info ******************** api ********************)
 	@echo "process build [api]"
@@ -44,7 +37,8 @@ api:
 	goctl api swagger --api app/api/api.api --dir app/api/
 	@echo "processed"
 
-# 依赖注入
+.PHONY: wire
+# 根据 wire.go 生成依赖注入代码（wire_gen.go）
 wire:
 	$(info ******************** wire ********************)
 	@echo "process build [wire]"
@@ -52,7 +46,7 @@ wire:
 	@echo "processed"
 
 .PHONY: model
-# 生成model文件
+# 根据 MySQL 表结构生成 Go Model 代码
 model:
 	$(info ******************** model ********************)
 	@echo "process model"
@@ -62,9 +56,9 @@ model:
 
 # 帮助
 help:
+	@echo 'Version: v1.9.4-0.0.4'
 	@echo ''
-	@echo 'Usage:'
-	@echo ' make [target]'
+	@echo 'Usage: make [target]'
 	@echo ''
 	@echo 'Targets:'
 	@awk '/^[a-zA-Z\-\_0-9]+:/ { \
@@ -72,7 +66,7 @@ help:
         if (helpMessage) { \
             helpCommand = substr($$1, 0, index($$1, ":")-1); \
             helpMessage = substr(lastLine, RSTART + 2, RLENGTH); \
-            printf "\033[36m%-22s\033[0m %s\n", helpCommand,helpMessage; \
+            printf "    \033[36m%-22s\033[0m %s\n", helpCommand,helpMessage; \
         } \
     } \
     { lastLine = $$0 }' $(MAKEFILE_LIST)

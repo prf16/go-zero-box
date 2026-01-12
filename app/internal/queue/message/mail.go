@@ -21,10 +21,11 @@ type MailQueuePayload struct {
 	Content string
 }
 
-//----------------------------------------------
+// ----------------------------------------------
+// XXXQueueEnqueue 入队函数
 // Write a function NewXXXTask to create a task.（编写一个函数NewXXXTask来创建任务。）
 // A task consists of a type and a payload.（任务由类型和有效载荷组成。）
-//----------------------------------------------
+// ----------------------------------------------
 
 func MailQueueEnqueue(ctx context.Context, payload MailQueuePayload) error {
 	payloadByte, err := json.Marshal(payload)
@@ -50,7 +51,16 @@ func NewMailQueue(messageService *message.Service) *MailQueue {
 	return &MailQueue{MessageService: messageService}
 }
 
-func (q *MailQueue) Async() *asynqx.Handler {
+// ---------------------------------------------------------------
+// Handler 处理程序
+// Write a function HandleXXXTask to handle the input task.（编写一个函数 HandleXXXTask 来处理输入的任务）
+// Note that it satisfies the asynq.HandlerFunc interface.（请注意它满足 asynq.HandlerFunc 接口。）
+//
+// Handler doesn't need to be a function. You can define a type
+// that satisfies asynq.Handler interface. See examples below.（处理程序不一定需要是一个函数。你可以定义一个满足 asynq.Handler 接口的类型。请参考下面的示例。）
+// ---------------------------------------------------------------
+
+func (q *MailQueue) Handler() *asynqx.Handler {
 	return &asynqx.Handler{
 		Type:        MailQueueType,
 		Concurrency: 10,

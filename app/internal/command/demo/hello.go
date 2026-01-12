@@ -6,26 +6,25 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/zeromicro/go-zero/core/logx"
 	"go-zero-box/pkg/asynqx"
-	"time"
 )
 
-type Person struct {
+type Hello struct {
 }
 
-func NewPerson() *Person {
-	return &Person{}
+func NewHello() *Hello {
+	return &Hello{}
 }
 
 // Type 返回任务的唯一标识符
-func (s *Person) Type() string {
-	return "demo:person"
+func (s *Hello) Type() string {
+	return "demo:hello"
 }
 
 // Sync 返回一个 cobra.Command 实例，用于执行脚本任务
-func (s *Person) Sync() *cobra.Command {
+func (s *Hello) Sync() *cobra.Command {
 	return &cobra.Command{
 		Use:   s.Type(),
-		Short: "描述信息，这是一个demo任务",
+		Short: "描述信息，这是一个hello任务",
 		Run: func(cmd *cobra.Command, args []string) {
 			s.Handle()
 		},
@@ -33,7 +32,7 @@ func (s *Person) Sync() *cobra.Command {
 }
 
 // Async 返回一个 asynqx.Handler 实例，用于执行计划任务
-func (s *Person) Async() *asynqx.Handler {
+func (s *Hello) Async() *asynqx.Handler {
 	return &asynqx.Handler{
 		Type:      s.Type(),
 		Scheduler: "* * * * *",
@@ -43,6 +42,6 @@ func (s *Person) Async() *asynqx.Handler {
 		},
 	}
 }
-func (s *Person) Handle() {
-	logx.WithContext(context.Background()).Infof("time: %s I'm lisa\n", time.Now().String())
+func (s *Hello) Handle() {
+	logx.WithContext(context.Background()).Infof("Hello World command")
 }

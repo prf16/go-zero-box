@@ -1,7 +1,6 @@
 package asynqx
 
 import (
-	"fmt"
 	"github.com/hibiken/asynq"
 	"github.com/zeromicro/go-zero/core/service"
 	"log"
@@ -39,12 +38,12 @@ func (q *Queue) Start() {
 	mux.HandleFunc(q.handler.Type, q.handler.Async)
 
 	if err := q.server.Start(mux); err != nil {
-		panic(fmt.Sprintf("| Server: queue | type: %s | start error: %v", q.handler.Type, err))
+		panic(err)
 	}
 
-	log.Printf("| Server: queue | type: %s Concurrency:%d | start", q.handler.Type, q.handler.Concurrency)
+	log.Printf("[server:queue] start success at Type: %s Concurrency: %d...", q.handler.Type, q.handler.Concurrency)
 }
 func (q *Queue) Stop() {
 	q.server.Stop()
-	log.Printf("| Server: queue | type: %s | stop", q.handler.Type)
+	log.Printf("[server:queue] stop Type: %s", q.handler.Type)
 }

@@ -9,27 +9,27 @@ import (
 
 var Provider = wire.NewSet(
 	NewCommand,
-	demo.NewPerson,
+	demo.NewHello,
 )
 
 type Command struct {
-	Person *demo.Person
+	Hello *demo.Hello
 }
 
-func NewCommand(person *demo.Person) *Command {
-	return &Command{Person: person}
+func NewCommand(hello *demo.Hello) *Command {
+	return &Command{Hello: hello}
 }
 
-// ScriptHandler 注册脚本任务
-func ScriptHandler(s *Command) []*cobra.Command {
+// RegisterHandlerScript 注册脚本任务
+func RegisterHandlerScript(s *Command) []*cobra.Command {
 	return []*cobra.Command{
-		s.Person.Sync(),
+		s.Hello.Sync(),
 	}
 }
 
-// SchedulerHandler 注册计划任务
-func SchedulerHandler(s *Command) []*asynqx.Handler {
+// RegisterHandlerScheduler 注册计划任务
+func RegisterHandlerScheduler(s *Command) []*asynqx.Handler {
 	return []*asynqx.Handler{
-		s.Person.Async(),
+		s.Hello.Async(),
 	}
 }

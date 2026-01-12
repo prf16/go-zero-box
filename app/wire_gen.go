@@ -53,8 +53,8 @@ func initApp(c *config.Config) *App {
 	smsQueue := message2.NewSmsQueue(messageService)
 	wechatQueue := message2.NewWechatQueue(messageService)
 	queueQueue := queue.NewQueue(mailQueue, smsQueue, wechatQueue)
-	person := demo2.NewPerson()
-	commandCommand := command.NewCommand(person)
+	hello := demo2.NewHello()
+	commandCommand := command.NewCommand(hello)
 	app := NewApp(c, serviceContext, queueQueue, commandCommand, pkgPkg)
 	return app
 }

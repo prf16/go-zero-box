@@ -23,10 +23,10 @@ func NewQueue(messageMailQueue *message.MailQueue, messageSmsQueue *message.SmsQ
 	return &Queue{MessageMailQueue: messageMailQueue, MessageSmsQueue: messageSmsQueue, MessageWechatQueue: messageWechatQueue}
 }
 
-func Handler(s *Queue) []*asynqx.Handler {
+func RegisterHandlerQueue(s *Queue) []*asynqx.Handler {
 	return []*asynqx.Handler{
-		s.MessageMailQueue.Async(),
-		s.MessageSmsQueue.Async(),
-		s.MessageWechatQueue.Async(),
+		s.MessageMailQueue.Handler(),
+		s.MessageSmsQueue.Handler(),
+		s.MessageWechatQueue.Handler(),
 	}
 }

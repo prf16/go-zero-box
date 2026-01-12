@@ -75,22 +75,22 @@ $ make build env=dev|test|prod
 ```text
 .
 ├── app                             包含应用程序的主要代码
-│   ├── doc                         项目主业务逻辑
+│   ├── api                         api 描述文件
 │   ├── etc                         静态配置文件目录
 │   ├── internal                    内部业务逻辑
-│   ├── app.go                      应用程序的入口文件，定义了 API 服务、队列服务和调度服务的启动命令。
+│   ├── app.go                      应用程序的入口文件，定义了 api、scheduler、queue、script 服务。
 │   ├── wire.go                     依赖注入文件
 │   └── wire_gin.go                 依赖注入生成文件
 ├── build                           项目构建目录
-│   ├── app                         应用构建目录  
-│   │   ├── bin                     应用二进制文件
-│   │   └── deploy                  应用部署文件                 
-│   │   └── etc                     配置文件         
-│   └── app.tar                     应用构建打包文件（部署文件）         
-├── deploy                          部署目录
-│   ├── goctl                       代码生成工具                       
-│   ├── sql                         数据库脚本
-│   └── template                    模板文件 
+│   ├── app                         应用构建后的目录  
+│   │   ├── api                     接口文档目录     
+│   │   ├── etc                     配置文件目录
+│   │   └── app                     应用二进制文件
+│   └── app.tar                     应用构建后的打包文件
+├── deploy                          部署相关目录
+│   ├── access                      示例图片                       
+│   ├── goctl                       模板文件
+│   └── sql                         初始化数据库SQL
 ├── pkg                             工具包
 ├── runtime                         项目运行时目录
 ├── vendor                          项目依赖包
@@ -111,39 +111,39 @@ $ make build env=dev|test|prod
 
 #### 1. clone项目
 
-![初始化项目](./deploy/doc/access/快速开始/1初始化项目.jpg)
+![初始化项目](deploy/access/快速开始/1初始化项目.jpg)
 
 #### 2. 打开项目
 
-![打开项目](./deploy/doc/access/快速开始/2打开项目.jpg)
+![打开项目](deploy/access/快速开始/2打开项目.jpg)
 
 #### 3. 替换包名引用
 
-![替换包名引用](./deploy/doc/access/快速开始/3替换包名引用.jpg)
+![替换包名引用](deploy/access/快速开始/3替换包名引用.jpg)
 
 #### 4. 启动go模块
 
-![启动go模块](./deploy/doc/access/快速开始/4启动go模块.jpg)
+![启动go模块](deploy/access/快速开始/4启动go模块.jpg)
 
 #### 5. 安装gosdk
 
-![下载依赖包](./deploy/doc/access/快速开始/5安装gosdk.png)
+![下载依赖包](deploy/access/快速开始/5安装gosdk.png)
 
 #### 6. 下载依赖包
 
-![下载依赖包](./deploy/doc/access/快速开始/6下载依赖包.jpg)
+![下载依赖包](deploy/access/快速开始/6下载依赖包.jpg)
 
 #### 7. 启动redis
 
-![启动redis](./deploy/doc/access/快速开始/7启动redis.jpg)
+![启动redis](deploy/access/快速开始/7启动redis.jpg)
 
 #### 8. 启动项目
 
-![启动项目](./deploy/doc/access/快速开始/8启动项目.jpg)
+![启动项目](deploy/access/快速开始/8启动项目.jpg)
 
 #### 9. 启动成功
 
-![启动项目](./deploy/doc/access/快速开始/9启动成功.jpg)
+![启动项目](deploy/access/快速开始/9启动成功.jpg)
 
 #### 
 

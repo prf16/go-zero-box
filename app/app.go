@@ -33,7 +33,7 @@ func main() {
 	logc.MustSetup(c.Server.Log)
 	app := initApp(c)
 	rootCmd.AddCommand(serverApi(app), serverQueue(app), serverScheduler(app), serverAll(app))
-	rootCmd.AddCommand(command.ScriptHandler(app.command)...)
+	rootCmd.AddCommand(command.RegisterHandlerScript(app.command)...)
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Printf("execute core service failed, %s\n", err.Error())
@@ -49,7 +49,7 @@ func serverApi(app *App) *cobra.Command {
 			defer server.Stop()
 			handler.RegisterHandlers(server, app.svcCtx)
 			//httpx.SetValidator(tools.NewValidator())
-			log.Printf("[Server: api] start success at %s:%d...\n", app.config.Server.Host, app.config.Server.Port)
+			log.Printf("[server:api] start success at %s:%d...\n", app.config.Server.Host, app.config.Server.Port)
 			server.Start()
 		},
 	}
@@ -63,7 +63,7 @@ func serverQueue(app *App) *cobra.Command {
 			serviceGroup := service.NewServiceGroup()
 			defer serviceGroup.Stop()
 
-			handlers := queue.Handler(app.queue)
+			handlers := queue.RegisterHandlerQueue(app.queue)
 			for _, v := range handlers {
 				serviceGroup.Add(asynqx.NewQueue(app.config.Asynqx, v))
 			}
@@ -81,7 +81,7 @@ func serverScheduler(app *App) *cobra.Command {
 			serviceGroup := service.NewServiceGroup()
 			defer serviceGroup.Stop()
 
-			handlers := command.SchedulerHandler(app.command)
+			handlers := command.RegisterHandlerScheduler(app.command)
 			serviceGroup.Add(asynqx.NewScheduler(app.config.Asynqx, handlers))
 			for _, v := range handlers {
 				serviceGroup.Add(asynqx.NewQueue(app.config.Asynqx, v))

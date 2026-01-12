@@ -1,7 +1,6 @@
 package asynqx
 
 import (
-	"fmt"
 	"github.com/hibiken/asynq"
 	"github.com/zeromicro/go-zero/core/service"
 	"log"
@@ -17,7 +16,7 @@ type Scheduler struct {
 func NewScheduler(config *Config, handler []*Handler) service.Service {
 	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
-		log.Fatalf("| Server: scheduler | load location error: %v", err)
+		panic(err)
 	}
 
 	return &Scheduler{
@@ -40,20 +39,20 @@ func (q *Scheduler) Start() {
 	for _, v := range q.handler {
 		entryID, err := q.scheduler.Register(v.Scheduler, asynq.NewTask(v.Type, nil))
 		if err != nil {
-			panic(fmt.Sprintf("| Server: scheduler | q.scheduler.Register error: %v", err))
-		} else {
-			log.Printf("| Server: scheduler | type: %s | Register at %s %s", v.Type, entryID, v.Scheduler)
+			panic(err)
 		}
+
+		log.Printf("[server:scheduler] register Type: %s entryID: %s Scheduler: %s", v.Type, entryID, v.Scheduler)
 	}
 
-	log.Printf("| Server: scheduler | run...")
 	if err := q.scheduler.Start(); err != nil {
-		panic(fmt.Sprintf("| Server: scheduler | q.scheduler.Run error: %v", err))
+		panic(err)
 	}
 
+	log.Printf("[server:scheduler] run...")
 	select {}
 }
 func (q *Scheduler) Stop() {
 	q.scheduler.Shutdown()
-	log.Printf("| Server: scheduler | stop")
+	log.Printf("[server:scheduler] Shutdown")
 }

@@ -56,7 +56,7 @@ model:
 
 # 帮助
 help:
-	@echo 'Version: 1.9.4-0.0.4'
+	@echo 'Version: v1.9.4-0.0.4'
 	@echo ''
 	@echo 'Usage: make [target]'
 	@echo ''

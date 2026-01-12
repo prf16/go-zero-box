@@ -17,22 +17,22 @@ build:
 
 	@if [ "$(env)" = "dev" ]; then \
   		echo "Building for dev environment"; \
-		go build -ldflags="-s -w" -o ./build/app/bin/app app/app.go app/wire_gen.go;\
+		go build -ldflags="-s -w" -o ./build/app/app app/app.go app/wire_gen.go;\
 	elif [ "$(env)" = "prod" ]; then \
   		echo "Building for prod environment"; \
-		GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./build/app/bin/app app/app.go app/wire_gen.go;\
+		GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./build/app/app app/app.go app/wire_gen.go;\
 	elif [ "$(env)" = "test" ]; then \
 		echo "Building for test environment"; \
-		GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./build/app/bin/app app/app.go app/wire_gen.go;\
+		GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./build/app/app app/app.go app/wire_gen.go;\
 	else \
 		echo "Error: Unknown set env. Please set env to 'dev', 'prod', 'test'. Example：make api env=prod"; \
 		exit 1; \
 	fi
 
 	mkdir -p ./build/app/etc
-	mkdir -p ./build/app/doc
+	mkdir -p ./build/app/api
 	cp -f app/etc/app.yaml.$(env).bak ./build/app/etc/app.yaml
-	cp -f app/doc/api.json ./build/app/doc/api.json
+	cp -f app/api/api.json ./build/app/api/api.json
 	tar -C ./build -cvf ./build/app.tar app
 
 .PHONY: api
@@ -40,8 +40,8 @@ build:
 api:
 	$(info ******************** api ********************)
 	@echo "process build [api]"
-	goctl api go -api app/doc/api.api -dir app --style go_zero --home ./deploy/goctl/1.5.5/
-	goctl api swagger --api app/doc/api.api --dir app/doc/
+	goctl api go -api app/api/api.api -dir app --style go_zero --home ./deploy/goctl/1.5.5/
+	goctl api swagger --api app/api/api.api --dir app/api/
 	@echo "processed"
 
 # 依赖注入

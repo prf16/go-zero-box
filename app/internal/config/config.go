@@ -6,10 +6,11 @@ import (
 	"go-zero-box/pkg/asynqx"
 	"go-zero-box/pkg/database"
 	"go-zero-box/pkg/redis"
+	"go-zero-box/pkg/rpc"
 )
 
 var Provider = wire.NewSet(
-	wire.FieldsOf(new(*Config), "Database", "Redis", "Asynqx"),
+	wire.FieldsOf(new(*Config), "Database", "Redis", "Asynqx", "UserRpc"),
 )
 
 type Config struct {
@@ -18,6 +19,7 @@ type Config struct {
 	Redis    *redis.Config
 	Asynqx   *asynqx.Config
 	JwtAuth  *JwtAuth
+	UserRpc  *rpc.Config
 }
 
 // JwtAuth - jwt 配置

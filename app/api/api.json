@@ -244,6 +244,98 @@
         }
       }
     },
+    "/api/hello/rpc": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "tags": [
+          "Hello world"
+        ],
+        "summary": "Hello rpc",
+        "operationId": "helloHelloRpc",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "description": "返回状态0-成功\u003cbr\u003e10001-默认异常错误码,前端可提示\u003cbr\u003e20001-系统异常错误码，前端可不提示\u003cbr\u003e40000-未登录状态码",
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "message": {
+                  "description": "返回信息",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/hello/user_rpc": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "schemes": [
+          "https"
+        ],
+        "tags": [
+          "Hello world"
+        ],
+        "summary": "Hello user_rpc",
+        "operationId": "helloHelloUserRpc",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "description": "返回状态0-成功\u003cbr\u003e10001-默认异常错误码,前端可提示\u003cbr\u003e20001-系统异常错误码，前端可不提示\u003cbr\u003e40000-未登录状态码",
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "nickname"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "nickname": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "message": {
+                  "description": "返回信息",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/user/exit": {
       "post": {
         "security": [
@@ -386,7 +478,7 @@
       "in": "header"
     }
   },
-  "x-date": "2026-01-12 16:03:11",
+  "x-date": "2026-01-13 18:15:09",
   "x-description": "This is a goctl generated swagger file.",
   "x-github": "https://github.com/zeromicro/go-zero",
   "x-go-zero-doc": "https://go-zero.dev/",

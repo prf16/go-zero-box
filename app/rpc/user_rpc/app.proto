@@ -5,14 +5,14 @@ package user_rpc;
 option go_package = "app/rpc/user_rpc";
 
 //  hello 示例
-message HelloInfoReq {
+message HelloWorldReq {
 }
-message HelloInfoResp {
+message HelloWorldResp {
   string Message = 1;
 }
 
 service Hello {
-  rpc Info(HelloInfoReq) returns(HelloInfoResp);
+  rpc World(HelloWorldReq) returns(HelloWorldResp);
 }
 
 // 用户相关

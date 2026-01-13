@@ -24,6 +24,31 @@ type HelloResp struct {
 	Data HelloData `json:"data"`
 }
 
+type HelloRpcReq struct {
+}
+
+type HelloRpcResp struct {
+	Response
+	Data HelloRpcRespData `json:"data"`
+}
+
+type HelloRpcRespData struct {
+	Message string `json:"message"`
+}
+
+type HelloUserRpcReq struct {
+}
+
+type HelloUserRpcResp struct {
+	Response
+	Data HelloUserRpcRespData `json:"data"`
+}
+
+type HelloUserRpcRespData struct {
+	Id       uint64 `json:"id"`
+	Nickname string `json:"nickname"`
+}
+
 type LoginData struct {
 	User  LoginDataUser `json:"user"`  //用户基本信息
 	Token string        `json:"token"` //服务端返回的token值

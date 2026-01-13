@@ -8,6 +8,6 @@ import (
 
 func DocJsonHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "app/doc/api.json")
+		http.ServeFile(w, r, "app/api/api.json")
 	}
 }

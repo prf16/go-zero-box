@@ -37,6 +37,14 @@ api:
 	goctl api swagger --api app/api/api.api --dir app/api/
 	@echo "processed"
 
+.PHONY: rpc
+# 根据 app.proto 定义生成 Go RPC 代码
+rpc:
+	$(info ******************** rpc ********************)
+	@echo "process build [rpc]"
+	protoc ./app/rpc/user_rpc/app.proto --go_out=. --go-grpc_out=.
+	@echo "processed"
+
 .PHONY: wire
 # 根据 wire.go 生成依赖注入代码（wire_gen.go）
 wire:

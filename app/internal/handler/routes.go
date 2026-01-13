@@ -60,6 +60,18 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Path:    "/hello",
 					Handler: hello.HelloHandler(serverCtx),
 				},
+				{
+					// Hello rpc
+					Method:  http.MethodGet,
+					Path:    "/hello/rpc",
+					Handler: hello.HelloRpcHandler(serverCtx),
+				},
+				{
+					// Hello user_rpc
+					Method:  http.MethodGet,
+					Path:    "/hello/user_rpc",
+					Handler: hello.HelloUserRpcHandler(serverCtx),
+				},
 			}...,
 		),
 		rest.WithPrefix("/api"),

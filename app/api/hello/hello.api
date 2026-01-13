@@ -11,6 +11,30 @@ type (
     }
 )
 
+type (
+    HelloRpcReq {
+    }
+    HelloRpcResp {
+        Response
+        Data HelloRpcRespData `json:"data"`
+    }
+    HelloRpcRespData {
+        Message string `json:"message"`
+    }
+)
+
+type (
+    HelloUserRpcReq {
+    }
+    HelloUserRpcResp {
+        Response
+        Data HelloUserRpcRespData `json:"data"`
+    }
+    HelloUserRpcRespData {
+        Id uint64 `json:"id"`
+        Nickname string `json:"nickname"`
+    }
+)
 
 @server(
     middleware: LogMiddleware
@@ -22,4 +46,12 @@ service app {
     @doc "Hello world"
     @handler Hello
     get /hello (HelloReq) returns (HelloResp)
+
+    @doc "Hello rpc"
+    @handler HelloRpc
+    get /hello/rpc (HelloRpcReq) returns (HelloRpcResp)
+
+    @doc "Hello user_rpc"
+    @handler HelloUserRpc
+    get /hello/user_rpc (HelloUserRpcReq) returns (HelloUserRpcResp)
 }

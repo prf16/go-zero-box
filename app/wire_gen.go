@@ -24,6 +24,7 @@ import (
 	"go-zero-box/pkg/asynqx"
 	"go-zero-box/pkg/database"
 	"go-zero-box/pkg/redis"
+	"go-zero-box/pkg/rpc"
 )
 
 // Injectors from wire.go:
@@ -44,7 +45,10 @@ func initApp(c *config.Config) *App {
 	asynqxConfig := c.Asynqx
 	client := asynqx.NewClient(asynqxConfig)
 	asynq := asynqx.NewAsynq(client)
-	pkgPkg := pkg.NewPkg(databaseDatabase, redisRedis, asynq)
+	rpcConfig := c.UserRpc
+	user := rpc.NewUser(rpcConfig)
+	rpcRpc := rpc.NewRpc(user)
+	pkgPkg := pkg.NewPkg(databaseDatabase, redisRedis, asynq, rpcRpc)
 	authMiddleware := middleware.NewAuthMiddleware(c)
 	logMiddleware := middleware.NewLogMiddleware(c)
 	middlewareMiddleware := middleware.NewMiddleware(authMiddleware, logMiddleware)

@@ -23,9 +23,9 @@ build:
 	fi
 
 	mkdir -p ./build/app/etc
-	mkdir -p ./build/app/api
+	mkdir -p ./build/app/doc
 	cp -f app/etc/app.yaml.$(env).bak ./build/app/etc/app.yaml
-	cp -f app/api/api.json ./build/app/api/api.json
+	cp -f app/doc/api.json ./build/app/doc/api.json
 	tar -C ./build -cvf ./build/app.tar app
 
 .PHONY: api
@@ -33,8 +33,8 @@ build:
 api:
 	$(info ******************** api ********************)
 	@echo "process build [api]"
-	goctl api go -api app/api/api.api -dir app --style go_zero --home ./deploy/goctl/1.5.5/
-	goctl api swagger --api app/api/api.api --dir app/api/
+	goctl api go -api api/api.api -dir app --style go_zero --home ./deploy/goctl/1.5.5/
+	goctl api swagger --api api/api.api --dir app/doc/
 	@echo "processed"
 
 .PHONY: wire

@@ -11,31 +11,32 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type HelloUserRpcLogic struct {
+type HelloUserLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewHelloUserRpcLogic(ctx context.Context, svcCtx *svc.ServiceContext) *HelloUserRpcLogic {
-	return &HelloUserRpcLogic{
+func NewHelloUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *HelloUserLogic {
+	return &HelloUserLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *HelloUserRpcLogic) HelloUserRpc(req *types.HelloUserRpcReq) (resp *types.HelloUserRpcResp, err error) {
-	resp = &types.HelloUserRpcResp{}
+func (l *HelloUserLogic) HelloUser(req *types.HelloUserReq) (resp *types.HelloUserResp, err error) {
+	resp = &types.HelloUserResp{}
 
-	userInfo, err := l.svcCtx.Pkg.Rpc.User.Info(l.ctx, &user.UserInfoReq{})
+	userInfo, err := user.NewUserClient(l.svcCtx.Pkg.Rpc.User.Conn()).Info(l.ctx, &user.UserInfoReq{})
 	if err != nil {
 		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}
 
-	resp.Data = types.HelloUserRpcRespData{
+	resp.Data = types.HelloUserRespData{
 		Id:       userInfo.User.ID,
 		Nickname: userInfo.User.NickName,
 	}
+
 	return
 }

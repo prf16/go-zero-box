@@ -20,34 +20,34 @@ import (
 	"go-zero-box/app/internal/services/demo"
 	"go-zero-box/app/internal/services/message"
 	"go-zero-box/app/internal/svc"
-	database2 "go-zero-box/bootstrap/database"
-	redis2 "go-zero-box/bootstrap/redis"
-	rpc2 "go-zero-box/bootstrap/rpc"
 	"go-zero-box/pkg"
 	"go-zero-box/pkg/asynqx"
+	"go-zero-box/pkg/database"
+	"go-zero-box/pkg/redis"
+	"go-zero-box/pkg/rpc"
 )
 
 // Injectors from wire.go:
 
 func initApp(c *config.Config) *App {
 	databaseConfig := c.Database
-	databaseDefault := database2.NewDefault(databaseConfig)
+	databaseDefault := database.NewDefault(databaseConfig)
 	userModel := usermodel.NewUserModel(databaseDefault)
 	messageModel := messagemodel.NewMessageModel(databaseDefault)
 	modelModel := model.NewModel(userModel, messageModel)
 	service := demo.NewService(userModel)
 	messageService := message.NewService()
 	servicesServices := services.NewServices(service, messageService)
-	databaseDatabase := database2.NewDatabase(databaseDefault)
+	databaseDatabase := database.NewDatabase(databaseDefault)
 	redisConfig := c.Redis
-	redisDefault := redis2.NewDefault(redisConfig)
-	redisRedis := redis2.NewRedis(redisDefault)
+	redisDefault := redis.NewDefault(redisConfig)
+	redisRedis := redis.NewRedis(redisDefault)
 	asynqxConfig := c.Asynqx
 	client := asynqx.NewClient(asynqxConfig)
 	asynq := asynqx.NewAsynq(client)
 	rpcConfig := c.UserRpc
-	user := rpc2.NewUser(rpcConfig)
-	rpcRpc := rpc2.NewRpc(user)
+	user := rpc.NewUser(rpcConfig)
+	rpcRpc := rpc.NewRpc(user)
 	pkgPkg := pkg.NewPkg(databaseDatabase, redisRedis, asynq, rpcRpc)
 	authMiddleware := middleware.NewAuthMiddleware(c)
 	logMiddleware := middleware.NewLogMiddleware(c)

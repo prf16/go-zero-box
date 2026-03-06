@@ -9,7 +9,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/google/wire v0.6.0
 	github.com/hibiken/asynq v0.25.1
-	github.com/prf16/go-zero-box-rpc v1.9.4-0.1.0
+	github.com/prf16/go-zero-box-rpc v1.9.4-0.1.2
 	github.com/spf13/cast v1.7.1
 	github.com/spf13/cobra v1.10.2
 	github.com/zeromicro/go-zero v1.9.4

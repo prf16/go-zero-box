@@ -30,4 +30,4 @@ JwtAuth:
   AccessExpire: 604800
 
 UserRpc:
-  Target: 127.0.0.1:8080
+  Target: 127.0.0.1:8101

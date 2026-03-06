@@ -198,7 +198,7 @@ github.com/pelletier/go-toml/v2/internal/characters
 github.com/pelletier/go-toml/v2/internal/danger
 github.com/pelletier/go-toml/v2/internal/tracker
 github.com/pelletier/go-toml/v2/unstable
-# github.com/prf16/go-zero-box-rpc v1.9.4-0.1.0
+# github.com/prf16/go-zero-box-rpc v1.9.4-0.1.2
 ## explicit; go 1.23.5
 github.com/prf16/go-zero-box-rpc/api/user
 # github.com/prometheus/client_golang v1.21.1

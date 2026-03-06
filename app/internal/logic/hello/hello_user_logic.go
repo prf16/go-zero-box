@@ -28,7 +28,7 @@ func NewHelloUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *HelloUs
 func (l *HelloUserLogic) HelloUser(req *types.HelloUserReq) (resp *types.HelloUserResp, err error) {
 	resp = &types.HelloUserResp{}
 
-	userInfo, err := l.svcCtx.Pkg.Rpc.User.Info(l.ctx, &user.UserInfoReq{})
+	userInfo, err := user.NewUserClient(l.svcCtx.Pkg.Rpc.User.Conn()).Info(l.ctx, &user.UserInfoReq{})
 	if err != nil {
 		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}

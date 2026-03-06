@@ -1,0 +1,41 @@
+import "../base/base.api"
+
+type (
+    HelloReq {
+    }
+    HelloResp {
+        Response
+        Data HelloData `json:"data"`
+    }
+    HelloData {
+    }
+)
+
+type (
+    HelloUserReq {
+    }
+    HelloUserResp {
+        Response
+        Data HelloUserRespData `json:"data"`
+    }
+    HelloUserRespData {
+        Id uint64 `json:"id"`
+        Nickname string `json:"nickname"`
+    }
+)
+
+@server(
+    middleware: LogMiddleware
+    group: hello
+    prefix: /api
+    tags: "Hello world"
+)
+service app {
+    @doc "Hello world"
+    @handler Hello
+    get /hello (HelloReq) returns (HelloResp)
+
+    @doc "Hello user（rpc）"
+    @handler HelloUser
+    get /hello/user (HelloUserReq) returns (HelloUserResp)
+}

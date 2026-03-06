@@ -148,8 +148,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prashantv/gostub v1.1.0 h1:BTyx3RfQjRHnUWaGF9oQos79AlQ5k8WNktv7VGvVH4g=
 github.com/prashantv/gostub v1.1.0/go.mod h1:A5zLQHz7ieHGG7is6LLXLz7I8+3LZzsrV0P1IAHhP5U=
-github.com/prf16/go-zero-box-rpc v1.9.4-0.1.0 h1:cy1QEjEaFH09T0gq/3xNumMB0wDKTuHTwZ0pjVwK+e8=
-github.com/prf16/go-zero-box-rpc v1.9.4-0.1.0/go.mod h1:XW9s188Q/qm+6/l+yPC5Cq3QxbCQbgoeMzZJ0O9uIBU=
+github.com/prf16/go-zero-box-rpc v1.9.4-0.1.2 h1:0rO+U2cSYfiGh8TRl06W9ElNe1LYWwKiWIDnfEKL2Q8=
+github.com/prf16/go-zero-box-rpc v1.9.4-0.1.2/go.mod h1:XW9s188Q/qm+6/l+yPC5Cq3QxbCQbgoeMzZJ0O9uIBU=
 github.com/prometheus/client_golang v1.21.1 h1:DOvXXTqVzvkIewV/CDPFdejpMCGeMcbGCQ8YOmu+Ibk=
 github.com/prometheus/client_golang v1.21.1/go.mod h1:U9NM32ykUErtVBxdvD3zfi+EuFkkaBvMb09mIfe0Zgg=
 github.com/prometheus/client_model v0.6.1 h1:ZKSh/rekM+n3CeS952MLRAdFwIKqeY8b62p8ais2e9E=

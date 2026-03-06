@@ -24,27 +24,15 @@ type HelloResp struct {
 	Data HelloData `json:"data"`
 }
 
-type HelloRpcReq struct {
+type HelloUserReq struct {
 }
 
-type HelloRpcResp struct {
+type HelloUserResp struct {
 	Response
-	Data HelloRpcRespData `json:"data"`
+	Data HelloUserRespData `json:"data"`
 }
 
-type HelloRpcRespData struct {
-	Message string `json:"message"`
-}
-
-type HelloUserRpcReq struct {
-}
-
-type HelloUserRpcResp struct {
-	Response
-	Data HelloUserRpcRespData `json:"data"`
-}
-
-type HelloUserRpcRespData struct {
+type HelloUserRespData struct {
 	Id       uint64 `json:"id"`
 	Nickname string `json:"nickname"`
 }

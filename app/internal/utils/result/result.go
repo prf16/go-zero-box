@@ -2,8 +2,9 @@ package result
 
 import (
 	"context"
-	"github.com/zeromicro/go-zero/core/logx"
 	"runtime/debug"
+
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type Result struct {

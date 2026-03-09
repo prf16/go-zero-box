@@ -2,12 +2,13 @@ package middleware
 
 import (
 	"context"
-	"github.com/golang-jwt/jwt/v4"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"go-zero-box/app/internal/config"
 	"go-zero-box/app/internal/utils/result"
 	"net/http"
+
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 type AuthMiddleware struct {
@@ -32,17 +33,17 @@ func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		})
 		if err != nil {
 			logx.ErrorStack(err.Error())
-			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), result.MessageAuthTokenNotValid))
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), "登录已过期，请重新登录"))
 			return
 		}
 		if !token.Valid {
-			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), result.MessageAuthTokenNotValid))
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), "登录已过期，请重新登录"))
 			return
 		}
 
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if !ok {
-			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), result.MessageAuthTokenNotValid))
+			httpx.WriteJsonCtx(r.Context(), w, http.StatusOK, result.ResponseAuth(r.Context(), "登录已过期，请重新登录"))
 			return
 		}
 

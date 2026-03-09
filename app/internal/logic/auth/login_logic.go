@@ -2,8 +2,6 @@ package auth
 
 import (
 	"context"
-	"github.com/Masterminds/squirrel"
-	"github.com/golang-jwt/jwt/v4"
 	"go-zero-box/app/internal/model/usermodel"
 	"go-zero-box/app/internal/queue/message"
 	"go-zero-box/app/internal/utils/constant"
@@ -11,6 +9,9 @@ import (
 	"go-zero-box/app/internal/utils/tools"
 	"strings"
 	"time"
+
+	"github.com/Masterminds/squirrel"
+	"github.com/golang-jwt/jwt/v4"
 
 	"go-zero-box/app/internal/svc"
 	"go-zero-box/app/internal/types"
@@ -55,10 +56,10 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 
 	// 校验用户是否存在
 	if userInfo == nil || userInfo.Id == 0 {
-		return nil, result.Response(l.ctx, result.MessageAuthNotUser)
+		return nil, result.Response(l.ctx, "您不是该系统用户，请联系管理员开通权限")
 	}
 	if userInfo.Status != constant.AccountStatusEnable {
-		return nil, result.Response(l.ctx, result.MessageAuthUserStatusDisable)
+		return nil, result.Response(l.ctx, "账号被禁用")
 	}
 
 	// 密码校验工作操作--密码校验

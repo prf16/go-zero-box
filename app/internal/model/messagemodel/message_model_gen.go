@@ -117,12 +117,15 @@ func (m *defaultMessageModel) InsertWithUpdate(ctx context.Context, data *Messag
 		data.CreatedAt = time.Now()
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?)", m.table, messageRowsExpectAutoSet)
 		ret, err := m.conn.ExecCtx(ctx, query, data.UserId, data.Content)
+		if err != nil {
+			return err
+		}
 		id, err := ret.LastInsertId()
 		if err != nil {
 			return err
 		}
 		data.Id = uint64(id)
-		return err
+		return nil
 	} else {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, messageRowsWithPlaceHolder)
 		_, err := m.conn.ExecCtx(ctx, query, data.UserId, data.Content, data.Id)

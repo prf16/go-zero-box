@@ -125,12 +125,15 @@ func (m *defaultUserModel) InsertWithUpdate(ctx context.Context, data *User) err
 		data.CreatedAt = time.Now()
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, userRowsExpectAutoSet)
 		ret, err := m.conn.ExecCtx(ctx, query, data.Uuid, data.Account, data.Name, data.Mobile, data.Email, data.Password, data.Gender, data.Note, data.Status, data.IsDelete)
+		if err != nil {
+			return err
+		}
 		id, err := ret.LastInsertId()
 		if err != nil {
 			return err
 		}
 		data.Id = uint64(id)
-		return err
+		return nil
 	} else {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, userRowsWithPlaceHolder)
 		_, err := m.conn.ExecCtx(ctx, query, data.Uuid, data.Account, data.Name, data.Mobile, data.Email, data.Password, data.Gender, data.Note, data.Status, data.IsDelete, data.Id)

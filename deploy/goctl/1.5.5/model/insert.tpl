@@ -20,12 +20,15 @@ func (m *default{{.upperStartCamelObject}}Model) InsertWithUpdate(ctx context.Co
             return conn.ExecCtx(ctx, query, {{.expressionValues}})
         }, {{.keyValues}}){{else}}query := fmt.Sprintf("insert into %s (%s) values ({{.expression}})", m.table, {{.lowerStartCamelObject}}RowsExpectAutoSet)
         ret,err:=m.conn.ExecCtx(ctx, query, {{.expressionValues}}){{end}}
+        if err != nil {
+            return err
+        }
         id, err := ret.LastInsertId()
         if err != nil {
             return err
         }
         data.Id = uint64(id)
-        return err
+        return nil
 	} else {
         {{if .withCache}}{{if .containsIndexCache}}data, err:=m.FindOne(ctx, newData.{{.upperStartCamelPrimaryKey}})
         if err!=nil{

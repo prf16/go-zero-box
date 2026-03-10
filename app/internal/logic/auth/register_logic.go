@@ -40,10 +40,14 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRe
 		return nil, result.Response(l.ctx, "账号已存在")
 	}
 	// 2.添加用户
+	hashedPassword, err := tools.HashAndSalt([]byte(req.Password))
+	if err != nil {
+		return nil, result.ResponseSystem(l.ctx, err.Error())
+	}
 	_, err = l.svcCtx.Model.UserModel.Insert(l.ctx, &usermodel.User{
 		Uuid:      uuid.New().String(),
 		Account:   req.Account,
-		Password:  tools.HashAndSalt([]byte(req.Password)),
+		Password:  hashedPassword,
 		Status:    constant.AccountStatusEnable,
 		IsDelete:  constant.IsNoDelete,
 		CreatedAt: time.Now(),

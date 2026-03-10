@@ -8,12 +8,12 @@ import (
 )
 
 // HashAndSalt 加密密码
-func HashAndSalt(pwd []byte) string {
-	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
+func HashAndSalt(pwd []byte) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.DefaultCost)
 	if err != nil {
-
+		return "", err
 	}
-	return string(hash)
+	return string(hash), nil
 }
 
 // ValidatePasswords 验证密码 false密码不一致 true密码一致
@@ -26,7 +26,7 @@ func ValidatePasswords(hashedPwd string, plainPwd []byte) bool {
 	return true
 }
 
-// AesDecrypt AES加密
+// AesDecrypt AES解密
 func AesDecrypt(cryted, key string) ([]byte, error) {
 	//使用RawURLEncoding 不要使用StdEncoding
 	//不要使用StdEncoding  放在url参数中回导致错误

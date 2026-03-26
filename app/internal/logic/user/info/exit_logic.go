@@ -3,10 +3,11 @@ package info
 import (
 	"context"
 	"fmt"
-	"github.com/spf13/cast"
 	"go-zero-box/app/internal/svc"
 	"go-zero-box/app/internal/types"
 	"go-zero-box/app/internal/utils/result"
+
+	"github.com/spf13/cast"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -35,7 +36,7 @@ func (l *ExitLogic) Exit() (resp *types.ExitResp, err error) {
 	}
 
 	// 删除用户登入标识
-	_, err = l.svcCtx.Pkg.Redis.Default.Del(fmt.Sprintf("user:auth:%d", userId))
+	_, err = l.svcCtx.Pkg.Redis.Default.DelCtx(l.ctx, fmt.Sprintf("user:auth:%d", userId))
 	if err != nil {
 		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}

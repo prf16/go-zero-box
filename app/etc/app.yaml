@@ -1,0 +1,33 @@
+Server:
+  Name: api
+  Host: 0.0.0.0
+  Port: 8001
+  Timeout: 30000
+  MaxBytes: 2097152
+  Log:
+    Level: debug
+#    Stat: true
+#    Mode: file
+#    Path: runtime/logs
+#    Rotation: daily
+#    KeepDays: 10
+
+Asynqx:
+  Addr: 127.0.0.1:6379
+  Password: ""
+  DB: 2
+
+Redis:
+  Host: 127.0.0.1:6379
+  Type: "node"
+  Pass: ""
+
+Database:
+  Default: root:123456@tcp(127.0.0.1:3306)/go-zero-box?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+JwtAuth:
+  AccessSecret: ad879037-c7a4-4063-9236-6bfc35d54b7d
+  AccessExpire: 604800
+
+UserRpc:
+  Target: 127.0.0.1:8080

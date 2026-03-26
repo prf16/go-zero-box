@@ -3,17 +3,18 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/spf13/cobra"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/core/service"
-	"github.com/zeromicro/go-zero/rest"
 	"go-zero-box/app/internal/command"
 	"go-zero-box/app/internal/config"
 	"go-zero-box/app/internal/handler"
 	"go-zero-box/app/internal/queue"
 	"go-zero-box/pkg/asynqx"
 	"log"
+
+	"github.com/spf13/cobra"
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/core/logc"
+	"github.com/zeromicro/go-zero/core/service"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 var (
@@ -29,7 +30,14 @@ var (
 func main() {
 	flag.Parse()
 	var c *config.Config
-	conf.MustLoad(*configFile, &c)
+	err := conf.Load(*configFile, &c)
+	if err != nil {
+		err = conf.Load("etc/app.yaml", &c)
+		if err != nil {
+			fmt.Printf("%s\n", err.Error())
+			return
+		}
+	}
 	logc.MustSetup(c.Server.Log)
 	app := initApp(c)
 	rootCmd.AddCommand(serverApi(app), serverQueue(app), serverScheduler(app), serverAll(app))

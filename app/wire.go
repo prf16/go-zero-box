@@ -1,15 +1,16 @@
 //go:build wireinject
 // +build wireinject
 
-package main
+package app
 
 import (
-	"github.com/google/wire"
 	"go-zero-box/app/internal/command"
 	"go-zero-box/app/internal/config"
 	"go-zero-box/app/internal/queue"
 	"go-zero-box/app/internal/svc"
 	"go-zero-box/pkg"
+
+	"github.com/google/wire"
 )
 
 type App struct {

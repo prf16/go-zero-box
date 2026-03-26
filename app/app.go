@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"flag"
@@ -27,7 +27,7 @@ var (
 	}
 )
 
-func main() {
+func Start() {
 	flag.Parse()
 	var c *config.Config
 	err := conf.Load(*configFile, &c)

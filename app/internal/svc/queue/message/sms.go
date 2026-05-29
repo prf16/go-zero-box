@@ -3,11 +3,12 @@ package message
 import (
 	"context"
 	"encoding/json"
+	"go-zero-box/app/internal/svc/model/usermodel"
+	"go-zero-box/app/internal/svc/services/message"
+	"go-zero-box/pkg/asynqx"
+
 	"github.com/hibiken/asynq"
 	"github.com/zeromicro/go-zero/core/logx"
-	"go-zero-box/app/internal/model/usermodel"
-	"go-zero-box/app/internal/services/message"
-	"go-zero-box/pkg/asynqx"
 )
 
 // 任务的唯一标识符

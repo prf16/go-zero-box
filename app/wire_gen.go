@@ -7,19 +7,19 @@
 package app
 
 import (
-	"go-zero-box/app/internal/command"
-	demo2 "go-zero-box/app/internal/command/demo"
 	"go-zero-box/app/internal/config"
 	"go-zero-box/app/internal/middleware"
-	"go-zero-box/app/internal/model"
-	"go-zero-box/app/internal/model/messagemodel"
-	"go-zero-box/app/internal/model/usermodel"
-	"go-zero-box/app/internal/queue"
-	message2 "go-zero-box/app/internal/queue/message"
-	"go-zero-box/app/internal/services"
-	"go-zero-box/app/internal/services/demo"
-	"go-zero-box/app/internal/services/message"
 	"go-zero-box/app/internal/svc"
+	"go-zero-box/app/internal/svc/command"
+	"go-zero-box/app/internal/svc/command/hello"
+	"go-zero-box/app/internal/svc/model"
+	"go-zero-box/app/internal/svc/model/messagemodel"
+	"go-zero-box/app/internal/svc/model/usermodel"
+	"go-zero-box/app/internal/svc/queue"
+	message2 "go-zero-box/app/internal/svc/queue/message"
+	"go-zero-box/app/internal/svc/services"
+	"go-zero-box/app/internal/svc/services/demo"
+	"go-zero-box/app/internal/svc/services/message"
 	"go-zero-box/pkg"
 	"go-zero-box/pkg/asynqx"
 	"go-zero-box/pkg/database"
@@ -30,49 +30,47 @@ import (
 // Injectors from wire.go:
 
 func initApp(c *config.Config) *App {
+	authMiddleware := middleware.NewAuthMiddleware(c)
+	logMiddleware := middleware.NewLogMiddleware(c)
+	middlewareMiddleware := middleware.NewMiddleware(authMiddleware, logMiddleware)
 	databaseConfig := c.Database
 	databaseDefault := database.NewDefault(databaseConfig)
-	userModel := usermodel.NewUserModel(databaseDefault)
-	messageModel := messagemodel.NewMessageModel(databaseDefault)
-	modelModel := model.NewModel(userModel, messageModel)
-	service := demo.NewService(userModel)
-	messageService := message.NewService()
-	servicesServices := services.NewServices(service, messageService)
 	databaseDatabase := database.NewDatabase(databaseDefault)
 	redisConfig := c.Redis
 	redisDefault := redis.NewDefault(redisConfig)
 	redisRedis := redis.NewRedis(redisDefault)
-	asynqxConfig := c.Asynqx
-	client := asynqx.NewClient(asynqxConfig)
+	client := asynqx.NewClient(redisConfig)
 	asynq := asynqx.NewAsynq(client)
 	rpcConfig := c.UserRpc
 	user := rpc.NewUser(rpcConfig)
 	rpcRpc := rpc.NewRpc(user)
 	pkgPkg := pkg.NewPkg(databaseDatabase, redisRedis, asynq, rpcRpc)
-	authMiddleware := middleware.NewAuthMiddleware(c)
-	logMiddleware := middleware.NewLogMiddleware(c)
-	middlewareMiddleware := middleware.NewMiddleware(authMiddleware, logMiddleware)
-	serviceContext := svc.NewServiceContext(c, modelModel, servicesServices, pkgPkg, middlewareMiddleware)
-	mailQueue := message2.NewMailQueue(messageService)
-	smsQueue := message2.NewSmsQueue(messageService)
-	wechatQueue := message2.NewWechatQueue(messageService)
+	world := hello.NewWorld()
+	commandCommand := command.NewCommand(world)
+	userModel := usermodel.NewUserModel(databaseDefault)
+	messageModel := messagemodel.NewMessageModel(databaseDefault)
+	modelModel := model.NewModel(userModel, messageModel)
+	service := message.NewService()
+	mailQueue := message2.NewMailQueue(service)
+	smsQueue := message2.NewSmsQueue(service)
+	wechatQueue := message2.NewWechatQueue(service)
 	queueQueue := queue.NewQueue(mailQueue, smsQueue, wechatQueue)
-	hello := demo2.NewHello()
-	commandCommand := command.NewCommand(hello)
-	app := NewApp(c, serviceContext, queueQueue, commandCommand, pkgPkg)
+	demoService := demo.NewService(userModel)
+	servicesServices := services.NewServices(demoService, service)
+	serviceContext := svc.NewServiceContext(middlewareMiddleware, c, pkgPkg, commandCommand, modelModel, queueQueue, servicesServices)
+	app := NewApp(c, middlewareMiddleware, serviceContext, pkgPkg)
 	return app
 }
 
 // wire.go:
 
 type App struct {
-	config  *config.Config
-	svcCtx  *svc.ServiceContext
-	queue   *queue.Queue
-	command *command.Command
-	pkg     *pkg.Pkg
+	config     *config.Config
+	middleware *middleware.Middleware
+	svcCtx     *svc.ServiceContext
+	pkg        *pkg.Pkg
 }
 
-func NewApp(config2 *config.Config, svcCtx *svc.ServiceContext, queue2 *queue.Queue, command2 *command.Command, pkg2 *pkg.Pkg) *App {
-	return &App{config: config2, svcCtx: svcCtx, queue: queue2, command: command2, pkg: pkg2}
+func NewApp(config2 *config.Config, middleware2 *middleware.Middleware, svcCtx *svc.ServiceContext, pkg2 *pkg.Pkg) *App {
+	return &App{config: config2, middleware: middleware2, svcCtx: svcCtx, pkg: pkg2}
 }

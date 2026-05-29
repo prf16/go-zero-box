@@ -6,16 +6,11 @@ Server:
   MaxBytes: 2097152
   Log:
     Level: debug
-#    Stat: true
-#    Mode: file
-#    Path: runtime/logs
-#    Rotation: daily
-#    KeepDays: 10
-
-Asynqx:
-  Addr: 127.0.0.1:6379
-  Password: ""
-  DB: 2
+    Stat: true
+    Mode: file
+    Path: runtime/logs
+    Rotation: daily
+    KeepDays: 10
 
 Redis:
   Host: 127.0.0.1:6379
@@ -30,4 +25,4 @@ JwtAuth:
   AccessExpire: 604800
 
 UserRpc:
-  Target: 127.0.0.1:8080
+  Target: 127.0.0.1:8011

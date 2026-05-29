@@ -1,7 +1,7 @@
 package demo
 
 import (
-	"go-zero-box/app/internal/model/usermodel"
+	"go-zero-box/app/internal/svc/model/usermodel"
 )
 
 type Service struct {

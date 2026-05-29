@@ -1,24 +1,24 @@
 package config
 
 import (
-	"github.com/google/wire"
-	"github.com/zeromicro/go-zero/rest"
-	"go-zero-box/pkg/asynqx"
 	"go-zero-box/pkg/database"
 	"go-zero-box/pkg/redis"
 	"go-zero-box/pkg/rpc"
+
+	"github.com/google/wire"
+	"github.com/zeromicro/go-zero/rest"
 )
 
 var Provider = wire.NewSet(
-	wire.FieldsOf(new(*Config), "Database", "Redis", "Asynqx", "UserRpc"),
+	wire.FieldsOf(new(*Config), "Database", "Redis", "UserRpc"),
 )
 
 type Config struct {
-	Server   rest.RestConf
+	Server  rest.RestConf
+	JwtAuth *JwtAuth
+
 	Database *database.Config
 	Redis    *redis.Config
-	Asynqx   *asynqx.Config
-	JwtAuth  *JwtAuth
 	UserRpc  *rpc.Config
 }
 

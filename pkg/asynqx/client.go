@@ -1,16 +1,17 @@
 package asynqx
 
 import (
+	"go-zero-box/pkg/redis"
+
 	"github.com/hibiken/asynq"
 )
 
 var Client *asynq.Client
 
-func NewClient(c *Config) *asynq.Client {
+func NewClient(c *redis.Config) *asynq.Client {
 	Client = asynq.NewClient(asynq.RedisClientOpt{
-		Addr:     c.Addr,
-		Password: c.Password,
-		DB:       c.DB,
+		Addr:     c.Host,
+		Password: c.Pass,
 	})
 	return Client
 }

@@ -3,20 +3,21 @@ package message
 import (
 	"context"
 	"encoding/json"
+	"go-zero-box/app/internal/svc/model/usermodel"
+	"go-zero-box/app/internal/svc/services/message"
+	"go-zero-box/pkg/asynqx"
+
 	"github.com/hibiken/asynq"
 	"github.com/zeromicro/go-zero/core/logx"
-	"go-zero-box/app/internal/model/usermodel"
-	"go-zero-box/app/internal/services/message"
-	"go-zero-box/pkg/asynqx"
 )
 
-// 邮箱通知队列
+// 任务的唯一标识符
 
-const MailQueueType = "message:mail"
+const WechatQueueType = "message:wechat"
 
 // 队列里的任务消息体
 
-type MailQueuePayload struct {
+type WechatQueuePayload struct {
 	User    *usermodel.User
 	Content string
 }
@@ -27,28 +28,27 @@ type MailQueuePayload struct {
 // A task consists of a type and a payload.（任务由类型和有效载荷组成。）
 // ----------------------------------------------
 
-func MailQueueEnqueue(ctx context.Context, payload MailQueuePayload) error {
+func WechatQueueEnqueue(ctx context.Context, payload WechatQueuePayload) error {
 	payloadByte, err := json.Marshal(payload)
-	if err != nil {
-		logx.Errorf("MailQueueEnqueue json.Marshal err: %v", err)
-		return nil
-	}
-
-	taskInfo, err := asynqx.Client.EnqueueContext(ctx, asynqx.NewTask(MailQueueType, payloadByte))
 	if err != nil {
 		return err
 	}
 
-	logx.Infof("MailQueueEnqueue taskInfo.ID: %s", taskInfo.ID)
+	taskInfo, err := asynqx.Client.EnqueueContext(ctx, asynqx.NewTask(WechatQueueType, payloadByte))
+	if err != nil {
+		return err
+	}
+
+	logx.Infof("Queue MailProcess EnqueueWechatQueue taskInfo: %+v", taskInfo)
 	return nil
 }
 
-type MailQueue struct {
+type WechatQueue struct {
 	MessageService *message.Service
 }
 
-func NewMailQueue(messageService *message.Service) *MailQueue {
-	return &MailQueue{MessageService: messageService}
+func NewWechatQueue(messageService *message.Service) *WechatQueue {
+	return &WechatQueue{MessageService: messageService}
 }
 
 // ---------------------------------------------------------------
@@ -60,21 +60,21 @@ func NewMailQueue(messageService *message.Service) *MailQueue {
 // that satisfies asynq.Handler interface. See examples below.（处理程序不一定需要是一个函数。你可以定义一个满足 asynq.Handler 接口的类型。请参考下面的示例。）
 // ---------------------------------------------------------------
 
-func (q *MailQueue) Handler() *asynqx.Handler {
+func (q *WechatQueue) Handler() *asynqx.Handler {
 	return &asynqx.Handler{
-		Type:        MailQueueType,
+		Type:        SmsQueueType,
 		Concurrency: 10,
 		Async: func(ctx context.Context, t *asynq.Task) error {
-			logx.Infof("MailQueue ProcessTask t.Payload: %+v", string(t.Payload()))
-			var payload MailQueuePayload
+			logx.Infof("WechatQueue ProcessTask t.Payload: %s", string(t.Payload()))
+			var payload WechatQueuePayload
 			if err := json.Unmarshal(t.Payload(), &payload); err != nil {
-				logx.Errorf("MailQueue ProcessTask json.Unmarshal err: %v", err)
+				logx.Errorf("WechatQueue ProcessTask json.Unmarshal err: %v", err)
 				return err
 			}
 
-			err := q.MessageService.Mail(payload.User, payload.Content)
+			err := q.MessageService.Wechat(payload.User, payload.Content)
 			if err != nil {
-				logx.Errorf("MailQueue ProcessTask q.MessageService.MailQueue err: %v payload: %+v", err, payload)
+				logx.Errorf("WechatQueue ProcessTask q.MessageService.Wechat err: %v payload: %+v", err, payload)
 				return err
 			}
 			return nil

@@ -3,8 +3,8 @@ package hello
 import (
 	"context"
 	"go-zero-box/app/internal/svc"
+	"go-zero-box/app/internal/svc/utils/result"
 	"go-zero-box/app/internal/types"
-	"go-zero-box/app/internal/utils/result"
 
 	"github.com/prf16/go-zero-box-rpc/api/user"
 	"github.com/zeromicro/go-zero/core/logx"

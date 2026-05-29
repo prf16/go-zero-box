@@ -1,9 +1,10 @@
 package services
 
 import (
+	"go-zero-box/app/internal/svc/services/demo"
+	"go-zero-box/app/internal/svc/services/message"
+
 	"github.com/google/wire"
-	"go-zero-box/app/internal/services/demo"
-	"go-zero-box/app/internal/services/message"
 )
 
 var Provider = wire.NewSet(

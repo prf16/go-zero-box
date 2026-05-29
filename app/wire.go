@@ -4,9 +4,8 @@
 package app
 
 import (
-	"go-zero-box/app/internal/command"
 	"go-zero-box/app/internal/config"
-	"go-zero-box/app/internal/queue"
+	"go-zero-box/app/internal/middleware"
 	"go-zero-box/app/internal/svc"
 	"go-zero-box/pkg"
 
@@ -14,25 +13,23 @@ import (
 )
 
 type App struct {
-	config  *config.Config
-	svcCtx  *svc.ServiceContext
-	queue   *queue.Queue
-	command *command.Command
-	pkg     *pkg.Pkg
+	config     *config.Config
+	middleware *middleware.Middleware
+	svcCtx     *svc.ServiceContext
+	pkg        *pkg.Pkg
 }
 
-func NewApp(config *config.Config, svcCtx *svc.ServiceContext, queue *queue.Queue, command *command.Command, pkg *pkg.Pkg) *App {
-	return &App{config: config, svcCtx: svcCtx, queue: queue, command: command, pkg: pkg}
+func NewApp(config *config.Config, middleware *middleware.Middleware, svcCtx *svc.ServiceContext, pkg *pkg.Pkg) *App {
+	return &App{config: config, middleware: middleware, svcCtx: svcCtx, pkg: pkg}
 }
 
 func initApp(c *config.Config) *App {
 	wire.Build(
 		config.Provider,
+		middleware.Provider,
 		svc.Provider,
-		queue.Provider,
-		command.Provider,
 		pkg.Provider,
 		NewApp,
 	)
-	return &App{}
+	return nil
 }

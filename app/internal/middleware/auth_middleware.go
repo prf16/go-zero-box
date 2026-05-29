@@ -3,7 +3,7 @@ package middleware
 import (
 	"context"
 	"go-zero-box/app/internal/config"
-	"go-zero-box/app/internal/utils/result"
+	"go-zero-box/app/internal/svc/utils/result"
 	"net/http"
 
 	"github.com/golang-jwt/jwt/v4"

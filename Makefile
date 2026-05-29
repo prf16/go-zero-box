@@ -50,8 +50,8 @@ wire:
 model:
 	$(info ******************** model ********************)
 	@echo "process model"
-	goctl model mysql datasource -url="root:123456@tcp(127.0.0.1:3306)/user" -table="user*" -dir app/internal/model/usermodel --style go_zero -i 'created_at,updated_at' --home ./deploy/goctl/1.5.5/
-	goctl model mysql datasource -url="root:123456@tcp(127.0.0.1:3306)/message" -table="message*" -dir app/internal/model/messagemodel --style go_zero -i 'created_at,updated_at' --home ./deploy/goctl/1.5.5/
+	goctl model mysql datasource -url="root:123456@tcp(127.0.0.1:3306)/user" -table="user*" -dir app/internal/svc/model/usermodel --style go_zero -i 'created_at,updated_at' --home ./deploy/goctl/1.5.5/
+	goctl model mysql datasource -url="root:123456@tcp(127.0.0.1:3306)/message" -table="message*" -dir app/internal/svc/model/messagemodel --style go_zero -i 'created_at,updated_at' --home ./deploy/goctl/1.5.5/
 	@echo "processed"
 
 # 帮助

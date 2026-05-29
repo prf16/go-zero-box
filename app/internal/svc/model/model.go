@@ -1,9 +1,10 @@
 package model
 
 import (
+	"go-zero-box/app/internal/svc/model/messagemodel"
+	"go-zero-box/app/internal/svc/model/usermodel"
+
 	"github.com/google/wire"
-	"go-zero-box/app/internal/model/messagemodel"
-	"go-zero-box/app/internal/model/usermodel"
 )
 
 var Provider = wire.NewSet(

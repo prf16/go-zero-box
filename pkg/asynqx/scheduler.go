@@ -1,19 +1,21 @@
 package asynqx
 
 import (
-	"github.com/hibiken/asynq"
-	"github.com/zeromicro/go-zero/core/service"
+	"go-zero-box/pkg/redis"
 	"log"
 	"time"
+
+	"github.com/hibiken/asynq"
+	"github.com/zeromicro/go-zero/core/service"
 )
 
 type Scheduler struct {
-	config    *Config
+	config    *redis.Config
 	scheduler *asynq.Scheduler
 	handler   []*Handler
 }
 
-func NewScheduler(config *Config, handler []*Handler) service.Service {
+func NewScheduler(config *redis.Config, handler []*Handler) service.Service {
 	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
 		panic(err)
@@ -23,9 +25,8 @@ func NewScheduler(config *Config, handler []*Handler) service.Service {
 		config: config,
 		scheduler: asynq.NewScheduler(
 			&asynq.RedisClientOpt{
-				Addr:     config.Addr,
-				Password: config.Password,
-				DB:       config.DB,
+				Addr:     config.Host,
+				Password: config.Pass,
 			},
 			&asynq.SchedulerOpts{
 				Location: loc,

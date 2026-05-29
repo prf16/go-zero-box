@@ -2,7 +2,7 @@ package message
 
 import (
 	"fmt"
-	"go-zero-box/app/internal/model/usermodel"
+	"go-zero-box/app/internal/svc/model/usermodel"
 )
 
 func (s *Service) Wechat(user *usermodel.User, content string) error {

@@ -1,13 +1,14 @@
 package auth
 
 import (
-	"go-zero-box/app/internal/utils/result"
+	"go-zero-box/app/internal/svc/utils/result"
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"go-zero-box/app/internal/logic/auth"
 	"go-zero-box/app/internal/svc"
 	"go-zero-box/app/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 func LoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {

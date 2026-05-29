@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"go-zero-box/app/internal/svc"
+	"go-zero-box/app/internal/svc/utils/result"
 	"go-zero-box/app/internal/types"
-	"go-zero-box/app/internal/utils/result"
 
 	"github.com/spf13/cast"
 

@@ -1,9 +1,11 @@
 package asynqx
 
 import (
+	"go-zero-box/pkg/redis"
+	"log"
+
 	"github.com/hibiken/asynq"
 	"github.com/zeromicro/go-zero/core/service"
-	"log"
 )
 
 type Queue struct {
@@ -11,16 +13,15 @@ type Queue struct {
 	handler *Handler
 }
 
-func NewQueue(config *Config, handler *Handler) service.Service {
+func NewQueue(config *redis.Config, handler *Handler) service.Service {
 	concurrency := handler.Concurrency
 	if concurrency == 0 {
 		concurrency = 1
 	}
 	server := asynq.NewServer(
 		asynq.RedisClientOpt{
-			Addr:     config.Addr,
-			Password: config.Password,
-			DB:       config.DB,
+			Addr:     config.Host,
+			Password: config.Pass,
 		},
 		asynq.Config{
 			Concurrency: concurrency,

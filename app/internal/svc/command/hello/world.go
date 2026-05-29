@@ -16,7 +16,7 @@ func NewWorld() *World {
 
 // Type 返回任务的唯一标识符
 func (s *World) Type() string {
-	return "hello:hello"
+	return "hello:world"
 }
 
 // Handle 返回一个 cobra.Command 实例，用于执行脚本任务

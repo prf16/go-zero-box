@@ -73,7 +73,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 		return nil, result.ResponseSystem(l.ctx, err.Error())
 	}
 
-	err = message.MailQueueEnqueue(l.ctx, message.MailQueuePayload{
+	err = message.MailQueueEnqueue(l.ctx, l.svcCtx.Pkg.Asynqx.Client, message.MailQueuePayload{
 		User:    userInfo,
 		Content: "登录成功",
 	})

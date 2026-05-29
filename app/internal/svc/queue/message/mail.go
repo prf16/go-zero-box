@@ -28,14 +28,14 @@ type MailQueuePayload struct {
 // A task consists of a type and a payload.（任务由类型和有效载荷组成。）
 // ----------------------------------------------
 
-func MailQueueEnqueue(ctx context.Context, payload MailQueuePayload) error {
+func MailQueueEnqueue(ctx context.Context, client *asynq.Client, payload MailQueuePayload) error {
 	payloadByte, err := json.Marshal(payload)
 	if err != nil {
 		logx.Errorf("MailQueueEnqueue json.Marshal err: %v", err)
 		return nil
 	}
 
-	taskInfo, err := asynqx.Client.EnqueueContext(ctx, asynqx.NewTask(MailQueueType, payloadByte))
+	taskInfo, err := client.EnqueueContext(ctx, asynqx.NewTask(MailQueueType, payloadByte))
 	if err != nil {
 		return err
 	}

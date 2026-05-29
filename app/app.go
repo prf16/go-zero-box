@@ -82,12 +82,11 @@ func serverQueue(app *App) *cobra.Command {
 			serviceGroup := service.NewServiceGroup()
 			defer serviceGroup.Stop()
 
-			handlers := queue.RegisterHandlerQueue(app.svcCtx.Queue)
+			handlers := queue.Register(app.svcCtx.Queue)
 			for _, v := range handlers {
 				serviceGroup.Add(asynqx.NewQueue(app.config.Redis, v))
 			}
 			serviceGroup.Start()
-			select {}
 		},
 	}
 }

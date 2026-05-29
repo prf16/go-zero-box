@@ -6,14 +6,14 @@ import (
 )
 
 var Provider = wire.NewSet(
-	NewAsynq,
+	NewAsynqx,
 	NewClient,
 )
 
-type Asynq struct {
+type Asynqx struct {
 	Client *asynq.Client
 }
 
-func NewAsynq(client *asynq.Client) *Asynq {
-	return &Asynq{Client: client}
+func NewAsynqx(client *asynq.Client) *Asynqx {
+	return &Asynqx{Client: client}
 }

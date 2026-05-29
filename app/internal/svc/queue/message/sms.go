@@ -28,13 +28,13 @@ type SmsQueuePayload struct {
 // A task consists of a type and a payload.（任务由类型和有效载荷组成。）
 // ----------------------------------------------
 
-func SmsQueueEnqueue(ctx context.Context, payload SmsQueuePayload) error {
+func SmsQueueEnqueue(ctx context.Context, client *asynq.Client, payload SmsQueuePayload) error {
 	payloadByte, err := json.Marshal(payload)
 	if err != nil {
 		return err
 	}
 
-	taskInfo, err := asynqx.Client.EnqueueContext(ctx, asynqx.NewTask(SmsQueueType, payloadByte))
+	taskInfo, err := client.EnqueueContext(ctx, asynqx.NewTask(SmsQueueType, payloadByte))
 	if err != nil {
 		return err
 	}

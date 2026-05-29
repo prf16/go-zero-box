@@ -36,7 +36,7 @@ func NewQueue(config *redis.Config, handler *Handler) service.Service {
 
 func (q *Queue) Start() {
 	mux := asynq.NewServeMux()
-	mux.HandleFunc(q.handler.Type, q.handler.Async)
+	mux.HandleFunc(q.handler.Type, q.handler.Handler)
 
 	if err := q.server.Start(mux); err != nil {
 		panic(err)

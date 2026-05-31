@@ -223,7 +223,7 @@ $ ./app hello:world
 开发阶段可以通过 `-conf` 参数指定配置文件路径：
 
 ```shell
-$ go run main.go -conf app/etc/app.yaml server:api
+$ go run main.go server:api
 ```
 
 ## 配置文件说明

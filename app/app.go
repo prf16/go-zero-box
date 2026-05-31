@@ -40,6 +40,7 @@ func Start() {
 		}
 	}
 	logc.MustSetup(c.Server.Log)
+	defer logc.Close()
 
 	app := initApp(c)
 

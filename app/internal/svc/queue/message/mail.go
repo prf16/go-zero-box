@@ -65,7 +65,7 @@ func (q *MailQueue) Handler() *asynqx.Handler {
 	return &asynqx.Handler{
 		Type:        MailQueueType,
 		Concurrency: 10,
-		Async: func(ctx context.Context, t *asynq.Task) error {
+		Handler: func(ctx context.Context, t *asynq.Task) error {
 			logx.Infof("MailQueue ProcessTask t.Payload: %+v", string(t.Payload()))
 			var payload MailQueuePayload
 			if err := json.Unmarshal(t.Payload(), &payload); err != nil {

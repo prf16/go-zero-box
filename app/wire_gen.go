@@ -18,7 +18,6 @@ import (
 	"go-zero-box/app/internal/svc/queue"
 	message2 "go-zero-box/app/internal/svc/queue/message"
 	"go-zero-box/app/internal/svc/services"
-	"go-zero-box/app/internal/svc/services/demo"
 	"go-zero-box/app/internal/svc/services/message"
 	"go-zero-box/pkg"
 	"go-zero-box/pkg/asynqx"
@@ -40,11 +39,11 @@ func initApp(c *config.Config) *App {
 	redisDefault := redis.NewDefault(redisConfig)
 	redisRedis := redis.NewRedis(redisDefault)
 	client := asynqx.NewClient(redisConfig)
-	asynq := asynqx.NewAsynq(client)
+	asynqxAsynqx := asynqx.NewAsynqx(client)
 	rpcConfig := c.UserRpc
 	user := rpc.NewUser(rpcConfig)
 	rpcRpc := rpc.NewRpc(user)
-	pkgPkg := pkg.NewPkg(databaseDatabase, redisRedis, asynq, rpcRpc)
+	pkgPkg := pkg.NewPkg(databaseDatabase, redisRedis, asynqxAsynqx, rpcRpc)
 	world := hello.NewWorld()
 	commandCommand := command.NewCommand(world)
 	userModel := usermodel.NewUserModel(databaseDefault)
@@ -55,8 +54,7 @@ func initApp(c *config.Config) *App {
 	smsQueue := message2.NewSmsQueue(service)
 	wechatQueue := message2.NewWechatQueue(service)
 	queueQueue := queue.NewQueue(mailQueue, smsQueue, wechatQueue)
-	demoService := demo.NewService(userModel)
-	servicesServices := services.NewServices(demoService, service)
+	servicesServices := services.NewServices(service)
 	serviceContext := svc.NewServiceContext(middlewareMiddleware, c, pkgPkg, commandCommand, modelModel, queueQueue, servicesServices)
 	app := NewApp(c, middlewareMiddleware, serviceContext, pkgPkg)
 	return app

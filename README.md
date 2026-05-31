@@ -62,7 +62,7 @@ go-zero-box 框架支持：
     - 多 redis 支持
     - 多 rpc client 支持
     - 使用 app/internal/svc/utils/result 包实现统一响应结构和堆栈信息打印
-- Makefile 规则组件（参考 make 命令信息)）
+- Makefile 规则组件（参考 make 命令信息)
 
 好了，准备好开始了吗！
 

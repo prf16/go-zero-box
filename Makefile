@@ -10,13 +10,13 @@ build:
 
 	@if [ "$(env)" = "dev" ]; then \
   		echo "Building for dev environment"; \
-		go build -ldflags="-s -w" -o ./build/app/app app/app.go app/wire_gen.go;\
+		go build -ldflags="-s -w" -o ./build/app/app .;\
 	elif [ "$(env)" = "prod" ]; then \
   		echo "Building for prod environment"; \
-		GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./build/app/app app/app.go app/wire_gen.go;\
+		GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./build/app/app .;\
 	elif [ "$(env)" = "test" ]; then \
 		echo "Building for test environment"; \
-		GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./build/app/app app/app.go app/wire_gen.go;\
+		GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./build/app/app .;\
 	else \
 		echo "Error: Unknown set env. Please set env to 'dev', 'prod', 'test'. Example：make api env=prod"; \
 		exit 1; \

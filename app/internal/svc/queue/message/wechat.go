@@ -64,7 +64,7 @@ func (q *WechatQueue) Handler() *asynqx.Handler {
 	return &asynqx.Handler{
 		Type:        SmsQueueType,
 		Concurrency: 10,
-		Async: func(ctx context.Context, t *asynq.Task) error {
+		Handler: func(ctx context.Context, t *asynq.Task) error {
 			logx.Infof("WechatQueue ProcessTask t.Payload: %s", string(t.Payload()))
 			var payload WechatQueuePayload
 			if err := json.Unmarshal(t.Payload(), &payload); err != nil {

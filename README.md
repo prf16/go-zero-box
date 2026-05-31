@@ -1,35 +1,81 @@
 ## 概述
 
-### 简介
+### 背景
+
+go-zero 的实战级工程模板 go-zero-box，我是一个使用过 go-zero 框架开发过多个商业项目的开发者，在熟悉 go-zero 框架过程中踩坑很多，衍生的 go-zero-box 框架也是相当于经验贴了，希望可以帮助开发者更快的度过熟悉期。
+
+整理并且开源不易，后续还会持续编写 go-zero 框架和 go 语言新特性的使用心得，在使用过程中有任何问题，欢迎提 **issue**，如果您觉得项目对您有帮助，希望给个️ ⭐️ **star** ⭐️ ，十分感谢。
+
+### go-zero 简介
+
+go-zero 官方描述的非常清楚，不太了解的同学可以移步链接，官方文档：[go-zero](https://go-zero.dev)。
+
+go-zero 的背景，它是由万俊峰（Kevin Wan）主导研发并开源，他现任七牛云技术副总裁，20 年 + 后端 / 架构经验。
+
+go-zero 框架支持：
+
+应用层
+- api 服务
+- rpc 服务
+
+中间件
+- 基础设施组件
+    - 日志组件 logx
+    - 链路追踪 trace
+    - 服务监控 Prometheus
+    - 接口文档 swagger
+    ...
+- 数据层组件
+    - mysql
+    - redis
+    - mongo
+- 高可用组件 
+    - 负载均衡
+    - 熔断器
+    - 限流器
+    ...
+
+### go-zero-box 简介
+
+基于 go-zero 框架的 1.9.4 版本、goctl 1.9.2 版本.
 
 go-zero-box 是一套基于 go-zero 的实战级工程模板，开箱即用，包含 api、scheduler、queue、script 服务。
 
-它不是新框架，也不是对 go-zero 的再次封装，而是将实战中反复验证过的工程结构、服务拆分方式、通用能力设计，沉淀为一套可直接阅读、可直接落地的项目工程模板。
+它不是新框架，是将实战中反复验证过的工程结构、服务拆分方式、通用能力设计，沉淀为一套可直接阅读、可直接落地的项目工程模板。
 
 如果你正在使用 go-zero 构建真实业务系统，并希望项目从第一天起就具备良好的结构、清晰的边界和可维护性，那么 go-zero-box 可以帮助你少走大量工程弯路。
 
 配套的 gRPC 服务模板请参考 [go-zero-box-rpc](https://github.com/prf16/go-zero-box-rpc)，两者配合使用构成完整的微服务体系。
 
+go-zero-box 框架支持：
+
+应用层
+- queue 服务（使用 asynq 库实现队列功能）
+- scheduler 服务（使用 asynq 库实现任务调度）
+- command 服务（使用 cobra 包实现命令行工具 CLI 开发)
+
+中间件
+- 基础设施组件
+    - 依赖注入 wire
+- 基础设施扩展组件
+    - 多 mysql 支持
+    - 多 redis 支持
+    - 多 rpc client 支持
+    - 使用 app/internal/svc/utils/result 包实现统一响应结构和堆栈信息打印
+- Makefile 规则组件（参考 make 命令信息)
+
 好了，准备好开始了吗！
-
-### 背景
-
-go-zero 的背景就不必多说了，官方描述的非常清楚，不太了解的同学可以移步链接  [go-zero](https://go-zero.dev)。
-
-基于 go-zero 框架的 1.9.4 版本、goctl 1.9.2 版本.
-
-在熟悉 go-zero 框架过程中踩坑很多，衍生的 go-zero-box 框架也是相当于经验贴了，希望可以帮助开发者更快的度过熟悉期。
-
-整理并且开源不易，后续还会持续编写 go-zero 框架和 go 语言新特性的使用心得，在使用过程中有任何问题，欢迎提 **issue**，如果您觉得项目对您有帮助，希望给个️ ⭐️ **star** ⭐️ ，十分感谢。
 
 ### 特性
 
 - go-zero 框架 + goctl 代码生成工具 + wire 依赖注入 + Makefile 实现自动化编译；
 - 做了一些符合Web应用框架的目录划分，使开发者代码阅读更便捷，减少开发成本；
-- 支持多库，多redis；
+- api 服务 dsl 描述文件的目录拆分；
+- 支持多库，多redis，多 rpc client；
 - 提供了初始业务的 api 代码示例，包含登录、注册、鉴权等开箱即用的业务功能；
 - 提供了 go-zero 支持的 Swagger api 文档服务，**访问/api/doc即可预览文档**；
 - 增加了更多的 ORM API，支持复杂的数据操作业务；
+- svc 服务上下文的扩展，聚合所有依赖；
 - 引入 asynq 库，实现了队列、调度、脚本等功能；
 - 引入 wire 库，实现了依赖注入功能；
 - 通过 ```app [command]``` 的方式，在分布式场景下可以更方便地部署 api 、scheduler、queue 服务；
@@ -37,7 +83,7 @@ go-zero 的背景就不必多说了，官方描述的非常清楚，不太了解
 
 
     ···
-
+    
     持续更新中，敬请期待。
 
 ### 环境要求
@@ -102,8 +148,6 @@ go-zero 的背景就不必多说了，官方描述的非常清楚，不太了解
 ├── Makefile                           项目构建文件
 └── README.md                          项目说明文件
 ```
-
-
 
 ## 安装开发工具
 
@@ -179,7 +223,7 @@ $ ./app hello:world
 开发阶段可以通过 `-conf` 参数指定配置文件路径：
 
 ```shell
-$ go run main.go -conf app/etc/app.yaml server:api
+$ go run main.go server:api
 ```
 
 ## 配置文件说明

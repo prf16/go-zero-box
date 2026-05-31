@@ -24,6 +24,5 @@ func NewCommand(hello *hello.World) *Command {
 func (c *Command) Register() []*cobrax.Command {
 	return []*cobrax.Command{
 		{Command: c.World.Handle(), Scheduler: "* * * * *"},
-		{Command: c.World.Handle()},
 	}
 }

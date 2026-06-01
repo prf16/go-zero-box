@@ -85,7 +85,7 @@ func serverQueue(app *App) *cobra.Command {
 
 			handlers := queue.Register(app.svcCtx.Queue)
 			for _, v := range handlers {
-				serviceGroup.Add(asynqx.NewQueue(app.config.Redis, v))
+				serviceGroup.Add(asynqx.NewServer(app.config.Redis, v))
 			}
 			serviceGroup.Start()
 			select {}
@@ -119,7 +119,7 @@ func serverScheduler(app *App) *cobra.Command {
 
 			serviceGroup.Add(asynqx.NewScheduler(app.config.Redis, handlers))
 			for _, v := range handlers {
-				serviceGroup.Add(asynqx.NewQueue(app.config.Redis, v))
+				serviceGroup.Add(asynqx.NewServer(app.config.Redis, v))
 			}
 
 			serviceGroup.Start()

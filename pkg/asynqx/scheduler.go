@@ -1,12 +1,12 @@
 package asynqx
 
 import (
-	"go-zero-box/pkg/redis"
 	"log"
 	"time"
 
+	"go-zero-box/pkg/redis"
+
 	"github.com/hibiken/asynq"
-	"github.com/zeromicro/go-zero/core/service"
 )
 
 type Scheduler struct {
@@ -15,7 +15,7 @@ type Scheduler struct {
 	handler   []*Handler
 }
 
-func NewScheduler(config *redis.Config, handler []*Handler) service.Service {
+func NewScheduler(config *redis.Config, handler []*Handler) *Scheduler {
 	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
 		panic(err)
@@ -53,6 +53,7 @@ func (q *Scheduler) Start() {
 	log.Printf("[server:scheduler] run...")
 	select {}
 }
+
 func (q *Scheduler) Stop() {
 	q.scheduler.Shutdown()
 	log.Printf("[server:scheduler] Shutdown")

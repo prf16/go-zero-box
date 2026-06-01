@@ -1,19 +1,28 @@
 package asynqx
 
 import (
-	"go-zero-box/pkg/redis"
 	"log"
 
+	"go-zero-box/pkg/redis"
+
 	"github.com/hibiken/asynq"
-	"github.com/zeromicro/go-zero/core/service"
 )
 
-type Queue struct {
+// NewClient 生产者客户端
+func NewClient(c *redis.Config) *asynq.Client {
+	return asynq.NewClient(asynq.RedisClientOpt{
+		Addr:     c.Host,
+		Password: c.Pass,
+	})
+}
+
+// Server 消费者
+type Server struct {
 	server  *asynq.Server
 	handler *Handler
 }
 
-func NewQueue(config *redis.Config, handler *Handler) service.Service {
+func NewServer(config *redis.Config, handler *Handler) *Server {
 	concurrency := handler.Concurrency
 	if concurrency == 0 {
 		concurrency = 1
@@ -28,13 +37,13 @@ func NewQueue(config *redis.Config, handler *Handler) service.Service {
 		},
 	)
 
-	return &Queue{
+	return &Server{
 		server:  server,
 		handler: handler,
 	}
 }
 
-func (q *Queue) Start() {
+func (q *Server) Start() {
 	mux := asynq.NewServeMux()
 	mux.HandleFunc(q.handler.Type, q.handler.Handler)
 
@@ -44,7 +53,8 @@ func (q *Queue) Start() {
 
 	log.Printf("[server:queue] start success at Type: %s Concurrency: %d...", q.handler.Type, q.handler.Concurrency)
 }
-func (q *Queue) Stop() {
+
+func (q *Server) Stop() {
 	q.server.Stop()
 	log.Printf("[server:queue] stop Type: %s", q.handler.Type)
 }

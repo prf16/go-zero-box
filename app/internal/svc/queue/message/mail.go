@@ -35,7 +35,7 @@ func MailQueueEnqueue(ctx context.Context, client *asynq.Client, payload MailQue
 		return nil
 	}
 
-	taskInfo, err := client.EnqueueContext(ctx, asynqx.NewTask(MailQueueType, payloadByte))
+	taskInfo, err := client.EnqueueContext(ctx, asynq.NewTask(MailQueueType, payloadByte))
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package config
 
 import (
+	"go-zero-box/pkg/asynqx"
 	"go-zero-box/pkg/database"
 	"go-zero-box/pkg/redis"
 	"go-zero-box/pkg/rpc"
@@ -10,7 +11,7 @@ import (
 )
 
 var Provider = wire.NewSet(
-	wire.FieldsOf(new(*Config), "Database", "Redis", "UserRpc"),
+	wire.FieldsOf(new(*Config), "Database", "Redis", "Asynqx", "UserRpc"),
 )
 
 type Config struct {
@@ -19,6 +20,7 @@ type Config struct {
 
 	Database *database.Config
 	Redis    *redis.Config
+	Asynqx   *asynqx.Config
 	UserRpc  *rpc.Config
 }
 

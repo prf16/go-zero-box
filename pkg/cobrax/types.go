@@ -5,6 +5,10 @@ import (
 )
 
 type Command struct {
-	Command   *cobra.Command
+	*cobra.Command
 	Scheduler string
+}
+
+func NewCommand(command *cobra.Command, scheduler string) *Command {
+	return &Command{Command: command, Scheduler: scheduler}
 }

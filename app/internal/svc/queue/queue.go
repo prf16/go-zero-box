@@ -26,8 +26,8 @@ func NewQueue(messageMailQueue *message.MailQueue, messageSmsQueue *message.SmsQ
 
 func Register(s *Queue) []*asynqx.Handler {
 	return []*asynqx.Handler{
-		s.MessageMailQueue.Handler(),
-		s.MessageSmsQueue.Handler(),
-		s.MessageWechatQueue.Handler(),
+		{Type: message.MailQueueType, Concurrency: 10, Handler: s.MessageMailQueue},
+		{Type: message.SmsQueueType, Concurrency: 10, Handler: s.MessageSmsQueue},
+		{Type: message.WechatQueueType, Concurrency: 10, Handler: s.MessageWechatQueue},
 	}
 }

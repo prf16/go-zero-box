@@ -3,16 +3,15 @@ package asynqx
 import (
 	"log"
 
-	"go-zero-box/pkg/redis"
-
 	"github.com/hibiken/asynq"
 )
 
 // NewClient 生产者客户端
-func NewClient(c *redis.Config) *asynq.Client {
+func NewClient(c *Config) *asynq.Client {
 	return asynq.NewClient(asynq.RedisClientOpt{
-		Addr:     c.Host,
-		Password: c.Pass,
+		Addr:     c.Addr,
+		Password: c.Password,
+		DB:       c.DB,
 	})
 }
 
@@ -22,18 +21,18 @@ type Server struct {
 	handler *Handler
 }
 
-func NewServer(config *redis.Config, handler *Handler) *Server {
-	concurrency := handler.Concurrency
-	if concurrency == 0 {
-		concurrency = 1
+func NewServer(config *Config, handler *Handler) *Server {
+	if handler.Concurrency == 0 {
+		handler.Concurrency = 1
 	}
 	server := asynq.NewServer(
 		asynq.RedisClientOpt{
-			Addr:     config.Host,
-			Password: config.Pass,
+			Addr:     config.Addr,
+			Password: config.Password,
+			DB:       config.DB,
 		},
 		asynq.Config{
-			Concurrency: concurrency,
+			Concurrency: handler.Concurrency,
 		},
 	)
 
@@ -45,7 +44,7 @@ func NewServer(config *redis.Config, handler *Handler) *Server {
 
 func (q *Server) Start() {
 	mux := asynq.NewServeMux()
-	mux.HandleFunc(q.handler.Type, q.handler.Handler)
+	mux.Handle(q.handler.Type, q.handler.Handler)
 
 	if err := q.server.Start(mux); err != nil {
 		panic(err)

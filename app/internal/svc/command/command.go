@@ -16,8 +16,8 @@ type Command struct {
 	World *hello.World
 }
 
-func NewCommand(hello *hello.World) *Command {
-	return &Command{World: hello}
+func NewCommand(world *hello.World) *Command {
+	return &Command{World: world}
 }
 
 // Register 注册任务

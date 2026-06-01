@@ -50,7 +50,6 @@ func (q *Scheduler) Start() {
 	}
 
 	log.Printf("[server:scheduler] run...")
-	select {}
 }
 
 func (q *Scheduler) Stop() {

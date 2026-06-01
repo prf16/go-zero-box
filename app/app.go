@@ -85,7 +85,7 @@ func serverQueue(app *App) *cobra.Command {
 
 			handlers := queue.Register(app.svcCtx.Queue)
 			for _, v := range handlers {
-				serviceGroup.Add(asynqx.NewServer(app.config.Redis, v))
+				serviceGroup.Add(asynqx.NewServer(app.config.Asynqx, v))
 			}
 			serviceGroup.Start()
 			select {}
@@ -110,16 +110,16 @@ func serverScheduler(app *App) *cobra.Command {
 				handlers = append(handlers, &asynqx.Handler{
 					Type:      v.Command.Use,
 					Scheduler: v.Scheduler,
-					Handler: func(ctx context.Context, task *asynq.Task) error {
+					Handler: asynq.HandlerFunc(func(ctx context.Context, task *asynq.Task) error {
 						v.Command.Run(v.Command, nil)
 						return nil
-					},
+					}),
 				})
 			}
 
-			serviceGroup.Add(asynqx.NewScheduler(app.config.Redis, handlers))
+			serviceGroup.Add(asynqx.NewScheduler(app.config.Asynqx, handlers))
 			for _, v := range handlers {
-				serviceGroup.Add(asynqx.NewServer(app.config.Redis, v))
+				serviceGroup.Add(asynqx.NewServer(app.config.Asynqx, v))
 			}
 
 			serviceGroup.Start()

@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"go-zero-box/app/internal/svc/model/usermodel"
 	"go-zero-box/app/internal/svc/services/message"
-	"go-zero-box/pkg/asynqx"
 
 	"github.com/hibiken/asynq"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -59,33 +58,19 @@ func NewSmsQueue(messageService *message.Service) *SmsQueue {
 	return &SmsQueue{MessageService: messageService}
 }
 
-// ---------------------------------------------------------------
-// Handler 处理程序
-// Write a function HandleXXXTask to handle the input task.（编写一个函数 HandleXXXTask 来处理输入的任务）
-// Note that it satisfies the asynq.HandlerFunc interface.（请注意它满足 asynq.HandlerFunc 接口。）
-//
-// Handler doesn't need to be a function. You can define a type
-// that satisfies asynq.Handler interface. See examples below.（处理程序不一定需要是一个函数。你可以定义一个满足 asynq.Handler 接口的类型。请参考下面的示例。）
-// ---------------------------------------------------------------
-
-func (q *SmsQueue) Handler() *asynqx.Handler {
-	return &asynqx.Handler{
-		Type:        SmsQueueType,
-		Concurrency: 10,
-		Handler: func(ctx context.Context, t *asynq.Task) error {
-			logx.Infof("SmsQueue ProcessTask t.Payload: %+v", string(t.Payload()))
-			var payload SmsQueuePayload
-			if err := json.Unmarshal(t.Payload(), &payload); err != nil {
-				logx.Errorf("SmsQueue ProcessTask json.Unmarshal err: %v", err)
-				return err
-			}
-
-			err := q.MessageService.Sms(payload.User, payload.Content)
-			if err != nil {
-				logx.Errorf("SmsQueue ProcessTask q.MessageService.SmsQueue err: %v payload: %+v", err, payload)
-				return err
-			}
-			return nil
-		},
+// ProcessTask 处理任务函数
+func (q *SmsQueue) ProcessTask(ctx context.Context, t *asynq.Task) error {
+	logx.Infof("SmsQueue ProcessTask t.Payload: %+v", string(t.Payload()))
+	var payload SmsQueuePayload
+	if err := json.Unmarshal(t.Payload(), &payload); err != nil {
+		logx.Errorf("SmsQueue ProcessTask json.Unmarshal err: %v", err)
+		return err
 	}
+
+	err := q.MessageService.Sms(payload.User, payload.Content)
+	if err != nil {
+		logx.Errorf("SmsQueue ProcessTask q.MessageService.SmsQueue err: %v payload: %+v", err, payload)
+		return err
+	}
+	return nil
 }

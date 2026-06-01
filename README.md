@@ -39,7 +39,7 @@ go-zero 框架支持：
 
 基于 go-zero 框架的 1.9.4 版本、goctl 1.9.2 版本.
 
-go-zero-box 是一套基于 go-zero 的实战级工程模板，开箱即用，包含 api、scheduler、queue、script 服务。
+go-zero-box 是一套基于 go-zero 的实战级工程模板，开箱即用，包含 api、scheduler、queue、command 服务。
 
 它不是新框架，是将实战中反复验证过的工程结构、服务拆分方式、通用能力设计，沉淀为一套可直接阅读、可直接落地的项目工程模板。
 

@@ -98,32 +98,23 @@ func serverScheduler(app *App) *cobra.Command {
 		Use:   "server:scheduler",
 		Short: "启动计划任务服务",
 		Run: func(cmd *cobra.Command, args []string) {
-			serviceGroup := service.NewServiceGroup()
-			defer serviceGroup.Stop()
-
 			var handlers []*asynqx.Handler
 			for _, v := range app.svcCtx.Command.Register() {
-				if v.Scheduler == "" {
-					continue
+				if v.Scheduler != "" {
+					handlers = append(handlers, &asynqx.Handler{
+						Type:      v.Command.Use,
+						Scheduler: v.Scheduler,
+						Handler: asynq.HandlerFunc(func(ctx context.Context, task *asynq.Task) error {
+							v.Command.Run(v.Command, nil)
+							return nil
+						}),
+					})
 				}
-
-				handlers = append(handlers, &asynqx.Handler{
-					Type:      v.Command.Use,
-					Scheduler: v.Scheduler,
-					Handler: asynq.HandlerFunc(func(ctx context.Context, task *asynq.Task) error {
-						v.Command.Run(v.Command, nil)
-						return nil
-					}),
-				})
 			}
 
-			serviceGroup.Add(asynqx.NewScheduler(app.config.Asynqx, handlers))
-			for _, v := range handlers {
-				serviceGroup.Add(asynqx.NewServer(app.config.Asynqx, v))
-			}
-
-			serviceGroup.Start()
-			select {}
+			server := asynqx.NewScheduler(app.config.Asynqx, handlers)
+			defer server.Stop()
+			server.Start()
 		},
 	}
 }

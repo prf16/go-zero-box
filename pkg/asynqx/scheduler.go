@@ -67,5 +67,5 @@ func (q *Scheduler) Stop() {
 	}
 
 	q.scheduler.Shutdown()
-	log.Printf("[server:scheduler] Shutdown")
+	log.Printf("[server:scheduler] stop")
 }

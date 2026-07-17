@@ -40,7 +40,7 @@ func Start() {
 			return
 		}
 	}
-	
+
 	log.SetOutput(os.Stdout)
 	logc.MustSetup(c.Server.Log)
 	defer logc.Close()

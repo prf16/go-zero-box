@@ -13,7 +13,7 @@ CREATE TABLE `user` (
     `status` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT '状态 1启动 2禁用',
     `is_delete` tinyint(3) unsigned NOT NULL DEFAULT '2' COMMENT '是否删除 1是 2否',
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`),
     KEY `username` (`account`),
     KEY `email` (`email`) USING BTREE
@@ -28,6 +28,6 @@ CREATE TABLE `message` (
     `user_id` int(10) unsigned NOT NULL,
     `content` varchar(255) NOT NULL DEFAULT '',
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息表';

@@ -9,6 +9,7 @@ import (
 	"go-zero-box/app/internal/svc/queue"
 	"go-zero-box/pkg/asynqx"
 	"log"
+	"os"
 
 	"github.com/hibiken/asynq"
 	"github.com/spf13/cobra"
@@ -39,6 +40,8 @@ func Start() {
 			return
 		}
 	}
+	
+	log.SetOutput(os.Stdout)
 	logc.MustSetup(c.Server.Log)
 	defer logc.Close()
 

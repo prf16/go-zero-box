@@ -27,6 +27,7 @@ func NewScheduler(config *Config, handler []*Handler) *Scheduler {
 			},
 			&asynq.SchedulerOpts{
 				Location: loc,
+				LogLevel: asynq.WarnLevel,
 			},
 		)
 

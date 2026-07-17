@@ -33,6 +33,7 @@ func NewServer(config *Config, handler *Handler) *Server {
 		},
 		asynq.Config{
 			Concurrency: handler.Concurrency,
+			LogLevel:    asynq.WarnLevel,
 		},
 	)
 

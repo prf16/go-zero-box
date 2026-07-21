@@ -63,10 +63,10 @@ func (q *Scheduler) Start() {
 }
 
 func (q *Scheduler) Stop() {
+	q.scheduler.Shutdown()
+
 	for _, v := range q.server {
 		v.Stop()
 	}
-
-	q.scheduler.Shutdown()
 	log.Printf("[server:scheduler] stop")
 }

@@ -12,29 +12,6 @@ go-zero 官方描述的非常清楚，不太了解的同学可以移步链接，
 
 go-zero 的背景，它是由万俊峰（Kevin Wan）主导研发并开源，他现任七牛云技术副总裁，20 年 + 后端 / 架构经验。
 
-go-zero 框架支持：
-
-应用层
-- api 服务
-- rpc 服务
-
-中间件
-- 基础设施组件
-    - 日志组件 logx
-    - 链路追踪 trace
-    - 服务监控 Prometheus
-    - 接口文档 swagger
-    ...
-- 数据层组件
-    - mysql
-    - redis
-    - mongo
-- 高可用组件 
-    - 负载均衡
-    - 熔断器
-    - 限流器
-    ...
-
 ### go-zero-box 简介
 
 基于 go-zero 框架的 1.9.4 版本、goctl 1.9.2 版本.
@@ -47,22 +24,18 @@ go-zero-box 是一套基于 go-zero 的实战级工程模板，开箱即用，�
 
 配套的 gRPC 服务模板请参考 [go-zero-box-rpc](https://github.com/prf16/go-zero-box-rpc)，两者配合使用构成完整的微服务体系。
 
-go-zero-box 框架支持：
+### 框架支持
 
-应用层
-- queue 服务（使用 asynq 库实现队列功能）
-- scheduler 服务（使用 asynq 库实现任务调度）
-- command 服务（使用 cobra 包实现命令行工具 CLI 开发)
+下表汇总 go-zero 的基础能力和 go-zero-box 在其基础上提供的扩展能力。
 
-中间件
-- 基础设施组件
-    - 依赖注入 wire
-- 基础设施扩展组件
-    - 多 mysql 支持
-    - 多 redis 支持
-    - 多 rpc client 支持
-    - 使用 app/internal/svc/utils/result 包实现统一响应结构和堆栈信息打印
-- Makefile 规则组件（参考 make 命令信息)
+| 层级 | 组件类别 | go-zero 框架支持 | go-zero-box 扩展支持 |
+| --- | --- | --- | --- |
+| 应用层 | 服务 | api 服务、rpc 服务 | queue 服务（使用 asynq 库实现队列功能）<br>scheduler 服务（使用 asynq 库实现任务调度）<br>command 服务（使用 cobra 包实现命令行工具 CLI 开发） |
+| 中间件 | 基础设施组件 | 日志组件 logx、链路追踪 trace、服务监控 Prometheus、接口文档 swagger 等 | 依赖注入 wire |
+| 中间件 | 数据层组件 | mysql、redis、mongo | — |
+| 中间件 | 高可用组件 | 负载均衡、熔断器、限流器等 | — |
+| 中间件 | 基础设施扩展组件 | — | 多 mysql 支持、多 redis 支持、多 rpc client 支持<br>使用 `app/internal/svc/utils/result` 包实现统一响应结构和堆栈信息打印 |
+| 中间件 | Makefile 规则组件 | — | Makefile 规则（参考下文 Make 命令介绍） |
 
 ### 特性
 
